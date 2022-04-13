@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Button.Green" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/green_button</item>
+    </style>
+    <style name="MyRadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/bir</item>
+    </style>
+    <style name="MyRadioButtonStylee" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/iki</item>
+    </style>
+    <style name="MyRadioButtonStyleee" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/uc</item>
+    </style>
+</resources>

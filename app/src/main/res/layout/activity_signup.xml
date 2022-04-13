@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".activities.SignupActivity">
+
+    <EditText
+        android:id="@+id/textRegisterPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="@color/green_button"
+        android:ems="10"
+        android:hint="@string/textRegisterPassword"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/textRegisterNickname"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textRegisterNickname"
+        app:layout_constraintTop_toBottomOf="@+id/textRegisterEmail" />
+
+    <EditText
+        android:id="@+id/textRegisterEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@color/green_button"
+        android:ems="10"
+        android:hint="@string/textRegisterEmail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/textRegisterNickname"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textRegisterNickname"
+        app:layout_constraintTop_toBottomOf="@+id/textRegisterNickname" />
+
+    <EditText
+        android:id="@+id/textRegisterNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="101dp"
+        android:background="@color/green_button"
+        android:ems="10"
+        android:hint="@string/textRegisterNickname"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="215dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="196dp"
+        android:backgroundTint="@color/green_button"
+        android:text="@string/buttonRegister"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textRegisterPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

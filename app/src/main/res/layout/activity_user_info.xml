@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".activities.UserInfoActivity">
+
+    <RadioGroup
+        android:id="@+id/toBeLearnedRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="188dp"
+        android:background="@drawable/textview_backgorund"
+        android:backgroundTint="@color/backgorund"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/toBeLearnedFirst"
+            style="@style/MyRadioButtonStyle"
+            android:layout_width="138dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/turkish_flag"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/toBeLearnedSecond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="68dp"
+            android:background="@drawable/united_kingdom_flag"
+            android:button="@null" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/diffucultyRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:background="@color/backgorund"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toBeLearnedRadioGroup">
+
+        <RadioButton
+            android:id="@+id/diffucultyEasy"
+            android:layout_width="115dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/bir"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/diffucultyMedium"
+            android:layout_width="115dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/iki"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/diffucultyHard"
+            android:layout_width="115dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/uc"
+            android:button="@null" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/notificationRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:background="@color/backgorund"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/diffucultyRadioGroup">
+
+        <RadioButton
+            android:id="@+id/notificationHourly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="16dp"
+            android:text="RadioButton" />
+
+        <RadioButton
+            android:id="@+id/notificationWeekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="15dp"
+            android:text="RadioButton" />
+
+        <RadioButton
+            android:id="@+id/notificationMontly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="31dp"
+            android:text="RadioButton" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/buttonSaveUserInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="159dp"
+        android:backgroundTint="@color/green_button"
+        android:text="@string/buttonSaveUserInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationRadioGroup" />
+</androidx.constraintlayout.widget.ConstraintLayout>

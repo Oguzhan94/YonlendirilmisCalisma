@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">WordCup</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Splash Activity -->
+    <string name="no_internet_connection">Offline olarak devam ediliyor</string>
+
+    <!-- Login Activity -->
+    <string name="empty_email_password">Lütfen gerekli alanları doldurunuz!</string>
+    <string name="login_success">Giriş başarılı!</string>
+    <string name="login_failed">Giriş başarısız!</string>
+
+    <!-- Signup Activity -->
+    <string name="signup_success">Kayıt başarılı!</string>
+    <string name="signup_failed">Kayıt başarısız!</string>
+    <string name="fill_in_all_fields">Lütfen gerekli alanları doldurunuz!</string>
+    
+    <!-- Update Password Activity -->
+    <string name="re_aut_success">Hesap doğrulama başarılı!</string>
+    <string name="success_update_password">Şifre güncelleme başarılı!</string>
+    <string name="failed_update_password">Şifre güncelleme başarısız, lütfen 6 karakterden fazla bir şifre giriniz!</string>
+    <string name="current_password_not_match">Mevcut şifre hatalı!</string>
+    <string name="password_not_match">Şifreler uyuşmuyor!</string>
+    
+    <!-- User Info Activity -->
+    <string name="user_information_update_successful">Kullanıcı bilgileri güncellendi!</string>
+
+    <!-- Main Activity -->
+    <string name="welcome_message">Hoş geldiniz, %1$s! </string>
+    <string name="welcome_message_failed">veri getirilemedi!</string>
+    <string name="database_listener_failed">dinleyicide sorun var!</string>
+
+    <!-- Manual Word Add Activity -->
+    <string name="word_added">Kelime başarıyla eklendi!</string>
+    <string name="word_add_failed">Lütfen gerekli tüm alanları doldurunuz!</string>
+    
+    <!-- Alert Dialog -->
+    <string name="alert_dialog_title">Alert</string>
+    <string name="alert_dialog_message">İnternet bağlantınız bulunmamaktadır</string>
+    <string name="alert_dialog_positive_button">Ayarları Aç</string>
+    <string name="alert_dialog_negative_button">Çıkış Yap</string>
+
+    <!-- WordCup Play Category -->
+    <string name="buttonRandomWordPlay">KUPAYI KARIŞTIR</string>
+    <string name="buttonUserAddedWord">EKLENENLER</string>
+    <string name="buttonPopularWords">POPÜLER 100 KELİME</string>
+    <string name="buttonWeeklyWords">HAFTALIK KELİMELER</string>
+
+    <!-- WordCup Dictionary Word Add -->
+    <string name="searchViewDictionaryWordAdd">KELİME ARAMA</string>
+    <string name="buttonAddWordDictionary">KELİME EKLE</string>
+
+    <!-- WordCup Login -->
+    <string name="textLoginEmailAddress">E-MAİL</string>
+    <string name="textLoginPassword">ŞİFRE</string>
+    <string name="buttonLogin">GİRİŞ YAP</string>
+    <string name="buttonToRegister">KAYIT OL</string>
+    <string name="buttonForgotPassword">ŞİFREMİ UNUTTUM</string>
+
+    <!-- WordCup Main -->
+    <string name="buttonOpenPlayCategory">OYNA</string>
+    <string name="buttonToAddedWords">KUPAM</string>
+    <string name="buttonAddWordCategory">KELİME EKLE</string>
+    <string name="buttonLearnedWords">ÖĞRENDİĞİM KELİMELER</string>
+    <string name="textNickname">KULLANICI ADI</string>
+
+    <!-- WordCup Manual Word Added -->
+    <string name="textWordSourceManuelAdded">SOURCE</string>
+    <string name="textWordTargetManuelAdded">TARGET</string>
+    <string name="buttonSaveWordsManualAdded">KAYDET</string>
+
+    <!-- WordCup Settings Category -->
+    <string name="buttonSettingsPassword">ŞİFRE</string>
+    <string name="buttonSettingsUserInfo">OYUN AYARLARI</string>
+    <string name="buttonSettingsLogout">ÇIKIŞ YAP</string>
+
+    <!-- WordCup Signup -->
+    <string name="textRegisterNickname">KULLANICI ADI</string>
+    <string name="textRegisterEmail">E-MAİL</string>
+    <string name="textRegisterPassword">ŞİFRE</string>
+    <string name="buttonRegister">KAYIT OL</string>
+
+    <!-- WordCup Update Password -->
+    <string name="textSettingsCurrentPassword">MEVCUT ŞİFRENİZ</string>
+    <string name="TextSettingsNewPassword">YENİ ŞİFRENİZ</string>
+    <string name="TextSettingsNewPasswordCheck">Yeni Şifrenizi Tekrar Giriniz</string>
+    <string name="buttonUpdatePassword">ŞİFREMİ GÜNCELLE</string>
+
+    <!-- WordCup User INFO -->
+    <string name="buttonSaveUserInfo">KAYDET</string>
+
+    <!-- WordCup ADDING WORDS CATEGORY -->
+    <string name="buttonAddWordFromDictionary">Sözlükten Kelime Ekle</string>
+    <string name="buttonAddWordFromManuel">Manuel Olarak Kelime Ekle</string>
+
+    <!-- WordCup CardView -->
+    <string name="textCardViewSource">Source</string>
+    <string name="textCardViewTarget">Target</string>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+</resources>

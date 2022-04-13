@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".activities.MainActivity">
+
+    <Button
+        android:id="@+id/buttonOpenPlayCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="160dp"
+        android:backgroundTint="@color/green_button"
+        android:text="@string/buttonOpenPlayCategory"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNickname" />
+
+    <Button
+        android:id="@+id/buttonToAddedWords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/green_button"
+        android:text="@string/buttonToAddedWords"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/buttonOpenPlayCategory"
+        app:layout_constraintStart_toStartOf="@+id/buttonOpenPlayCategory"
+        app:layout_constraintTop_toBottomOf="@+id/buttonOpenPlayCategory" />
+
+    <Button
+        android:id="@+id/buttonAddWordCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/green_button"
+        android:text="@string/buttonAddWordCategory"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/buttonToAddedWords"
+        app:layout_constraintStart_toStartOf="@+id/buttonToAddedWords"
+        app:layout_constraintTop_toBottomOf="@+id/buttonToAddedWords" />
+
+    <Button
+        android:id="@+id/buttonLearnedWords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="117dp"
+        android:backgroundTint="@color/green_button"
+        android:text="@string/buttonLearnedWords"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAddWordCategory"
+        app:layout_constraintStart_toStartOf="@+id/buttonAddWordCategory"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddWordCategory" />
+
+    <TextView
+        android:id="@+id/textNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="177dp"
+        android:background="@drawable/textview_backgorund"
+        android:gravity="center"
+        android:text="TextViewTextViewTextViewTextViewTextViewTextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonOpenSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="349dp"
+        android:backgroundTint="#0C0C0C"
+        app:layout_constraintBottom_toTopOf="@+id/textNickname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.122"
+        app:srcCompat="@android:drawable/ic_menu_preferences" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
