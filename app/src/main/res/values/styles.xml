@@ -4,7 +4,7 @@
         <item name="colorAccent">@color/green_button</item>
     </style>
     <style name="MyRadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
-        <item name="android:button">@drawable/bir</item>
+        <item name="android:button">@drawable/custom_radio_button</item>
     </style>
     <style name="MyRadioButtonStylee" parent="@android:style/Widget.CompoundButton.RadioButton">
         <item name="android:button">@drawable/iki</item>
