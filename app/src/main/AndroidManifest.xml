@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordCup">
         <activity
+            android:name=".activities.PlayActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AttachedWordsActivity"
             android:exported="false" />
         <activity

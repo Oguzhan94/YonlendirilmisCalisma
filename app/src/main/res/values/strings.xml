@@ -30,14 +30,14 @@
     <string name="signup_success">Kayıt başarılı!</string>
     <string name="signup_failed">Kayıt başarısız!</string>
     <string name="fill_in_all_fields">Lütfen gerekli alanları doldurunuz!</string>
-    
+
     <!-- Update Password Activity -->
     <string name="re_aut_success">Hesap doğrulama başarılı!</string>
     <string name="success_update_password">Şifre güncelleme başarılı!</string>
     <string name="failed_update_password">Şifre güncelleme başarısız, lütfen 6 karakterden fazla bir şifre giriniz!</string>
     <string name="current_password_not_match">Mevcut şifre hatalı!</string>
     <string name="password_not_match">Şifreler uyuşmuyor!</string>
-    
+
     <!-- User Info Activity -->
     <string name="user_information_update_successful">Kullanıcı bilgileri güncellendi!</string>
 
@@ -49,7 +49,7 @@
     <!-- Manual Word Add Activity -->
     <string name="word_added">Kelime başarıyla eklendi!</string>
     <string name="word_add_failed">Lütfen gerekli tüm alanları doldurunuz!</string>
-    
+
     <!-- Alert Dialog -->
     <string name="alert_dialog_title">Alert</string>
     <string name="alert_dialog_message">İnternet bağlantınız bulunmamaktadır</string>

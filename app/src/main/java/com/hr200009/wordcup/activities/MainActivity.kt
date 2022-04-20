@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingsButton: ImageButton
     private lateinit var openAddWordCategory: Button
     private lateinit var openAttachedWordActivity: Button
+    private lateinit var openPlayCategoryActivity: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         settingsButton = findViewById(R.id.buttonOpenSettings)
         openAddWordCategory = findViewById(R.id.buttonAddWordCategory)
         openAttachedWordActivity = findViewById(R.id.buttonToAddedWords)
+        openPlayCategoryActivity = findViewById(R.id.buttonOpenPlayCategory)
 
         currentUserId = auth.uid.toString()
         currentUserId
