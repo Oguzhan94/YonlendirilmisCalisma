@@ -13,16 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordCup">
         <activity
+            android:name=".activities.LearnedWordsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.PlayActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AttachedWordsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DictionaryWordAdd"
+            android:name=".activities.DictionaryWordAddActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ManualWordAdd"
+            android:name=".activities.ManualWordAddActivity"
             android:exported="false" />
         <activity
             android:name=".activities.WordAddCategory"
@@ -44,7 +47,7 @@
             android:name=".activities.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PlayCategoryActivity"
+            android:name=".activities.CategoryActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"

@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.hr200009.wordcup.R
 
-class PlayCategoryActivity : AppCompatActivity() {
+class LearnedWordsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category)
+        setContentView(R.layout.activity_learned_words)
     }
 }

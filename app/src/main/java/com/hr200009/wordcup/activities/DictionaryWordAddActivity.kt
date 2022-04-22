@@ -18,7 +18,7 @@ import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.hr200009.wordcup.R
 
-class DictionaryWordAdd : AppCompatActivity() {
+class DictionaryWordAddActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
@@ -91,7 +91,7 @@ class DictionaryWordAdd : AppCompatActivity() {
                     .addOnFailureListener { exception ->
                         // Error.
                         // ...
-                        Toast.makeText(this@DictionaryWordAdd, "Error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@DictionaryWordAddActivity, "Error", Toast.LENGTH_SHORT).show()
                     }
                 return false
             }

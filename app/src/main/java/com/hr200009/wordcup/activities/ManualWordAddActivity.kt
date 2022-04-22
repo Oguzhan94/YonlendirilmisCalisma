@@ -14,7 +14,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 
-class ManualWordAdd : AppCompatActivity() {
+class ManualWordAddActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference

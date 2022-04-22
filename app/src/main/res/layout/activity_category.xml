@@ -5,53 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
-    tools:context=".activities.PlayCategoryActivity">
+    tools:context=".activities.CategoryActivity">
 
     <Button
         android:id="@+id/buttonRandomWordPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="268dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/green_button"
         android:text="@string/buttonRandomWordPlay"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPopularWords"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonUserAddedWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="@color/green_button"
-        android:text="@string/buttonUserAddedWord"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/buttonRandomWordPlay"
-        app:layout_constraintStart_toStartOf="@+id/buttonRandomWordPlay"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRandomWordPlay" />
 
     <Button
         android:id="@+id/buttonPopularWords"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/green_button"
         android:text="@string/buttonPopularWords"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/buttonWeeklyWords"
         app:layout_constraintEnd_toEndOf="@+id/buttonRandomWordPlay"
         app:layout_constraintStart_toStartOf="@+id/buttonRandomWordPlay"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUserAddedWord" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRandomWordPlay" />
 
     <Button
         android:id="@+id/buttonWeeklyWords"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="200dp"
         android:backgroundTint="@color/green_button"
         android:text="@string/buttonWeeklyWords"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/buttonRandomWordPlay"
-        app:layout_constraintStart_toStartOf="@+id/buttonRandomWordPlay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonPopularWords"
+        app:layout_constraintStart_toStartOf="@+id/buttonPopularWords"
         app:layout_constraintTop_toBottomOf="@+id/buttonPopularWords" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,12 +23,12 @@ class WordAddCategory : AppCompatActivity() {
 
     private fun run() {
         addWordFromDictionary.setOnClickListener() {
-            Intent(this, DictionaryWordAdd::class.java).also {
+            Intent(this, DictionaryWordAddActivity::class.java).also {
                 startActivity(it)
             }
         }
         addWordManuel.setOnClickListener() {
-            Intent(this, ManualWordAdd::class.java).also {
+            Intent(this, ManualWordAddActivity::class.java).also {
                 startActivity(it)
             }
         }

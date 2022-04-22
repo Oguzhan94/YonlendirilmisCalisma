@@ -58,6 +58,9 @@ class MainActivity : AppCompatActivity() {
         openAttachedWordActivity.setOnClickListener(View.OnClickListener {
             openAttachedWordActivity()
         })
+        openPlayCategoryActivity.setOnClickListener(View.OnClickListener {
+            openPlayCategoryActivity()
+        })
 
     }
 
@@ -91,6 +94,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun openAttachedWordActivity() {
         val intent = Intent(this@MainActivity, AttachedWordsActivity::class.java)
+        startActivity(intent)
+    }
+    private fun openPlayCategoryActivity() {
+        val intent = Intent(this@MainActivity, CategoryActivity::class.java)
         startActivity(intent)
     }
 }

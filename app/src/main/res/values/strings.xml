@@ -113,6 +113,10 @@
     <string name="textCardViewSource">Source</string>
     <string name="textCardViewTarget">Target</string>
 
+    <!-- WordCup Play Category -->
+    <string name="passButton">PAS GEÇ</string>
+    <string name="continueButton">DEVAM ET</string>
+
     <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 </resources>
