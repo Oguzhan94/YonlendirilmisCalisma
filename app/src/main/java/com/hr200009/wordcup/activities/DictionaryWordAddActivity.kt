@@ -62,12 +62,12 @@ class DictionaryWordAddActivity : AppCompatActivity() {
             .requireWifi()
             .build()
         turkishToEnglishTranslator.downloadModelIfNeeded(conditions)
-            .addOnSuccessListener {
+            .addOnCompleteListener {
                 // Model downloaded successfully. Okay to start translating.
                 // (Set a flag, unhide the translation UI, etc.)
                 Toast.makeText(this, "Model downloaded successfully", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener {
                 // Model couldn’t be downloaded or other internal error.
                 // ...
                 Toast.makeText(this, "Model couldn't be downloaded", Toast.LENGTH_SHORT).show()

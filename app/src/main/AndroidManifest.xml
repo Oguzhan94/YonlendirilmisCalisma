@@ -28,7 +28,7 @@
             android:name=".activities.ManualWordAddActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.WordAddCategory"
+            android:name=".activities.WordAddCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".activities.UserInfoActivity"

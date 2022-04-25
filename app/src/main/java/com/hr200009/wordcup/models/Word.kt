@@ -14,6 +14,8 @@ data class Word (
 ){
 
 
+
+
     @Exclude
     fun toWordMap(): Map<String, Any?> {
         return mapOf(

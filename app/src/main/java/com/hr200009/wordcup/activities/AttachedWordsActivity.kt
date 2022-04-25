@@ -35,6 +35,9 @@ class AttachedWordsActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         arrayList = arrayListOf<Word>()
+        run()
+    }
+    private fun run() {
         getWords()
     }
 

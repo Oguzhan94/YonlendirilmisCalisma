@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.hr200009.wordcup.R
 
-class WordAddCategory : AppCompatActivity() {
+class WordAddCategoryActivity : AppCompatActivity() {
 
     private lateinit var addWordFromDictionary: Button
     private lateinit var addWordManuel: Button

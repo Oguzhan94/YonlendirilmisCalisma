@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openAddWordCategory() {
-        val intent = Intent(this@MainActivity, WordAddCategory::class.java)
+        val intent = Intent(this@MainActivity, WordAddCategoryActivity::class.java)
         startActivity(intent)
     }
 
