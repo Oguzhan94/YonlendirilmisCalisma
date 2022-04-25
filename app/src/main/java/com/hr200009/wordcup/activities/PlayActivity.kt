@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 
 import com.hr200009.wordcup.models.Word
+import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class PlayActivity : AppCompatActivity() {
@@ -43,11 +44,9 @@ class PlayActivity : AppCompatActivity() {
 
     private fun getWord() {
         // getir word nesnesi oluştur id ile map ile pushla.
-        val user = auth.currentUser
-        val userId = user?.uid
-        database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString())
 
-        database.addValueEventListener(object : ValueEventListener {
+
+        FirebaseUtil.WORDS_USER_REF.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 arrayList.clear()
                 arrayList2.clear()
@@ -96,10 +95,7 @@ class PlayActivity : AppCompatActivity() {
 
     }
     private fun updateWordStatus(sayi: Int) {
-        val user = auth.currentUser
-        val userId = user?.uid
-        database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString()).child(arrayList2[sayi])
-        //database.child(word.id.toString()).setValue(word)
-        database.child("trueCounter").setValue("1")
+      
+        FirebaseUtil.WORDS_USER_REF.child(arrayList2[sayi]).child("trueCounter").setValue("1")
     }
 }
