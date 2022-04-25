@@ -10,8 +10,10 @@ data class Word (
     var trueCounter: String? = null,
     var falseCounter: String? = null,
     var passCounter: String? = null,
-    var isItLearned: String? = null
+    var isItLearned: String? = null,
 ){
+
+
     @Exclude
     fun toWordMap(): Map<String, Any?> {
         return mapOf(

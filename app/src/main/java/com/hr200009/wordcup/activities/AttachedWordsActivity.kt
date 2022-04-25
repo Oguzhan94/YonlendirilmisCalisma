@@ -1,6 +1,7 @@
 package com.hr200009.wordcup.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +50,8 @@ class AttachedWordsActivity : AppCompatActivity() {
                     val word = snapshot.getValue(Word::class.java)
                     arrayList.add(word!!)
                 }
+                var size = arrayList.size.toString()
+                Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
                 recyclerView.adapter = WordAdapter(arrayList)
             }
 

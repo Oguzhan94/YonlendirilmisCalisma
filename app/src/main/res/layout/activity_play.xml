@@ -7,8 +7,8 @@
     android:background="@drawable/background"
     tools:context=".activities.PlayActivity">
 
-    <EditText
-        android:id="@+id/textView"
+    <TextView
+        android:id="@+id/textViewRandomMain"
         android:layout_width="140dp"
         android:layout_height="48dp"
         android:layout_marginStart="176dp"
@@ -34,7 +34,7 @@
         android:hint="ÇEVİRİ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewRandomMain" />
 
     <Button
         android:id="@+id/button"
