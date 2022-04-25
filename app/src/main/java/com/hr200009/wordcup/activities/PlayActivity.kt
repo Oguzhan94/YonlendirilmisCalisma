@@ -42,6 +42,7 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun getWord() {
+        // getir word nesnesi oluştur id ile map ile pushla.
         val user = auth.currentUser
         val userId = user?.uid
         database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString())
