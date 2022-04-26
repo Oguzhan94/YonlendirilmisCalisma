@@ -97,6 +97,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun addWordToDatabase(){
         translate()
       saveButton.setOnClickListener(View.OnClickListener {
@@ -104,8 +105,8 @@ class DictionaryWordAddActivity : AppCompatActivity() {
               val user = auth.currentUser
               val userId = user?.uid
               val wordData = hashMapOf(
-                  "source" to textTSource,
-                  "translation" to textTarget,
+                  "source" to textTSource.lowercase(),
+                  "translation" to textTarget.lowercase(),
                   "trueCounter" to trueCounter,
                   "falseCounter" to falseCounter,
                   "passCounter" to passCounter,

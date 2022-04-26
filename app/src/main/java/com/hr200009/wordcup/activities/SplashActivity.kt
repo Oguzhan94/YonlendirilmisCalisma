@@ -11,6 +11,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.util.AlertUtil
+import com.hr200009.wordcup.util.FirebaseUtil
 import com.hr200009.wordcup.util.NetworkUtil
 
 class SplashActivity : AppCompatActivity() {
@@ -20,8 +21,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        Firebase.database.setPersistenceEnabled(true)
+        // Offline için data izini veriyoruz
+        FirebaseUtil.FIRE_BASE_DİSK_PERSISTENCE
         // Initialize Firebase Auth
         auth = Firebase.auth
 

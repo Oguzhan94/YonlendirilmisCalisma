@@ -54,6 +54,7 @@ class AttachedWordsActivity : AppCompatActivity() {
                     arrayList.add(word!!)
                 }
                 var size = arrayList.size.toString()
+
                 Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
                 recyclerView.adapter = WordAdapter(arrayList)
             }

@@ -39,10 +39,10 @@ class PlayActivity : AppCompatActivity() {
         textSource = findViewById(R.id.textViewRandomMain)
         textTarget = findViewById(R.id.textView2)
         goButton = findViewById(R.id.button2)
-        getWord()
+        getWordData()
     }
 
-    private fun getWord() {
+    private fun getWordData() {
         // getir word nesnesi oluştur id ile map ile pushla.
 
 
@@ -53,10 +53,14 @@ class PlayActivity : AppCompatActivity() {
                 for (snapshot in dataSnapshot.children) {
                     arrayList2.add(snapshot.key.toString())
                     snapshot.key?.let {
-                        Toast.makeText(this@PlayActivity, snapshot.key, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this@PlayActivity, snapshot.key, Toast.LENGTH_SHORT).show()
                     }
                     val word = snapshot.getValue(Word::class.java)
                     arrayList.add(word!!)
+
+                }
+                for (a in arrayList) {
+                    println(a.source+"\n")
                 }
                 randomWord()
             }
@@ -64,7 +68,7 @@ class PlayActivity : AppCompatActivity() {
             }
         })
     }
-
+//random kısmı fonksiyonlaştırlmalı, dönüş türü vererek.
     private fun randomWord() {
         var random = (0..arrayList.size).random()
         var temp = random
@@ -75,7 +79,11 @@ class PlayActivity : AppCompatActivity() {
             if (textControll == arrayList[random].translation) {
                 Toast.makeText(this, "You win", Toast.LENGTH_SHORT).show()
                // arrayList.removeAt(random)
+
                 updateWordStatus(random)
+                for (a in arrayList) {
+                    println(a.source+"\n")
+                }
                 random = (0..arrayList.size).random()
                 if(random != temp) {
                     textSource.text = arrayList[random].source

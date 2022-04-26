@@ -48,7 +48,8 @@
 
     <!-- Manual Word Add Activity -->
     <string name="word_added">Kelime başarıyla eklendi!</string>
-    <string name="word_add_failed">Lütfen gerekli tüm alanları doldurunuz!</string>
+    <string name="word_add_empty_fields">Lütfen gerekli tüm alanları doldurunuz!</string>
+    <string name="word_add_failed">Kelime ekleme başarısız!</string>
 
     <!-- Alert Dialog -->
     <string name="alert_dialog_title">Alert</string>
