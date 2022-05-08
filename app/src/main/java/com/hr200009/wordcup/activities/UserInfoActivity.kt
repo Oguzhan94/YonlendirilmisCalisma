@@ -132,9 +132,10 @@ class UserInfoActivity : AppCompatActivity() {
 
         }
         buttonSaveUserInfo.setOnClickListener(View.OnClickListener {
-            database.child(userId).child("toBeLearned").setValue(toBeLearned.toInt())
-            database.child(userId).child("difficulty").setValue(difficulty.toInt())
-            database.child(userId).child("notificationFrequency").setValue(notification.toInt())
+            database.child(userId).updateChildren(mapOf(
+                "toBeLearned" to toBeLearned,
+                "difficulty" to difficulty,
+                "notificationFrequency" to notification))
             getData(userId)
             Toast.makeText(this, R.string.user_information_update_successful, Toast.LENGTH_SHORT)
                 .show()

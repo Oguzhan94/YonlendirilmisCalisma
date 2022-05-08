@@ -24,7 +24,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var forgotPassword: Button
     private lateinit var email: String
     private lateinit var password: String
-    private val currentUser = Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,48 +37,39 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+    }
+    override fun onStart() {
+        super.onStart()
         run()
     }
 
     private fun run() {
-        if (currentUser != null){
-            openMainActivity()
-        }else{
+        loginButton.setOnClickListener(View.OnClickListener {
             login()
-            openRegisterActivity()
-        }
+        })
+        registerButton.setOnClickListener(View.OnClickListener {
+            openSignupActivity()
+        })
     }
+
 
     private fun login() {
-        loginButton.setOnClickListener(View.OnClickListener {
-            email = emailEditText.text.toString()
-            password = passwordEditText.text.toString()
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(applicationContext, R.string.empty_email_password, Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(baseContext, R.string.login_success, Toast.LENGTH_SHORT)
-                                .show()
-                            openMainActivity()
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(baseContext, R.string.login_failed, Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-            }
-        })
-    }
+        email = emailEditText.text.toString()
+        password = passwordEditText.text.toString()
 
-    private fun openRegisterActivity() {
-        registerButton.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@LoginActivity, SignupActivity::class.java)
-            startActivity(intent)
-        })
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, R.string.empty_email_password, Toast.LENGTH_SHORT).show()
+        } else {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show()
+                        openMainActivity()
+                    } else {
+                        Toast.makeText(this, R.string.login_failed, Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
     }
 
     private fun openMainActivity() {
@@ -87,10 +77,19 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finishAffinity()
     }
-
-    fun openForgotPassword() {
-        //
+    private fun openSignupActivity() {
+        val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+        startActivity(intent)
     }
+/*
+    private fun openForgotPasswordActivity() {
+        forgotPassword.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        })
+    }*/
+
+
 
 
 }

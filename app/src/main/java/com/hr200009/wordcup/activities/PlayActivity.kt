@@ -16,7 +16,6 @@ import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 
 import com.hr200009.wordcup.models.Word
-import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class PlayActivity : AppCompatActivity() {
@@ -29,6 +28,10 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var textControll: String
     private lateinit var goButton: Button
 
+    private var trueCounter: Int = 0
+    private var falseCounter: Int = 0
+    private var passCounter: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
@@ -39,71 +42,86 @@ class PlayActivity : AppCompatActivity() {
         textSource = findViewById(R.id.textViewRandomMain)
         textTarget = findViewById(R.id.textView2)
         goButton = findViewById(R.id.button2)
-        getWordData()
+        getWord()
+        //database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+        //print(database)
     }
 
-    private fun getWordData() {
+    private fun getWord() {
         // getir word nesnesi oluştur id ile map ile pushla.
 
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
 
-        FirebaseUtil.WORDS_USER_REF.addValueEventListener(object : ValueEventListener {
+        arrayList.clear()
+        arrayList2.clear()
+        database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                arrayList.clear()
-                arrayList2.clear()
-                for (snapshot in dataSnapshot.children) {
-                    arrayList2.add(snapshot.key.toString())
-                    snapshot.key?.let {
-                        //Toast.makeText(this@PlayActivity, snapshot.key, Toast.LENGTH_SHORT).show()
-                    }
-                    val word = snapshot.getValue(Word::class.java)
-                    arrayList.add(word!!)
 
-                }
-                for (a in arrayList) {
-                    println(a.source+"\n")
+                for (snapshot in dataSnapshot.children) {
+
+                    arrayList2.add(snapshot.key.toString())
+
+
+                 val word = snapshot.getValue(Word::class.java)
+
+                    arrayList.add(word!!)
                 }
                 randomWord()
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
     }
-//random kısmı fonksiyonlaştırlmalı, dönüş türü vererek.
+
     private fun randomWord() {
         var random = (0..arrayList.size).random()
         var temp = random
         textSource.text = arrayList[random].source
-
+        trueCounter = arrayList[random]!!.trueCounter!!.toInt()
         goButton.setOnClickListener(View.OnClickListener { view ->
             textControll = textTarget.text.toString()
             if (textControll == arrayList[random].translation) {
                 Toast.makeText(this, "You win", Toast.LENGTH_SHORT).show()
-               // arrayList.removeAt(random)
+
+                trueCounter++
+                // arrayList.removeAt(random)
 
                 updateWordStatus(random)
-                for (a in arrayList) {
-                    println(a.source+"\n")
-                }
                 random = (0..arrayList.size).random()
-                if(random != temp) {
+                if (random != temp) {
                     textSource.text = arrayList[random].source
-                }
-                else {
+                } else {
                     random = (0..arrayList.size).random()
                     textSource.text = arrayList[random].source
                 }
 
-            }
-            else{
+            } else {
                 Toast.makeText(this, "You lose", Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, "Correct answer is: ${arrayList[random].translation}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Correct answer is: ${arrayList[random].translation}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 Toast.makeText(this, "Your answer is: ${textControll}", Toast.LENGTH_SHORT).show()
             }
         })
 
     }
+
     private fun updateWordStatus(sayi: Int) {
-      
-        FirebaseUtil.WORDS_USER_REF.child(arrayList2[sayi]).child("trueCounter").setValue("1")
+
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+            .child(arrayList2[sayi])
+        //database.child(word.id.toString()).setValue(word)
+        database.child("trueCounter").setValue(trueCounter.toInt())
+    }
+    private fun falseCounter() {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+        database.child("falseCounter").setValue(falseCounter.toInt())
+    }
+    private fun passCounter() {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+        database.child("passCounter").setValue(passCounter.toInt())
     }
 }

@@ -15,6 +15,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.User
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class SignupActivity : AppCompatActivity() {
 
@@ -43,45 +44,52 @@ class SignupActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         database = Firebase.database.reference
-        run()
 
+    }
+
+   override fun onStart() {
+        super.onStart()
+        run()
     }
 
     private fun run() {
-        registerButton.setOnClickListener(View.OnClickListener { view ->
-            email = emailEditText.text.toString()
-            password = passwordEditText.text.toString()
-            nickName = nickNameEditText.text.toString()
-            if (email.isEmpty() || password.isEmpty() || nickName.isEmpty()) {
-                Toast.makeText(applicationContext, R.string.fill_in_all_fields, Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Register success, update UI with the signed-in user's information
-                            Toast.makeText(baseContext, R.string.signup_success, Toast.LENGTH_SHORT)
-                                .show()
-                            writeNewUser(nickName, difficulty, notificationFrequency, toBeLearned)
-                            continueToSettings()
-                        } else {
-                            // If register in fails, display a message to the user.
-                            Toast.makeText(
-                                baseContext, R.string.signup_failed,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                    }
-            }
+        registerButton.setOnClickListener(View.OnClickListener {
+            registerNewUser()
         })
     }
+
+    private fun registerNewUser() {
+        email = emailEditText.text.toString()
+        password = passwordEditText.text.toString()
+        nickName = nickNameEditText.text.toString()
+        if (email.isEmpty() || password.isEmpty() || nickName.isEmpty()) {
+            Toast.makeText(applicationContext, R.string.fill_in_all_fields, Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Register success, update UI with the signed-in user's information
+                        Toast.makeText(baseContext, R.string.signup_success, Toast.LENGTH_SHORT)
+                            .show()
+                        writeNewUser(nickName, difficulty, notificationFrequency, toBeLearned)
+                        continueToSettings()
+                    } else {
+                        // If register in fails, display a message to the user.
+                        Toast.makeText(baseContext, R.string.signup_failed, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                }
+        }
+    }
+
 
     private fun continueToSettings() {
         val intent = Intent(this@SignupActivity, UserInfoActivity::class.java)
         intent.putExtra("activity", "signup")
         startActivity(intent)
-        finish()
+        finishAffinity()
     }
 
     private fun writeNewUser(

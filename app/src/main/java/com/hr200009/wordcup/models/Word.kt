@@ -7,10 +7,10 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class Word (
     var source: String? = null,
     var translation: String? = null,
-    var trueCounter: String? = null,
-    var falseCounter: String? = null,
-    var passCounter: String? = null,
-    var isItLearned: String? = null,
+    var trueCounter: Int? = null,
+    var falseCounter: Int? = null,
+    var passCounter: Int? = null,
+    var isItLearned: Int? = null,
 ){
 
 

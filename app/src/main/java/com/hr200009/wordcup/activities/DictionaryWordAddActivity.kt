@@ -28,10 +28,10 @@ class DictionaryWordAddActivity : AppCompatActivity() {
     private lateinit var textViewSource: TextView
     private lateinit var textTSource: String
     private lateinit var textTarget: String
-    private var trueCounter: String = "0"
-    private var falseCounter: String = "0"
-    private var passCounter: String = "0"
-    private var isItLearned: String = "-1"
+    private var trueCounter: Int = 0
+    private var falseCounter: Int = 0
+    private var passCounter: Int = 0
+    private var isItLearned: Int = 0
     private lateinit var saveButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,8 +102,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
         translate()
       saveButton.setOnClickListener(View.OnClickListener {
           if (textTSource.isNotEmpty() && textTarget.isNotEmpty()) {
-              val user = auth.currentUser
-              val userId = user?.uid
+
               val wordData = hashMapOf(
                   "source" to textTSource.lowercase(),
                   "translation" to textTarget.lowercase(),
@@ -112,7 +111,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                   "passCounter" to passCounter,
                   "isItLearned" to isItLearned
               )
-              database.child("words").child(userId.toString()).child(database.push().key.toString()).setValue(wordData)
+              database.child("words").child(auth.uid.toString()).child(database.push().key.toString()).setValue(wordData)
               Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
           } else {
               Toast.makeText(this, R.string.word_add_failed, Toast.LENGTH_SHORT).show()

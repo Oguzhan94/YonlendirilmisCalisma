@@ -11,7 +11,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.util.AlertUtil
-import com.hr200009.wordcup.util.FirebaseUtil
 import com.hr200009.wordcup.util.NetworkUtil
 
 class SplashActivity : AppCompatActivity() {
@@ -21,33 +20,18 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
         // Offline için data izini veriyoruz
-        FirebaseUtil.FIRE_BASE_DİSK_PERSISTENCE
+        Firebase.database.setPersistenceEnabled(true)
+
         // Initialize Firebase Auth
         auth = Firebase.auth
 
-        startSplashActivity()
     }
 
-    private fun startSplashActivity() {
-        checkInternetConnection()
-    }
-
-    private fun checkInternetConnection() {
-        if (NetworkUtil.isInternetConnected(applicationContext)) {
-            //Start countDownTimer
-            loadingTime()
-        } else {
-            // Show InternetAlert
-            val currentUser = auth.currentUser
-            if(currentUser != null){
-                Toast.makeText(applicationContext, R.string.no_internet_connection, Toast.LENGTH_LONG).show()
-                loadingTime()
-            }else{
-               AlertUtil.internetAlert(this)
-            }
-
-        }
+    override fun onStart() {
+        super.onStart()
+        loadingTime()
     }
 
     private fun loadingTime() {
@@ -55,14 +39,41 @@ class SplashActivity : AppCompatActivity() {
             override fun onTick(l: Long) {}
             override fun onFinish() {
                 //start nextActivity
+                //checkUserLogin()
                 openNextActivity()
             }
         }
         countDownTimer.start()
     }
 
+    private fun checkInternet(): Boolean {
+        return NetworkUtil.isInternetConnected(applicationContext)
+    }
+    private fun checkUserLogin(): Boolean {
+       return auth.currentUser != null
+    }
+
     private fun openNextActivity() {
+        if (checkUserLogin() && checkInternet()) {
+            openMainActivity()
+        } else if (checkUserLogin() && !checkInternet()) {
+            Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
+            openMainActivity()
+        } else if (!checkUserLogin() && checkInternet()) {
+            openLoginActivity()
+        } else {
+            AlertUtil.internetAlert(this)
+        }
+    }
+
+    private fun openLoginActivity() {
         val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun openMainActivity() {
+        val intent = Intent(this@SplashActivity, MainActivity::class.java)
         startActivity(intent)
         finish()
     }

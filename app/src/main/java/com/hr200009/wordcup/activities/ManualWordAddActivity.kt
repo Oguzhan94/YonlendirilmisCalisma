@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.models.Word
 import com.hr200009.wordcup.util.FirebaseUtil
 
 class ManualWordAddActivity : AppCompatActivity() {
@@ -21,12 +22,16 @@ class ManualWordAddActivity : AppCompatActivity() {
     private lateinit var textWordSource: EditText
     private lateinit var textWordTarget: EditText
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+
     private lateinit var wordSource: String
     private lateinit var wordTarget: String
-    private var trueCounter: String = "0"
-    private var falseCounter: String = "0"
-    private var passCounter: String = "0"
-    private var isItLearned: String = "-1"
+    private var wordId: String? = null
+    private var trueCounter: Int = 0
+    private var falseCounter: Int = 0
+    private var passCounter: Int = 0
+    private var isItLearned: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +43,12 @@ class ManualWordAddActivity : AppCompatActivity() {
         textWordTarget = findViewById(R.id.textWordTargetManuelAdded)
 
 
-        FirebaseUtil.FIRE_BASE_KEEPING_DATA_FRESH
+        //FirebaseUtil.FIRE_BASE_KEEPING_DATA_FRESH
+
+        database = Firebase.database.reference
+        database.keepSynced(true)
+
+        auth = Firebase.auth
 
         run()
     }
@@ -52,18 +62,20 @@ class ManualWordAddActivity : AppCompatActivity() {
     private fun wordAddManual() {
         wordSource = textWordSource.text.toString()
         wordTarget = textWordTarget.text.toString()
+        wordId = database.push().key.toString()
 
         if (wordSource.isNotEmpty() && wordTarget.isNotEmpty()) {
+            val word = Word(wordSource, wordTarget, trueCounter, falseCounter, passCounter, isItLearned)
             val wordData = hashMapOf(
                 "source" to wordSource.lowercase(),
                 "translation" to wordTarget.lowercase(),
                 "trueCounter" to trueCounter,
                 "falseCounter" to falseCounter,
                 "passCounter" to passCounter,
-                "isItLearned" to isItLearned
+                "isItLearned" to isItLearned,
             )
 
-            FirebaseUtil.WORD_ADD_REF.setValue(wordData).addOnSuccessListener {
+            database.child("words").child(auth.uid.toString()).child(database.push().key.toString()).setValue(word).addOnSuccessListener {
                 Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
 
             }.addOnFailureListener {
