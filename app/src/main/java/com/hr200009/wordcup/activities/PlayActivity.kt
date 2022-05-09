@@ -27,6 +27,7 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var textTarget: EditText
     private lateinit var textControll: String
     private lateinit var goButton: Button
+    private lateinit var passButton: Button
 
     private var trueCounter: Int = 0
     private var falseCounter: Int = 0
@@ -45,6 +46,7 @@ class PlayActivity : AppCompatActivity() {
         textSource = findViewById(R.id.textViewRandomMain)
         textTarget = findViewById(R.id.textView2)
         goButton = findViewById(R.id.button2)
+        passButton = findViewById(R.id.button)
         getWord()
 
     }
@@ -54,13 +56,22 @@ class PlayActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
 
-        database.get().addOnSuccessListener {
-            for (word in it.children) {
-                val word = word.getValue(Word::class.java)
-                arrayList.add(word!!)
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (word in snapshot.children) {
+                    val word = word.getValue(Word::class.java)
+                    arrayList.add(word!!)
+                }
+                randomWord()
             }
-            randomWord()
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
         }
+
+        )
 
 
         //arrayList.clear()
@@ -85,62 +96,56 @@ class PlayActivity : AppCompatActivity() {
         })*/
 
     }
+    private fun run(){
+        goButton.setOnClickListener( View.OnClickListener {
+            randomWord()
+        })
+        passButton.setOnClickListener( View.OnClickListener {
+
+        })
+    }
 
     private fun randomWord() {
 
         //var random = (0 until arrayList.size).random()
         // var temp = random
         // random olmuyor buna bak!!!
-        arrayList.random().let {Word ->
-            textSource.text = Word.source
+
+    var random = (0 until arrayList.size).random()
+
+        arrayList[random].let {
+            textSource.text = it.source
             textControll = textTarget.text.toString()
-            trueCounter = Word.trueCounter!!
-            goButton.setOnClickListener(View.OnClickListener {
-                if (Word.translation == textTarget.text.toString()) {
-                    trueCounter++
-                    updateWordStatus(Word.id!!, trueCounter)
-                    Toast.makeText(this, "You win", Toast.LENGTH_SHORT).show()
-                }
-            })
-
-
-/*
-        textSource.text = arrayList[random].source
-        trueCounter = arrayList[random]!!.trueCounter!!.toInt()
-
-        goButton.setOnClickListener(View.OnClickListener { view ->
-
-            textControll = textTarget.text.toString()
-            if (textControll == arrayList[random].translation) {
-                Toast.makeText(this, "You win", Toast.LENGTH_SHORT).show()
-
-                trueCounter++
-                // arrayList.removeAt(random)
-
-                updateWordStatus(arrayList[random].id.toString(), trueCounter)
-                random = (0 until arrayList.size).random()
-                if (random != temp) {
-                    textSource.text = arrayList[random].source
-                } else {
-                    random = (0 until arrayList.size).random()
-                    textSource.text = arrayList[random].source
-                }
-
-            } else {
-                Toast.makeText(this, "You lose", Toast.LENGTH_SHORT).show()
-                Toast.makeText(
-                    this,
-                    "Correct answer is: ${arrayList[random].translation}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                Toast.makeText(this, "Your answer is: ${textControll}", Toast.LENGTH_SHORT).show()
-            }
-        })
-*/
+            trueCounter = it.trueCounter!!
+            falseCounter = it.falseCounter!!
+            passCounter = it.passCounter!!
         }
-    }
 
-    private fun updateWordStatus(wordId: String, trueCounter: Int) {
+        goButton.setOnClickListener( View.OnClickListener {
+          if (textTarget != null) {
+              if (textTarget.text.toString() == arrayList[random].translation) {
+                  trueCounter++
+                  arrayList[random].trueCounter = trueCounter
+                  trueCounter(arrayList[random].id.toString(), trueCounter)
+              }
+              else {
+                  falseCounter++
+                  arrayList[random].falseCounter = falseCounter
+                  falseCounter(arrayList[random].id.toString(), falseCounter)
+              }
+
+          }
+        })
+        passButton.setOnClickListener( View.OnClickListener {
+            passCounter++
+            arrayList[random].passCounter = passCounter
+            passCounter(arrayList[random].id.toString(), passCounter)
+        })
+        }
+
+
+
+    private fun trueCounter(wordId: String, trueCounter: Int) {
 
 
         // database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
@@ -149,15 +154,12 @@ class PlayActivity : AppCompatActivity() {
         database.child(wordId).child("trueCounter").setValue(trueCounter.toInt())
     }
 
-    private fun falseCounter() {
-        database =
-            FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-        database.child("falseCounter").setValue(falseCounter.toInt())
+    private fun falseCounter(wordId: String, falseCounter: Int) {
+        database.child(wordId).child("falseCounter").setValue(falseCounter.toInt())
     }
 
-    private fun passCounter() {
-        database =
-            FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-        database.child("passCounter").setValue(passCounter.toInt())
+    private fun passCounter(wordId: String, passCounter: Int) {
+        database.child(wordId).child("passCounter").setValue(passCounter.toInt())
     }
 }
+
