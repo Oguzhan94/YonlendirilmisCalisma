@@ -22,7 +22,7 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var arrayList: ArrayList<Word> = ArrayList()
-    private var arrayList2: ArrayList<String> = ArrayList()
+
     private lateinit var textSource: TextView
     private lateinit var textTarget: EditText
     private lateinit var textControll: String
@@ -31,6 +31,9 @@ class PlayActivity : AppCompatActivity() {
     private var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
+    private var wordId: String? = null
+
+    var control: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +46,7 @@ class PlayActivity : AppCompatActivity() {
         textTarget = findViewById(R.id.textView2)
         goButton = findViewById(R.id.button2)
         getWord()
-        //database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-        //print(database)
+
     }
 
     private fun getWord() {
@@ -52,34 +54,62 @@ class PlayActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
 
-        arrayList.clear()
-        arrayList2.clear()
+        database.get().addOnSuccessListener {
+            for (word in it.children) {
+                val word = word.getValue(Word::class.java)
+                arrayList.add(word!!)
+            }
+            randomWord()
+        }
+
+
+        //arrayList.clear()
+/*
         database.addValueEventListener(object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 for (snapshot in dataSnapshot.children) {
 
-                    arrayList2.add(snapshot.key.toString())
-
-
                  val word = snapshot.getValue(Word::class.java)
 
                     arrayList.add(word!!)
+
                 }
-                randomWord()
+                //randomWord()
             }
 
             override fun onCancelled(error: DatabaseError) {
             }
-        })
+
+        })*/
+
     }
 
     private fun randomWord() {
-        var random = (0..arrayList.size).random()
-        var temp = random
+
+        //var random = (0 until arrayList.size).random()
+        // var temp = random
+        // random olmuyor buna bak!!!
+        arrayList.random().let {Word ->
+            textSource.text = Word.source
+            textControll = textTarget.text.toString()
+            trueCounter = Word.trueCounter!!
+            goButton.setOnClickListener(View.OnClickListener {
+                if (Word.translation == textTarget.text.toString()) {
+                    trueCounter++
+                    updateWordStatus(Word.id!!, trueCounter)
+                    Toast.makeText(this, "You win", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
+/*
         textSource.text = arrayList[random].source
         trueCounter = arrayList[random]!!.trueCounter!!.toInt()
+
         goButton.setOnClickListener(View.OnClickListener { view ->
+
             textControll = textTarget.text.toString()
             if (textControll == arrayList[random].translation) {
                 Toast.makeText(this, "You win", Toast.LENGTH_SHORT).show()
@@ -87,12 +117,12 @@ class PlayActivity : AppCompatActivity() {
                 trueCounter++
                 // arrayList.removeAt(random)
 
-                updateWordStatus(random)
-                random = (0..arrayList.size).random()
+                updateWordStatus(arrayList[random].id.toString(), trueCounter)
+                random = (0 until arrayList.size).random()
                 if (random != temp) {
                     textSource.text = arrayList[random].source
                 } else {
-                    random = (0..arrayList.size).random()
+                    random = (0 until arrayList.size).random()
                     textSource.text = arrayList[random].source
                 }
 
@@ -106,22 +136,28 @@ class PlayActivity : AppCompatActivity() {
                 Toast.makeText(this, "Your answer is: ${textControll}", Toast.LENGTH_SHORT).show()
             }
         })
-
+*/
+        }
     }
 
-    private fun updateWordStatus(sayi: Int) {
+    private fun updateWordStatus(wordId: String, trueCounter: Int) {
 
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-            .child(arrayList2[sayi])
+
+        // database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+        // .child(wordId)
         //database.child(word.id.toString()).setValue(word)
-        database.child("trueCounter").setValue(trueCounter.toInt())
+        database.child(wordId).child("trueCounter").setValue(trueCounter.toInt())
     }
+
     private fun falseCounter() {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+        database =
+            FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
         database.child("falseCounter").setValue(falseCounter.toInt())
     }
+
     private fun passCounter() {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+        database =
+            FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
         database.child("passCounter").setValue(passCounter.toInt())
     }
 }

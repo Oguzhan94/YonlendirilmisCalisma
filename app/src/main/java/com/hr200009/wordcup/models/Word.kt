@@ -11,6 +11,7 @@ data class Word (
     var falseCounter: Int? = null,
     var passCounter: Int? = null,
     var isItLearned: Int? = null,
+    val id: String? = null
 ){
 
 

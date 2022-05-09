@@ -27,11 +27,12 @@ class ManualWordAddActivity : AppCompatActivity() {
 
     private lateinit var wordSource: String
     private lateinit var wordTarget: String
-    private var wordId: String? = null
+
     private var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
     private var isItLearned: Int = 0
+    private var wordId: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +66,7 @@ class ManualWordAddActivity : AppCompatActivity() {
         wordId = database.push().key.toString()
 
         if (wordSource.isNotEmpty() && wordTarget.isNotEmpty()) {
-            val word = Word(wordSource, wordTarget, trueCounter, falseCounter, passCounter, isItLearned)
+            //val word = Word(wordSource, wordTarget, trueCounter, falseCounter, passCounter, isItLearned,)
             val wordData = hashMapOf(
                 "source" to wordSource.lowercase(),
                 "translation" to wordTarget.lowercase(),
@@ -73,9 +74,10 @@ class ManualWordAddActivity : AppCompatActivity() {
                 "falseCounter" to falseCounter,
                 "passCounter" to passCounter,
                 "isItLearned" to isItLearned,
+                "id" to wordId
             )
 
-            database.child("words").child(auth.uid.toString()).child(database.push().key.toString()).setValue(word).addOnSuccessListener {
+            database.child("words").child(auth.uid.toString()).child(wordId.toString()).setValue(wordData).addOnSuccessListener {
                 Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
 
             }.addOnFailureListener {
