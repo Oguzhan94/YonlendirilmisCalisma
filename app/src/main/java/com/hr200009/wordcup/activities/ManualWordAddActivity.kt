@@ -77,7 +77,7 @@ class ManualWordAddActivity : AppCompatActivity() {
                 "id" to wordId
             )
 
-            database.child("words").child(auth.uid.toString()).child(wordId.toString()).setValue(wordData).addOnSuccessListener {
+            database.child("words").child(auth.uid.toString()).child("allWords").child(wordId.toString()).setValue(wordData).addOnSuccessListener {
                 Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
 
             }.addOnFailureListener {

@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var openAddWordCategory: Button
     private lateinit var openAttachedWordActivity: Button
     private lateinit var openPlayCategoryActivity: Button
+    private lateinit var openLearnedWordsActivity: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         openAddWordCategory = findViewById(R.id.buttonAddWordCategory)
         openAttachedWordActivity = findViewById(R.id.buttonToAddedWords)
         openPlayCategoryActivity = findViewById(R.id.buttonOpenPlayCategory)
+        openLearnedWordsActivity = findViewById(R.id.buttonLearnedWords)
 
         currentUserId = auth.uid.toString()
         currentUserId
@@ -60,6 +62,9 @@ class MainActivity : AppCompatActivity() {
         })
         openPlayCategoryActivity.setOnClickListener(View.OnClickListener {
             openPlayCategoryActivity()
+        })
+        openLearnedWordsActivity.setOnClickListener(View.OnClickListener {
+            openLearnedWordsActivity()
         })
 
     }
@@ -98,6 +103,10 @@ class MainActivity : AppCompatActivity() {
     }
     private fun openPlayCategoryActivity() {
         val intent = Intent(this@MainActivity, CategoryActivity::class.java)
+        startActivity(intent)
+    }
+    private fun openLearnedWordsActivity() {
+        val intent = Intent(this@MainActivity, LearnedWordsActivity::class.java)
         startActivity(intent)
     }
 }

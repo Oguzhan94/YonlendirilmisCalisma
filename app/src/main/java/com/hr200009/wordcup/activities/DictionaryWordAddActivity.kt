@@ -116,7 +116,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                   "id" to wordId
               )
 
-              database.child("words").child(auth.uid.toString()).child(wordId.toString()).setValue(wordData)
+              database.child("words").child(auth.uid.toString()).child("allWords").child(wordId.toString()).setValue(wordData)
               Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
           } else {
               Toast.makeText(this, R.string.word_add_failed, Toast.LENGTH_SHORT).show()

@@ -44,7 +44,7 @@ class AttachedWordsActivity : AppCompatActivity() {
     private fun getWords() {
         val user = auth.currentUser
         val userId = user?.uid
-        database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString())
+        database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString()).child("allWords")
 
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
