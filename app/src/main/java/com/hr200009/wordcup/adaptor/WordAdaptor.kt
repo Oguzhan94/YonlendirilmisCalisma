@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.Word
 
 
-class WordAdapter(private val dataSet: ArrayList<Word>) :
+class WordAdapter(private val dataSet: ArrayList<Word>, var onClick: (Int) -> Unit) :
     RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
 
     /**
@@ -19,6 +20,7 @@ class WordAdapter(private val dataSet: ArrayList<Word>) :
     class WordViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textCardViewSource: TextView = view.findViewById(R.id.textCardViewSource)
         val textCardViewTarget: TextView = view.findViewById(R.id.textCardViewTarget)
+        val cardView: CardView = view.findViewById(R.id.cardVieww)
 
     }
 
@@ -39,6 +41,9 @@ class WordAdapter(private val dataSet: ArrayList<Word>) :
         val currentItem = dataSet[position]
         wordViewHolder.textCardViewSource.text = currentItem.source
         wordViewHolder.textCardViewTarget.text = currentItem.translation
+        wordViewHolder.cardView.setOnClickListener {
+            onClick(position)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -4,28 +4,26 @@ import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-data class Word (
+data class Word(
     var source: String? = null,
     var translation: String? = null,
     var trueCounter: Int? = null,
     var falseCounter: Int? = null,
     var passCounter: Int? = null,
-    var isItLearned: Int? = null,
-    val id: String? = null
-){
-
-
-
-
+    val id: String? = null,
+    var viewCounter: Int? = null,
+    var isItLearned: Boolean? = null
+) {
     @Exclude
-    fun toWordMap(): Map<String, Any?> {
+    fun toMap(): Map<String, Any?> {
         return mapOf(
             "source" to source,
             "translation" to translation,
             "trueCounter" to trueCounter,
             "falseCounter" to falseCounter,
             "passCounter" to passCounter,
-            "isItLearned" to isItLearned
+            "isItLearned" to isItLearned,
+            "viewCounter" to viewCounter
         )
     }
 }

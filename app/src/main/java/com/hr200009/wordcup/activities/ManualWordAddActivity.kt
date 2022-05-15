@@ -31,7 +31,8 @@ class ManualWordAddActivity : AppCompatActivity() {
     private var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
-    private var isItLearned: Int = 0
+    private var isItLearned: Boolean = false
+    private var viewCounter: Int = 0
     private var wordId: String? = null
 
 
@@ -74,7 +75,8 @@ class ManualWordAddActivity : AppCompatActivity() {
                 "falseCounter" to falseCounter,
                 "passCounter" to passCounter,
                 "isItLearned" to isItLearned,
-                "id" to wordId
+                "id" to wordId,
+                "viewCounter" to viewCounter
             )
 
             database.child("words").child(auth.uid.toString()).child("allWords").child(wordId.toString()).setValue(wordData).addOnSuccessListener {

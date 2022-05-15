@@ -17,6 +17,7 @@ import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.models.Word
 
 class DictionaryWordAddActivity : AppCompatActivity() {
 
@@ -31,7 +32,8 @@ class DictionaryWordAddActivity : AppCompatActivity() {
     private var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
-    private var isItLearned: Int = 0
+    private var isItLearned: Boolean = false
+    private var viewCounter: Int = 0
     private lateinit var saveButton: Button
     var wordId: String? = null
 
@@ -106,6 +108,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
 
               wordId=database.push().key.toString()
 
+
               val wordData = hashMapOf(
                   "source" to textTSource.lowercase(),
                   "translation" to textTarget.lowercase(),
@@ -113,7 +116,8 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                   "falseCounter" to falseCounter,
                   "passCounter" to passCounter,
                   "isItLearned" to isItLearned,
-                  "id" to wordId
+                  "id" to wordId,
+                  "viewCounter" to viewCounter
               )
 
               database.child("words").child(auth.uid.toString()).child("allWords").child(wordId.toString()).setValue(wordData)

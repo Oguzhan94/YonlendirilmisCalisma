@@ -56,7 +56,10 @@ class LearnedWordsActivity : AppCompatActivity() {
                 var size = arrayList.size.toString()
 
                 Toast.makeText(this@LearnedWordsActivity, "You have $size words", Toast.LENGTH_SHORT).show()
-                recyclerView.adapter = WordAdapter(arrayList)
+                recyclerView.adapter = WordAdapter(arrayList,{
+                    val word = it
+                    Toast.makeText(this@LearnedWordsActivity, "You have ", Toast.LENGTH_SHORT).show()
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -23,8 +23,7 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
-        private var arrayList = ArrayList<Word>()
-
+    private var arrayList = ArrayList<Word>()
 
 
     private lateinit var textSource: TextView
@@ -40,10 +39,10 @@ class PlayActivity : AppCompatActivity() {
     private var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
+    private var viewCounter: Int = 0
+    private var isItLearned: Boolean = false
 
     private var bool: Boolean = false
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,17 +61,20 @@ class PlayActivity : AppCompatActivity() {
         textTarget = findViewById(R.id.textView2)
         goButton = findViewById(R.id.button2)
         passButton = findViewById(R.id.button)
-        arrayList = ArrayList()
+        //arrayList = ArrayList()
 
 
-        getWord()
+       run()
 
 
     }
-
+private fun run() {
+   getWord()
+}
     private fun getWord() {
 
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString()).child("allWords")
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+            .child("allWords")
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -80,12 +82,10 @@ class PlayActivity : AppCompatActivity() {
                     val word = word.getValue(Word::class.java)
 
                     arrayList.add(word!!)
-                    if (word.trueCounter!! >=15 ){
-                        learnedWord(word.id!!, word)
-                    }
 
                 }
-                randomWord()
+                randomWord(arrayList)
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -94,104 +94,141 @@ class PlayActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    private fun tempLayout(boolean: Boolean) {
+        goButton.visibility = View.INVISIBLE
+        passButton.visibility = View.INVISIBLE
+        tempLayout.visibility = View.VISIBLE
+
+        if (boolean) {
+
+            tempText.setText("Doğru cevap verdiniz")
+
+        } else {
+            tempText.setText("Yanlış cevap verdiniz")
+        }
+        tempButton.setOnClickListener(View.OnClickListener {
+            goButton.visibility = View.VISIBLE
+            passButton.visibility = View.VISIBLE
+            tempLayout.visibility = View.INVISIBLE
+            textTarget.text.clear()
+            randomWord(arrayList)
+        })
+
 
     }
 
-private fun tempLayout(boolean: Boolean){
-    goButton.visibility = View.INVISIBLE
-    passButton.visibility = View.INVISIBLE
-    tempLayout.visibility = View.VISIBLE
-
-    if (boolean){
-
-        tempText.setText("Doğru cevap verdiniz" )
-
-    }else{
-        tempText.setText("Yanlış cevap verdiniz" )
-    }
-    tempButton.setOnClickListener( View.OnClickListener {
-        goButton.visibility = View.VISIBLE
-        passButton.visibility = View.VISIBLE
-        tempLayout.visibility = View.INVISIBLE
-        textTarget.text.clear()
-        randomWord()
-    })
-
-
-
-
-
-
-
-}
-
-    private fun randomWord() {
-
+    private fun randomWord(arrayList: ArrayList<Word>) {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+       .child("allWords")
 
         arrayList.random().let { Word ->
             textSource.text = Word.source
             trueCounter = Word.trueCounter!!
             falseCounter = Word.falseCounter!!
             passCounter = Word.passCounter!!
+            viewCounter = Word.viewCounter!!
+
+            viewCounter++
+            Word.viewCounter = viewCounter
+            viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
 
 
-            goButton.setOnClickListener( View.OnClickListener {
+            goButton.setOnClickListener(View.OnClickListener {
                 if (textTarget.text.toString() == Word.translation) {
 
                     trueCounter++
                     Word.trueCounter = trueCounter
-                    trueCounter(Word.id.toString(), trueCounter)
 
-                    bool= true
+                    trueCounter(Word.id.toString(), trueCounter, Word, isItLearned)
+
+                    if (trueCounter!! >= 15) {
+                        isItLearned = true
+                        isLearned(Word.id.toString(), isItLearned, Word)
+                        learnedWord(Word.id!!, Word)
+                    }
+
+                    bool = true
                     tempLayout(bool)
 
-                    Toast.makeText(this, "Doğru", Toast.LENGTH_SHORT).show()
-                }
-                else {
+                    // Toast.makeText(this, "Doğru", Toast.LENGTH_SHORT).show()
+                } else {
                     falseCounter++
                     Word.falseCounter = falseCounter
-                    falseCounter(Word.id.toString(), falseCounter)
-                    bool= false
+                    falseCounter(Word.id.toString(), falseCounter, Word, isItLearned)
+                    bool = false
                     tempLayout(bool)
-                    Toast.makeText(this, "Yanlış", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(this, "Yanlış", Toast.LENGTH_SHORT).show()
                 }
 
                 //randomWord()
             })
-            passButton.setOnClickListener( View.OnClickListener {
+            passButton.setOnClickListener(View.OnClickListener {
                 passCounter++
-                Word.passCounter =passCounter
+                Word.passCounter = passCounter
 
-                passCounter(Word.id.toString(), passCounter)
+                passCounter(Word.id.toString(), passCounter, Word, isItLearned)
                 textTarget.text.clear()
                 Toast.makeText(this, "PAS GEÇTİNİZ", Toast.LENGTH_SHORT).show()
-                randomWord()
+                randomWord(arrayList)
             })
         }
 
 
+    }
 
+    private fun learnedWord(id: String, word: Word) {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+        database.child("learnedWords").child(id).setValue(word)
 
+    }
+
+    private fun viewCounter(wordId: String, viewCounter: Int, word: Word, isItLearned: Boolean) {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+            .child("allWords")
+        database.child(wordId).child("viewCounter").setValue(viewCounter.toInt())
+        if (isItLearned) {
+            learnedWord(wordId, word)
         }
 
-private fun learnedWord(id: String, word: Word) {
-    database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-    database.child("learnedWords").child(id).setValue(word)
+    }
 
-}
+    private fun isLearned(wordId: String, isLearned: Boolean, word: Word) {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+            .child("allWords")
+        database.child(wordId).child("isLearned").setValue(isLearned)
+        if (isItLearned) {
+            learnedWord(wordId, word)
+        }
+    }
 
-    private fun trueCounter(wordId: String, trueCounter: Int) {
-
-
+    private fun trueCounter(wordId: String, trueCounter: Int, word: Word, isItLearned: Boolean) {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+            .child("allWords")
         database.child(wordId).child("trueCounter").setValue(trueCounter.toInt())
+        if (isItLearned) {
+            learnedWord(wordId, word)
+        }
     }
 
-    private fun falseCounter(wordId: String, falseCounter: Int) {
+    private fun falseCounter(wordId: String, falseCounter: Int, word: Word, isItLearned: Boolean) {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+            .child("allWords")
         database.child(wordId).child("falseCounter").setValue(falseCounter.toInt())
+        if (isItLearned) {
+            learnedWord(wordId, word)
+        }
     }
 
-    private fun passCounter(wordId: String, passCounter: Int) {
+    private fun passCounter(wordId: String, passCounter: Int, word: Word, isItLearned: Boolean) {
+        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
+            .child("allWords")
         database.child(wordId).child("passCounter").setValue(passCounter.toInt())
+        if (isItLearned) {
+            learnedWord(wordId, word)
+        }
+
     }
 
     override fun onBackPressed() {
