@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var openAttachedWordActivity: Button
     private lateinit var openPlayCategoryActivity: Button
     private lateinit var openLearnedWordsActivity: Button
+
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,20 +74,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun readData(userId: String) {
 
-        database = FirebaseDatabase.getInstance().getReference("userInfo")
-        database.child(userId).get().addOnSuccessListener {
-            if (it.exists()) {
-                val nickName: String =
-                    getString(R.string.welcome_message, it.child("userName").value.toString())
-                nickNameTextView.text = nickName
-            } else {
-                Toast.makeText(this, R.string.welcome_message_failed, Toast.LENGTH_SHORT)
-                    .show()
+        val dbRef = db.collection("userInfo").document(userId)
+
+        dbRef.get()
+            .addOnSuccessListener {
+                if (it != null){
+                    val nickName: String = getString(R.string.welcome_message, it.get("userName").toString())
+                    nickNameTextView.text = nickName
+                }else{
+                    Toast.makeText(this, "Data bulunamadı", Toast.LENGTH_SHORT)
+                }
             }
-        }.addOnFailureListener {
-            Toast.makeText(this, R.string.database_listener_failed, Toast.LENGTH_SHORT)
-                .show()
-        }
+
+
     }
 
     private fun openSettingsActivity() {

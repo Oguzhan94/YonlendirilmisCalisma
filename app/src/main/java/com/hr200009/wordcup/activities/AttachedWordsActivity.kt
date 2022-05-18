@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
@@ -32,13 +34,15 @@ class AttachedWordsActivity : AppCompatActivity() {
 
     private lateinit var textSource: EditText
     private lateinit var textTarget: EditText
-    private var textTrueCount: TextView? = null
-    private var textFalseCount: TextView? = null
-    private var textPassCount: TextView? = null
-    private var textViewCount: TextView? = null
-    private var textIsItLearned: TextView? = null
+    private lateinit var textTrueCount: TextView
+    private lateinit var textFalseCount: TextView
+    private lateinit var textPassCount: TextView
+    private lateinit var textViewCount: TextView
+    private lateinit var textIsItLearned: TextView
     private lateinit var editButton: Button
     private lateinit var writeButton: Button
+
+    val db = Firebase.firestore
 
 
     private lateinit var tempLayout2: ConstraintLayout
@@ -79,13 +83,14 @@ class AttachedWordsActivity : AppCompatActivity() {
         editButton = findViewById(R.id.editButton)
         writeButton = findViewById(R.id.writeButton)
 
-        textSource?.setText(text.source)
-        textTarget?.setText(text.translation)
-        textTrueCount?.setText(text.trueCounter.toString())
-        textFalseCount?.setText(text.falseCounter.toString())
-        textPassCount?.setText(text.passCounter.toString())
-        textViewCount?.setText(text.viewCounter.toString())
-        textIsItLearned?.setText(text.viewCounter.toString())
+        text.let {
+            textSource.setText(it.source)
+            textTarget.setText(it.translation)
+            textTrueCount.text = it.trueCounter.toString()
+            textFalseCount.text = it.falseCounter.toString()
+            textPassCount.text = it.passCounter.toString()
+            textViewCount.text = it.viewCounter.toString()
+            textIsItLearned.text = it.isItLearned.toString()}
 
 
         textSource.isFocusableInTouchMode = false
@@ -97,15 +102,20 @@ class AttachedWordsActivity : AppCompatActivity() {
 
         }
         writeButton.setOnClickListener() {
-            database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-                .child("allWords")
-            database.child(text.id.toString()).child("source").setValue(textSource.text.toString())
-            database.child(text.id.toString()).child("translation").setValue(textTarget.text.toString())
+           db.collection("words").document(auth.uid.toString()).collection("allWords").document(text.id.toString())
+               .update(mapOf(
+                   "source" to textSource.text.toString(),
+                   "translation" to textTarget.text.toString()
+               ))
+               .addOnSuccessListener {
+                   Toast.makeText(this,"Kelime güncelleme başarılı",Toast.LENGTH_SHORT)
+               }
+            textSource.isFocusableInTouchMode = false
+            textTarget.isFocusableInTouchMode = false
         }
+
     }
-    private fun firstLayout() {
-        setContentView(R.layout.activity_attached_words)
-    }
+
 
     private fun run() {
         getWords()
@@ -114,15 +124,28 @@ class AttachedWordsActivity : AppCompatActivity() {
     private fun getWords() {
         val user = auth.currentUser
         val userId = user?.uid
-        database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString())
-            .child("allWords")
+       val dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
+        dbRef.get().addOnSuccessListener { querySnapshot ->
+            arrayList.clear()
+            if (querySnapshot != null){
+                for (data in querySnapshot){
+                    val word = data.toObject(Word::class.java)
+                    arrayList.add(word)
+                }
+                var size = arrayList.size.toString()
+                Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
+                recyclerView.adapter = WordAdapter(arrayList) {
+                    secondaryLayout(arrayList[it])
+                }
+            }
+        }
+        dbRef.addSnapshotListener { dataSnapshot, _ ->
 
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                arrayList.clear()
-                for (snapshot in dataSnapshot.children) {
-                    val word = snapshot.getValue(Word::class.java)
-                    arrayList.add(word!!)
+            arrayList.clear()
+            if (dataSnapshot != null) {
+                for (snapshot in dataSnapshot) {
+                    val word = snapshot.toObject(Word::class.java)
+                    arrayList.add(word)
                 }
                 var size = arrayList.size.toString()
 
@@ -137,9 +160,8 @@ class AttachedWordsActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        }
+
 
     }
 }

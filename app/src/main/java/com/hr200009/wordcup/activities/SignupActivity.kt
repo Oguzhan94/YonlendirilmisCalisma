@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.User
@@ -31,6 +32,8 @@ class SignupActivity : AppCompatActivity() {
     private var difficulty: Int = 0
     private var notificationFrequency: Int = 0
     private var toBeLearned: Int = 0
+
+    val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +102,10 @@ class SignupActivity : AppCompatActivity() {
         toBeLearned: Int
     ) {
         val user = User(name, difficulty, notificationFrequency, toBeLearned)
-        database.child("userInfo").child(auth.uid.toString()).setValue(user)
+       // database.child("userInfo").child(auth.uid.toString()).setValue(user)
+        db.collection("userInfo")
+            .document(auth.uid.toString())
+            .set(user)
     }
 
 

@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
@@ -36,13 +37,15 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var goButton: Button
     private lateinit var passButton: Button
 
-    private var trueCounter: Int = 0
+    private  var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
     private var viewCounter: Int = 0
     private var isItLearned: Boolean = false
 
     private var bool: Boolean = false
+
+    private val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,35 +67,29 @@ class PlayActivity : AppCompatActivity() {
         //arrayList = ArrayList()
 
 
-       run()
+        run()
 
 
     }
-private fun run() {
-   getWord()
-}
+
+    private fun run() {
+        getWord()
+    }
     private fun getWord() {
 
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-            .child("allWords")
-
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (word in snapshot.children) {
-                    val word = word.getValue(Word::class.java)
+        arrayList.clear()
+        db.collection("words").document(auth.uid.toString()).collection("allWords")
+            .get()
+            .addOnSuccessListener {
+                for (word in it) {
+                    val word = word.toObject(Word::class.java)
 
                     arrayList.add(word!!)
 
                 }
                 randomWord(arrayList)
-
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
 
     }
 
@@ -120,8 +117,8 @@ private fun run() {
     }
 
     private fun randomWord(arrayList: ArrayList<Word>) {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-       .child("allWords")
+
+        db.collection("words").document(auth.uid.toString()).collection("allWords")
 
         arrayList.random().let { Word ->
             textSource.text = Word.source
@@ -130,12 +127,18 @@ private fun run() {
             passCounter = Word.passCounter!!
             viewCounter = Word.viewCounter!!
 
-            viewCounter++
-            Word.viewCounter = viewCounter
-            viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+
+
+
 
 
             goButton.setOnClickListener(View.OnClickListener {
+
+
+                viewCounter++
+                Word.viewCounter = viewCounter
+                viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+
                 if (textTarget.text.toString() == Word.translation) {
 
                     trueCounter++
@@ -145,6 +148,7 @@ private fun run() {
 
                     if (trueCounter!! >= 15) {
                         isItLearned = true
+                        Word.isItLearned = isItLearned
                         isLearned(Word.id.toString(), isItLearned, Word)
                         learnedWord(Word.id!!, Word)
                     }
@@ -165,6 +169,13 @@ private fun run() {
                 //randomWord()
             })
             passButton.setOnClickListener(View.OnClickListener {
+
+
+                viewCounter++
+                Word.viewCounter = viewCounter
+                viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+
+
                 passCounter++
                 Word.passCounter = passCounter
 
@@ -178,16 +189,21 @@ private fun run() {
 
     }
 
+
     private fun learnedWord(id: String, word: Word) {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-        database.child("learnedWords").child(id).setValue(word)
+        var dbRef = db.collection("words").document(auth.uid.toString())
+        dbRef.collection("learnedWords").document(id).set(word)
+
 
     }
 
     private fun viewCounter(wordId: String, viewCounter: Int, word: Word, isItLearned: Boolean) {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-            .child("allWords")
-        database.child(wordId).child("viewCounter").setValue(viewCounter.toInt())
+
+
+        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
+        dbRef.document(wordId).update("viewCounter", viewCounter.toInt())
+
+
         if (isItLearned) {
             learnedWord(wordId, word)
         }
@@ -195,36 +211,44 @@ private fun run() {
     }
 
     private fun isLearned(wordId: String, isLearned: Boolean, word: Word) {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-            .child("allWords")
-        database.child(wordId).child("isLearned").setValue(isLearned)
+
+        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
+        dbRef.document(wordId).update("isItLearned", isLearned)
+
         if (isItLearned) {
             learnedWord(wordId, word)
         }
     }
 
     private fun trueCounter(wordId: String, trueCounter: Int, word: Word, isItLearned: Boolean) {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-            .child("allWords")
-        database.child(wordId).child("trueCounter").setValue(trueCounter.toInt())
+
+
+
+        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
+        dbRef.document(wordId).update("trueCounter", trueCounter.toInt())
+
         if (isItLearned) {
             learnedWord(wordId, word)
         }
     }
 
     private fun falseCounter(wordId: String, falseCounter: Int, word: Word, isItLearned: Boolean) {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-            .child("allWords")
-        database.child(wordId).child("falseCounter").setValue(falseCounter.toInt())
+
+
+
+        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
+        dbRef.document(wordId).update("falseCounter", falseCounter.toInt())
         if (isItLearned) {
             learnedWord(wordId, word)
         }
     }
 
     private fun passCounter(wordId: String, passCounter: Int, word: Word, isItLearned: Boolean) {
-        database = FirebaseDatabase.getInstance().getReference("words").child(auth.uid.toString())
-            .child("allWords")
-        database.child(wordId).child("passCounter").setValue(passCounter.toInt())
+
+
+        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
+        dbRef.document(wordId).update("passCounter", passCounter.toInt())
+
         if (isItLearned) {
             learnedWord(wordId, word)
         }
@@ -237,4 +261,3 @@ private fun run() {
         finish()
     }
 }
-

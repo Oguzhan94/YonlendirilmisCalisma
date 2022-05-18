@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
@@ -36,6 +37,8 @@ class DictionaryWordAddActivity : AppCompatActivity() {
     private var viewCounter: Int = 0
     private lateinit var saveButton: Button
     var wordId: String? = null
+
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +94,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                         textViewTarget.text = textTarget
                         textViewSource.text = textTSource
                     }
-                    .addOnFailureListener { exception ->
+                    .addOnFailureListener {
                         // Error.
                         // ...
                         Toast.makeText(this@DictionaryWordAddActivity, "Error", Toast.LENGTH_SHORT).show()
@@ -106,8 +109,9 @@ class DictionaryWordAddActivity : AppCompatActivity() {
       saveButton.setOnClickListener(View.OnClickListener {
           if (textTSource.isNotEmpty() && textTarget.isNotEmpty()) {
 
-              wordId=database.push().key.toString()
+              //wordId=database.push().key.toString()
 
+              wordId= db.collection("words").document(auth.uid.toString()).collection("allWords").document().toString()
 
               val wordData = hashMapOf(
                   "source" to textTSource.lowercase(),
@@ -120,7 +124,12 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                   "viewCounter" to viewCounter
               )
 
-              database.child("words").child(auth.uid.toString()).child("allWords").child(wordId.toString()).setValue(wordData)
+              db.collection("words").document(auth.uid.toString()).collection("allWords").document(wordId.toString())
+                  .set(wordData)
+                  .addOnSuccessListener {
+                      Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
+                  }
+              //database.child("words").child(auth.uid.toString()).child("allWords").child(wordId.toString()).setValue(wordData)
               Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
           } else {
               Toast.makeText(this, R.string.word_add_failed, Toast.LENGTH_SHORT).show()

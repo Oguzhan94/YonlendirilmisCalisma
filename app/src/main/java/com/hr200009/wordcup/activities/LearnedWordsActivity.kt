@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
@@ -21,6 +22,9 @@ class LearnedWordsActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var arrayList: ArrayList<Word>
+
+    val db = Firebase.firestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,25 +50,25 @@ class LearnedWordsActivity : AppCompatActivity() {
         val userId = user?.uid
         database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString()).child("learnedWords")
 
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                arrayList.clear()
-                for (snapshot in dataSnapshot.children) {
-                    val word = snapshot.getValue(Word::class.java)
-                    arrayList.add(word!!)
+        val dbRef = db.collection("words").document(userId.toString()).collection("learnedWords")
+        dbRef.addSnapshotListener { dataSnapshot, _ ->
+
+            arrayList.clear()
+            if (dataSnapshot != null) {
+                for (snapshot in dataSnapshot) {
+                    val word = snapshot.toObject(Word::class.java)
+                    arrayList.add(word)
                 }
                 var size = arrayList.size.toString()
 
                 Toast.makeText(this@LearnedWordsActivity, "You have $size words", Toast.LENGTH_SHORT).show()
-                recyclerView.adapter = WordAdapter(arrayList,{
-                    val word = it
-                    Toast.makeText(this@LearnedWordsActivity, "You have ", Toast.LENGTH_SHORT).show()
-                })
+                recyclerView.adapter = WordAdapter(arrayList) {
+
+                }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        }
+
 
     }
 }

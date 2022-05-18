@@ -11,6 +11,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.Word
@@ -34,6 +35,8 @@ class ManualWordAddActivity : AppCompatActivity() {
     private var isItLearned: Boolean = false
     private var viewCounter: Int = 0
     private var wordId: String? = null
+
+    val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +67,7 @@ class ManualWordAddActivity : AppCompatActivity() {
     private fun wordAddManual() {
         wordSource = textWordSource.text.toString()
         wordTarget = textWordTarget.text.toString()
-        wordId = database.push().key.toString()
+        wordId= db.collection("words").document(auth.uid.toString()).collection("allWords").document().toString()
 
         if (wordSource.isNotEmpty() && wordTarget.isNotEmpty()) {
             //val word = Word(wordSource, wordTarget, trueCounter, falseCounter, passCounter, isItLearned,)
@@ -79,14 +82,18 @@ class ManualWordAddActivity : AppCompatActivity() {
                 "viewCounter" to viewCounter
             )
 
-            database.child("words").child(auth.uid.toString()).child("allWords").child(wordId.toString()).setValue(wordData).addOnSuccessListener {
-                Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
-
-            }.addOnFailureListener {
-                Toast.makeText(this, R.string.word_add_failed, Toast.LENGTH_SHORT).show()
-            }
-        } else {
+            db.collection("words").document(auth.uid.toString()).collection("allWords")
+                .document(wordId.toString())
+                .set(wordData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Toast.makeText(this, R.string.word_add_failed, Toast.LENGTH_SHORT).show()
+                }
+        }
+        else {
             Toast.makeText(this, R.string.word_add_empty_fields, Toast.LENGTH_SHORT).show()
         }
     }
 }
+

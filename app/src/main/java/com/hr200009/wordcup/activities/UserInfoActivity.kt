@@ -13,6 +13,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 
@@ -39,6 +41,8 @@ class UserInfoActivity : AppCompatActivity() {
     private var difficulty = ""
     private var notification = ""
 
+
+    val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_info)
@@ -62,11 +66,55 @@ class UserInfoActivity : AppCompatActivity() {
         auth = Firebase.auth
         currentUserId = auth.uid.toString()
 
+
+
+
         run()
     }
 
     private fun getData(userId: String) {
 
+       val dbRef = db.collection("userInfo").document(userId)
+        dbRef.get()
+            .addOnSuccessListener {
+
+                toBeLearned = it.get("toBeLearned").toString()
+                difficulty = it.get("difficulty").toString()
+                notification = it.get("notificationFrequency").toString()
+
+
+                if (toBeLearned == "0") {
+                    radioGroupToBeLearned.check(R.id.toBeLearnedFirst)
+                } else {
+                    radioGroupToBeLearned.check(R.id.toBeLearnedSecond)
+                }
+
+                when (difficulty) {
+                    "0" -> {
+                        radioGroupDifficulty.check(R.id.diffucultyEasy)
+                    }
+                    "1" -> {
+                        radioGroupDifficulty.check(R.id.diffucultyMedium)
+                    }
+                    else -> {
+                        radioGroupDifficulty.check(R.id.diffucultyHard)
+                    }
+                }
+
+                when (notification) {
+                    "0" -> {
+                        radioGroupNotification.check(R.id.notificationHourly)
+                    }
+                    "1" -> {
+                        radioGroupNotification.check(R.id.notificationWeekly)
+                    }
+                    else -> {
+                        radioGroupNotification.check(R.id.notificationMontly)
+                    }
+                }
+
+            }
+/*
         database = FirebaseDatabase.getInstance().getReference("userInfo")
         database.child(userId).get().addOnSuccessListener {
             toBeLearned = it.child("toBeLearned").value.toString()
@@ -101,11 +149,14 @@ class UserInfoActivity : AppCompatActivity() {
                 else -> {
                     radioGroupNotification.check(R.id.notificationMontly)
                 }
-            }
+            }*/
         }
-    }
+
 
     private fun updateData(userId: String) {
+
+        val dbRef = db.collection("userInfo").document(userId)
+
 
         database = FirebaseDatabase.getInstance().getReference("userInfo")
         radioGroupToBeLearned.setOnCheckedChangeListener { _, checkedId ->
@@ -132,6 +183,17 @@ class UserInfoActivity : AppCompatActivity() {
 
         }
         buttonSaveUserInfo.setOnClickListener(View.OnClickListener {
+           dbRef.update(mapOf(
+               "toBeLearned" to toBeLearned,
+               "difficulty" to difficulty,
+               "notificationFrequency" to notification))
+            getData(userId)
+            Toast.makeText(this, R.string.user_information_update_successful, Toast.LENGTH_SHORT)
+                .show()
+            comeToSignupActivity()
+        })
+        /*
+        buttonSaveUserInfo.setOnClickListener(View.OnClickListener {
             database.child(userId).updateChildren(mapOf(
                 "toBeLearned" to toBeLearned,
                 "difficulty" to difficulty,
@@ -140,7 +202,7 @@ class UserInfoActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.user_information_update_successful, Toast.LENGTH_SHORT)
                 .show()
             comeToSignupActivity()
-        })
+        })*/
     }
 
     private fun comeToSignupActivity() {
