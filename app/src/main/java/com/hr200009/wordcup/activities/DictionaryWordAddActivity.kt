@@ -23,7 +23,6 @@ import com.hr200009.wordcup.models.Word
 class DictionaryWordAddActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
 
     private lateinit var searchView: SearchView
     private lateinit var textViewTarget: TextView
@@ -49,8 +48,6 @@ class DictionaryWordAddActivity : AppCompatActivity() {
         textViewSource = findViewById(R.id.textViewSource)
         saveButton = findViewById(R.id.buttonAddWordDictionary)
 
-        database = Firebase.database.reference
-        database.keepSynced(true)
 
         auth = Firebase.auth
 

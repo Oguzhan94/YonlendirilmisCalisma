@@ -19,7 +19,6 @@ import com.hr200009.wordcup.R
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var database: DatabaseReference
     private lateinit var nickNameTextView: TextView
     private lateinit var currentUserId: String
     private lateinit var auth: FirebaseAuth
@@ -35,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        database = Firebase.database.reference
-        database.keepSynced(true)
         auth = Firebase.auth
 
         nickNameTextView = findViewById(R.id.textNickname)

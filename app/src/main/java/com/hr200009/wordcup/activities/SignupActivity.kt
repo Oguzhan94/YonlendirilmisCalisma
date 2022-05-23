@@ -21,7 +21,7 @@ import com.hr200009.wordcup.util.FirebaseUtil
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var nickNameEditText: EditText
@@ -46,7 +46,6 @@ class SignupActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.buttonRegister)
 
         auth = Firebase.auth
-        database = Firebase.database.reference
 
     }
 

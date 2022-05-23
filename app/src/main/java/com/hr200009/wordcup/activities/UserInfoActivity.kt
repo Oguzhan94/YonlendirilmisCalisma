@@ -21,7 +21,6 @@ import com.hr200009.wordcup.R
 
 class UserInfoActivity : AppCompatActivity() {
 
-    private lateinit var database: DatabaseReference
     private lateinit var radioGroupToBeLearned: RadioGroup
     private lateinit var radioGroupDifficulty: RadioGroup
     private lateinit var radioGroupNotification: RadioGroup
@@ -60,8 +59,6 @@ class UserInfoActivity : AppCompatActivity() {
         notificationMonthly = findViewById(R.id.notificationMontly)
         buttonSaveUserInfo = findViewById(R.id.buttonSaveUserInfo)
 
-        database = Firebase.database.reference
-        database.keepSynced(true)
 
         auth = Firebase.auth
         currentUserId = auth.uid.toString()
@@ -158,7 +155,6 @@ class UserInfoActivity : AppCompatActivity() {
         val dbRef = db.collection("userInfo").document(userId)
 
 
-        database = FirebaseDatabase.getInstance().getReference("userInfo")
         radioGroupToBeLearned.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.toBeLearnedFirst -> toBeLearned = "0"

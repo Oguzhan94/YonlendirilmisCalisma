@@ -18,7 +18,7 @@ import com.hr200009.wordcup.models.Word
 class LearnedWordsActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var arrayList: ArrayList<Word>
@@ -30,8 +30,6 @@ class LearnedWordsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_learned_words)
 
-        database = Firebase.database.reference
-        database.keepSynced(true)
         auth = Firebase.auth
 
         recyclerView = findViewById(R.id.recyclerViewAttachedWords)
@@ -48,7 +46,6 @@ class LearnedWordsActivity : AppCompatActivity() {
     private fun getWords() {
         val user = auth.currentUser
         val userId = user?.uid
-        database = FirebaseDatabase.getInstance().getReference("words").child(userId.toString()).child("learnedWords")
 
         val dbRef = db.collection("words").document(userId.toString()).collection("learnedWords")
         dbRef.addSnapshotListener { dataSnapshot, _ ->

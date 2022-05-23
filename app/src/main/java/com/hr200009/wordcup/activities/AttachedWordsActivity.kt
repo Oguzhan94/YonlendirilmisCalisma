@@ -1,8 +1,7 @@
 package com.hr200009.wordcup.activities
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+
 import android.widget.Button
 import android.widget.EditText
 
@@ -17,7 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObjects
+
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
@@ -26,11 +25,9 @@ import com.hr200009.wordcup.models.Word
 class AttachedWordsActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var arrayList: ArrayList<Word>
-
 
     private lateinit var textSource: EditText
     private lateinit var textTarget: EditText
@@ -51,14 +48,10 @@ class AttachedWordsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attached_words)
 
-        database = Firebase.database.reference
-        database.keepSynced(true)
         auth = Firebase.auth
 
 
         tempLayout2 = findViewById(R.id.cons)
-
-
 
 
 

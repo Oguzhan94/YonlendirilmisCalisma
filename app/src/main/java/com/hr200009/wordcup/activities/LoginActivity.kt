@@ -50,6 +50,9 @@ class LoginActivity : AppCompatActivity() {
         registerButton.setOnClickListener(View.OnClickListener {
             openSignupActivity()
         })
+        forgotPassword.setOnClickListener(View.OnClickListener {
+            openPasswordResetActivity()
+        })
     }
 
 
@@ -81,15 +84,11 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this@LoginActivity, SignupActivity::class.java)
         startActivity(intent)
     }
-/*
-    private fun openForgotPasswordActivity() {
-        forgotPassword.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+
+    private fun openPasswordResetActivity() {
+            val intent = Intent(this@LoginActivity, PasswordResetActivity::class.java)
             startActivity(intent)
-        })
-    }*/
-
-
+    }
 
 
 }

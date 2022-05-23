@@ -24,7 +24,6 @@ class ManualWordAddActivity : AppCompatActivity() {
     private lateinit var textWordTarget: EditText
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
 
     private lateinit var wordSource: String
     private lateinit var wordTarget: String
@@ -47,11 +46,6 @@ class ManualWordAddActivity : AppCompatActivity() {
         textWordSource = findViewById(R.id.textWordSourceManuelAdded)
         textWordTarget = findViewById(R.id.textWordTargetManuelAdded)
 
-
-        //FirebaseUtil.FIRE_BASE_KEEPING_DATA_FRESH
-
-        database = Firebase.database.reference
-        database.keepSynced(true)
 
         auth = Firebase.auth
 

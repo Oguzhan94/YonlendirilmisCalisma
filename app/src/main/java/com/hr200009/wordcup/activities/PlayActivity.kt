@@ -21,7 +21,7 @@ import com.hr200009.wordcup.models.Word
 
 
 class PlayActivity : AppCompatActivity() {
-    private lateinit var database: DatabaseReference
+
     private lateinit var auth: FirebaseAuth
 
     private var arrayList = ArrayList<Word>()
@@ -59,7 +59,6 @@ class PlayActivity : AppCompatActivity() {
         tempButton = findViewById(R.id.button3)
 
 
-        database = Firebase.database.reference
         textSource = findViewById(R.id.textViewRandomMain)
         textTarget = findViewById(R.id.textView2)
         goButton = findViewById(R.id.button2)
