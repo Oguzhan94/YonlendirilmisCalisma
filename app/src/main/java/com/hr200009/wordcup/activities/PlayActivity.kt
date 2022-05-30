@@ -18,11 +18,11 @@ import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 
 import com.hr200009.wordcup.models.Word
+import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class PlayActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
 
     private var arrayList = ArrayList<Word>()
 
@@ -45,14 +45,13 @@ class PlayActivity : AppCompatActivity() {
 
     private var bool: Boolean = false
 
-    private val db = Firebase.firestore
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
-        auth = Firebase.auth
 
         tempLayout = findViewById(R.id.tempLayout)
         tempText = findViewById(R.id.editTextTextMultiLine)
@@ -77,7 +76,7 @@ class PlayActivity : AppCompatActivity() {
     private fun getWord() {
 
         arrayList.clear()
-        db.collection("words").document(auth.uid.toString()).collection("allWords")
+        FirebaseUtil.ALL_WORDS_REF
             .get()
             .addOnSuccessListener {
                 for (word in it) {
@@ -117,7 +116,7 @@ class PlayActivity : AppCompatActivity() {
 
     private fun randomWord(arrayList: ArrayList<Word>) {
 
-        db.collection("words").document(auth.uid.toString()).collection("allWords")
+        //db.collection("words").document(auth.uid.toString()).collection("allWords")
 
         arrayList.random().let { Word ->
             textSource.text = Word.source
@@ -190,8 +189,7 @@ class PlayActivity : AppCompatActivity() {
 
 
     private fun learnedWord(id: String, word: Word) {
-        var dbRef = db.collection("words").document(auth.uid.toString())
-        dbRef.collection("learnedWords").document(id).set(word)
+       FirebaseUtil.LEARNED_WORDS_REF.document(id).set(word)
 
 
     }
@@ -199,8 +197,7 @@ class PlayActivity : AppCompatActivity() {
     private fun viewCounter(wordId: String, viewCounter: Int, word: Word, isItLearned: Boolean) {
 
 
-        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
-        dbRef.document(wordId).update("viewCounter", viewCounter.toInt())
+        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("viewCounter", viewCounter.toInt())
 
 
         if (isItLearned) {
@@ -211,8 +208,7 @@ class PlayActivity : AppCompatActivity() {
 
     private fun isLearned(wordId: String, isLearned: Boolean, word: Word) {
 
-        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
-        dbRef.document(wordId).update("isItLearned", isLearned)
+        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("isItLearned", isLearned)
 
         if (isItLearned) {
             learnedWord(wordId, word)
@@ -223,8 +219,7 @@ class PlayActivity : AppCompatActivity() {
 
 
 
-        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
-        dbRef.document(wordId).update("trueCounter", trueCounter.toInt())
+        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("trueCounter", trueCounter.toInt())
 
         if (isItLearned) {
             learnedWord(wordId, word)
@@ -235,8 +230,7 @@ class PlayActivity : AppCompatActivity() {
 
 
 
-        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
-        dbRef.document(wordId).update("falseCounter", falseCounter.toInt())
+        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("falseCounter", falseCounter.toInt())
         if (isItLearned) {
             learnedWord(wordId, word)
         }
@@ -245,8 +239,7 @@ class PlayActivity : AppCompatActivity() {
     private fun passCounter(wordId: String, passCounter: Int, word: Word, isItLearned: Boolean) {
 
 
-        var dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
-        dbRef.document(wordId).update("passCounter", passCounter.toInt())
+        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("passCounter", passCounter.toInt())
 
         if (isItLearned) {
             learnedWord(wordId, word)

@@ -19,10 +19,10 @@ import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.Word
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class DictionaryWordAddActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
 
     private lateinit var searchView: SearchView
     private lateinit var textViewTarget: TextView
@@ -37,7 +37,6 @@ class DictionaryWordAddActivity : AppCompatActivity() {
     private lateinit var saveButton: Button
     var wordId: String? = null
 
-    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +47,6 @@ class DictionaryWordAddActivity : AppCompatActivity() {
         textViewSource = findViewById(R.id.textViewSource)
         saveButton = findViewById(R.id.buttonAddWordDictionary)
 
-
-        auth = Firebase.auth
 
         addWordToDatabase()
     }
@@ -108,7 +105,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
 
               //wordId=database.push().key.toString()
 
-              wordId= db.collection("words").document(auth.uid.toString()).collection("allWords").document().toString()
+              wordId= FirebaseUtil.ALL_WORDS_REF.document().toString()
 
               val wordData = hashMapOf(
                   "source" to textTSource.lowercase(),
@@ -121,7 +118,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                   "viewCounter" to viewCounter
               )
 
-              db.collection("words").document(auth.uid.toString()).collection("allWords").document(wordId.toString())
+              FirebaseUtil.ALL_WORDS_REF.document(wordId.toString())
                   .set(wordData)
                   .addOnSuccessListener {
                       Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()

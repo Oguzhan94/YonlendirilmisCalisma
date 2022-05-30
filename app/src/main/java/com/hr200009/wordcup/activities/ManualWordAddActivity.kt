@@ -23,7 +23,6 @@ class ManualWordAddActivity : AppCompatActivity() {
     private lateinit var textWordSource: EditText
     private lateinit var textWordTarget: EditText
 
-    private lateinit var auth: FirebaseAuth
 
     private lateinit var wordSource: String
     private lateinit var wordTarget: String
@@ -35,7 +34,6 @@ class ManualWordAddActivity : AppCompatActivity() {
     private var viewCounter: Int = 0
     private var wordId: String? = null
 
-    val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +44,6 @@ class ManualWordAddActivity : AppCompatActivity() {
         textWordSource = findViewById(R.id.textWordSourceManuelAdded)
         textWordTarget = findViewById(R.id.textWordTargetManuelAdded)
 
-
-        auth = Firebase.auth
 
         run()
     }
@@ -61,7 +57,7 @@ class ManualWordAddActivity : AppCompatActivity() {
     private fun wordAddManual() {
         wordSource = textWordSource.text.toString()
         wordTarget = textWordTarget.text.toString()
-        wordId= db.collection("words").document(auth.uid.toString()).collection("allWords").document().toString()
+        wordId= FirebaseUtil.ALL_WORDS_REF.document().toString()
 
         if (wordSource.isNotEmpty() && wordTarget.isNotEmpty()) {
             //val word = Word(wordSource, wordTarget, trueCounter, falseCounter, passCounter, isItLearned,)
@@ -76,8 +72,7 @@ class ManualWordAddActivity : AppCompatActivity() {
                 "viewCounter" to viewCounter
             )
 
-            db.collection("words").document(auth.uid.toString()).collection("allWords")
-                .document(wordId.toString())
+            FirebaseUtil.ALL_WORDS_REF.document(wordId.toString())
                 .set(wordData)
                 .addOnSuccessListener {
                     Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()

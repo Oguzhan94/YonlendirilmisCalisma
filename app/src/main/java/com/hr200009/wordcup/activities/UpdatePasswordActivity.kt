@@ -12,11 +12,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class UpdatePasswordActivity : AppCompatActivity() {
 
-    private val user = Firebase.auth.currentUser!!
-    private lateinit var auth: FirebaseAuth
     private lateinit var saveButton: Button
     private lateinit var newPassword: String
     private lateinit var newPasswordCheck: String
@@ -34,7 +33,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
         newPasswordCheckEditText = findViewById(R.id.TextSettingsNewPasswordCheck)
         saveButton = findViewById(R.id.buttonUpdatePassword)
 
-        auth = Firebase.auth
+
 
         run()
     }
@@ -52,20 +51,20 @@ class UpdatePasswordActivity : AppCompatActivity() {
             if (newPassword == newPasswordCheck) {
                 // doğrulama
                 val credential = EmailAuthProvider
-                    .getCredential(user.email!!, currentPassword)
+                    .getCredential(FirebaseUtil.CURRENT_USER!!.email!!, currentPassword)
                 // tekrar giriş yapma
-                user.reauthenticate(credential)
+                FirebaseUtil.CURRENT_USER!!.reauthenticate(credential)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             Toast.makeText(this, R.string.re_aut_success, Toast.LENGTH_SHORT)
                                 .show()
                             // şifre güncelleme
-                            user!!.updatePassword(newPassword)
+                            FirebaseUtil.CURRENT_USER!!.updatePassword(newPassword)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         Toast.makeText(this, R.string.success_update_password, Toast.LENGTH_SHORT)
                                             .show()
-                                        auth.signOut()
+                                        FirebaseUtil.AUTH.signOut()
                                         openLoginActivity()
                                     } else {
                                         Toast.makeText(this, R.string.failed_update_password, Toast.LENGTH_SHORT)

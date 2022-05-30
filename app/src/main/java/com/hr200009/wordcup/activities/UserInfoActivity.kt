@@ -17,6 +17,7 @@ import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class UserInfoActivity : AppCompatActivity() {
@@ -33,15 +34,14 @@ class UserInfoActivity : AppCompatActivity() {
     private lateinit var notificationDaily: RadioButton
     private lateinit var notificationMonthly: RadioButton
     private lateinit var buttonSaveUserInfo: Button
-    private lateinit var auth: FirebaseAuth
-    private lateinit var currentUserId: String
+
 
     private var toBeLearned = ""
     private var difficulty = ""
     private var notification = ""
 
 
-    val db = Firebase.firestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_info)
@@ -60,19 +60,14 @@ class UserInfoActivity : AppCompatActivity() {
         buttonSaveUserInfo = findViewById(R.id.buttonSaveUserInfo)
 
 
-        auth = Firebase.auth
-        currentUserId = auth.uid.toString()
-
-
-
-
         run()
     }
 
     private fun getData(userId: String) {
 
-       val dbRef = db.collection("userInfo").document(userId)
-        dbRef.get()
+
+
+        FirebaseUtil.USER_INFO.document(FirebaseUtil.CURRENT_USER_ID).get()
             .addOnSuccessListener {
 
                 toBeLearned = it.get("toBeLearned").toString()
@@ -111,48 +106,11 @@ class UserInfoActivity : AppCompatActivity() {
                 }
 
             }
-/*
-        database = FirebaseDatabase.getInstance().getReference("userInfo")
-        database.child(userId).get().addOnSuccessListener {
-            toBeLearned = it.child("toBeLearned").value.toString()
-            difficulty = it.child("difficulty").value.toString()
-            notification = it.child("notificationFrequency").value.toString()
 
-            if (toBeLearned == "0") {
-                radioGroupToBeLearned.check(R.id.toBeLearnedFirst)
-            } else {
-                radioGroupToBeLearned.check(R.id.toBeLearnedSecond)
-            }
-
-            when (difficulty) {
-                "0" -> {
-                    radioGroupDifficulty.check(R.id.diffucultyEasy)
-                }
-                "1" -> {
-                    radioGroupDifficulty.check(R.id.diffucultyMedium)
-                }
-                else -> {
-                    radioGroupDifficulty.check(R.id.diffucultyHard)
-                }
-            }
-
-            when (notification) {
-                "0" -> {
-                    radioGroupNotification.check(R.id.notificationHourly)
-                }
-                "1" -> {
-                    radioGroupNotification.check(R.id.notificationWeekly)
-                }
-                else -> {
-                    radioGroupNotification.check(R.id.notificationMontly)
-                }
-            }*/
         }
 
 
     private fun updateData(userId: String) {
-
-        val dbRef = db.collection("userInfo").document(userId)
 
 
         radioGroupToBeLearned.setOnCheckedChangeListener { _, checkedId ->
@@ -179,7 +137,7 @@ class UserInfoActivity : AppCompatActivity() {
 
         }
         buttonSaveUserInfo.setOnClickListener(View.OnClickListener {
-           dbRef.update(mapOf(
+            FirebaseUtil.USER_INFO.document(FirebaseUtil.CURRENT_USER_ID).update(mapOf(
                "toBeLearned" to toBeLearned,
                "difficulty" to difficulty,
                "notificationFrequency" to notification))
@@ -188,17 +146,7 @@ class UserInfoActivity : AppCompatActivity() {
                 .show()
             comeToSignupActivity()
         })
-        /*
-        buttonSaveUserInfo.setOnClickListener(View.OnClickListener {
-            database.child(userId).updateChildren(mapOf(
-                "toBeLearned" to toBeLearned,
-                "difficulty" to difficulty,
-                "notificationFrequency" to notification))
-            getData(userId)
-            Toast.makeText(this, R.string.user_information_update_successful, Toast.LENGTH_SHORT)
-                .show()
-            comeToSignupActivity()
-        })*/
+
     }
 
     private fun comeToSignupActivity() {
@@ -213,8 +161,8 @@ class UserInfoActivity : AppCompatActivity() {
 
 
     private fun run() {
-        getData(currentUserId)
-        updateData(currentUserId)
+        getData(FirebaseUtil.CURRENT_USER_ID)
+        updateData(FirebaseUtil.CURRENT_USER_ID)
     }
 
 
