@@ -5,22 +5,18 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class FirebaseUtil {
-    companion object {
-        const val FIREBASE_BASE_URL = "https://wordcup-f8f0f.firebaseio.com/"
-        val FIRE_BASE_DİSK_PERSISTENCE = Firebase.database.setPersistenceEnabled(true)
-        val FIRE_BASE_KEEPING_DATA_FRESH = Firebase.database.getReference("words").keepSynced(true)
-        val FIRE_BASE_CURRENT_USER_ID = FirebaseAuth.getInstance().currentUser?.uid
-        var FIRE_BASE_CURRENT_USER = Firebase.auth.currentUser
-        val FIRE_BASE_USER_INFO = Firebase.database.reference.child("userInfo").child(FIRE_BASE_CURRENT_USER_ID!!)
-        val WORDS_USER_REF = Firebase.database.reference.child("words").child(FIRE_BASE_CURRENT_USER_ID!!)
-        val WORD_ADD_REF = Firebase.database.reference.child("words").child(FIRE_BASE_CURRENT_USER_ID!!).child(Firebase.database.reference.push().key!!)
+     var auth: FirebaseAuth = Firebase.auth
+     var currentUser = auth.currentUser
+     var currentUserUid = currentUser?.uid
 
+    val db = Firebase.firestore
+    var userInfo = db.collection("userInfo").document(auth.uid.toString())
+    var wordId = db.collection("words").document(auth.uid.toString()).collection("allWords").document().toString()
+    var allWords = db.collection("words").document(auth.uid.toString()).collection("allWords")
+    var learnedWords = db.collection("words").document(currentUserUid.toString()).collection("learnedWords")
 
-
-
-
-    }
 }

@@ -19,8 +19,8 @@ import com.hr200009.wordcup.models.User
 import com.hr200009.wordcup.util.FirebaseUtil
 
 class SignupActivity : AppCompatActivity() {
+    private var dataBase = FirebaseUtil()
 
-    private lateinit var auth: FirebaseAuth
 
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
@@ -33,7 +33,6 @@ class SignupActivity : AppCompatActivity() {
     private var notificationFrequency: Int = 0
     private var toBeLearned: Int = 0
 
-    val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +44,6 @@ class SignupActivity : AppCompatActivity() {
         nickNameEditText = findViewById(R.id.textRegisterNickname)
         registerButton = findViewById(R.id.buttonRegister)
 
-        auth = Firebase.auth
 
     }
 
@@ -68,7 +66,7 @@ class SignupActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, R.string.fill_in_all_fields, Toast.LENGTH_SHORT)
                 .show()
         } else {
-            auth.createUserWithEmailAndPassword(email, password)
+            dataBase.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Register success, update UI with the signed-in user's information
@@ -102,9 +100,7 @@ class SignupActivity : AppCompatActivity() {
     ) {
         val user = User(name, difficulty, notificationFrequency, toBeLearned)
        // database.child("userInfo").child(auth.uid.toString()).setValue(user)
-        db.collection("userInfo")
-            .document(auth.uid.toString())
-            .set(user)
+        dataBase.userInfo.set(user)
     }
 
 

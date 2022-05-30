@@ -115,28 +115,12 @@ class AttachedWordsActivity : AppCompatActivity() {
     }
 
     private fun getWords() {
-        val user = auth.currentUser
-        val userId = user?.uid
        val dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
-        dbRef.get().addOnSuccessListener { querySnapshot ->
-            arrayList.clear()
-            if (querySnapshot != null){
-                for (data in querySnapshot){
-                    val word = data.toObject(Word::class.java)
-                    arrayList.add(word)
-                }
-                var size = arrayList.size.toString()
-                Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
-                recyclerView.adapter = WordAdapter(arrayList) {
-                    secondaryLayout(arrayList[it])
-                }
-            }
-        }
-        dbRef.addSnapshotListener { dataSnapshot, _ ->
 
+        dbRef.get().addOnSuccessListener {
             arrayList.clear()
-            if (dataSnapshot != null) {
-                for (snapshot in dataSnapshot) {
+            if (it != null) {
+                for (snapshot in it) {
                     val word = snapshot.toObject(Word::class.java)
                     arrayList.add(word)
                 }
@@ -145,16 +129,16 @@ class AttachedWordsActivity : AppCompatActivity() {
                 Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
                 recyclerView.adapter = WordAdapter(arrayList) {
                     arrayList[it].let { word ->
-
                         secondaryLayout(word)
-
-
                     }
                 }
             }
 
         }
+    }
 
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setContentView(R.layout.activity_attached_words)
     }
 }

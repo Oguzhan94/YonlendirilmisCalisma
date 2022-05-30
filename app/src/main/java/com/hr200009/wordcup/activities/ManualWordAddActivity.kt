@@ -19,11 +19,13 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 class ManualWordAddActivity : AppCompatActivity() {
 
+    private var dataBase = FirebaseUtil()
+
     private lateinit var saveButton: Button
     private lateinit var textWordSource: EditText
     private lateinit var textWordTarget: EditText
 
-    private lateinit var auth: FirebaseAuth
+
 
     private lateinit var wordSource: String
     private lateinit var wordTarget: String
@@ -35,7 +37,7 @@ class ManualWordAddActivity : AppCompatActivity() {
     private var viewCounter: Int = 0
     private var wordId: String? = null
 
-    val db = Firebase.firestore
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,6 @@ class ManualWordAddActivity : AppCompatActivity() {
         textWordTarget = findViewById(R.id.textWordTargetManuelAdded)
 
 
-        auth = Firebase.auth
 
         run()
     }
@@ -61,7 +62,8 @@ class ManualWordAddActivity : AppCompatActivity() {
     private fun wordAddManual() {
         wordSource = textWordSource.text.toString()
         wordTarget = textWordTarget.text.toString()
-        wordId= db.collection("words").document(auth.uid.toString()).collection("allWords").document().toString()
+
+        wordId= dataBase.allWords.document().toString()
 
         if (wordSource.isNotEmpty() && wordTarget.isNotEmpty()) {
             //val word = Word(wordSource, wordTarget, trueCounter, falseCounter, passCounter, isItLearned,)
@@ -76,7 +78,7 @@ class ManualWordAddActivity : AppCompatActivity() {
                 "viewCounter" to viewCounter
             )
 
-            db.collection("words").document(auth.uid.toString()).collection("allWords")
+            dataBase.allWords
                 .document(wordId.toString())
                 .set(wordData)
                 .addOnSuccessListener {

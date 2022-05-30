@@ -15,26 +15,27 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class MainActivity : AppCompatActivity() {
 
+    private var dataBase = FirebaseUtil()
+
     private lateinit var nickNameTextView: TextView
-    private lateinit var currentUserId: String
-    private lateinit var auth: FirebaseAuth
+
     private lateinit var settingsButton: ImageButton
     private lateinit var openAddWordCategory: Button
     private lateinit var openAttachedWordActivity: Button
     private lateinit var openPlayCategoryActivity: Button
     private lateinit var openLearnedWordsActivity: Button
 
-    val db = Firebase.firestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        auth = Firebase.auth
 
         nickNameTextView = findViewById(R.id.textNickname)
         settingsButton = findViewById(R.id.buttonOpenSettings)
@@ -43,9 +44,7 @@ class MainActivity : AppCompatActivity() {
         openPlayCategoryActivity = findViewById(R.id.buttonOpenPlayCategory)
         openLearnedWordsActivity = findViewById(R.id.buttonLearnedWords)
 
-        currentUserId = auth.uid.toString()
-        currentUserId
-        readData(currentUserId)
+        readData()
 
         run()
     }
@@ -69,9 +68,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun readData(userId: String) {
+    private fun readData() {
 
-        val dbRef = db.collection("userInfo").document(userId)
+        val dbRef = dataBase.userInfo
 
         dbRef.get()
             .addOnSuccessListener {

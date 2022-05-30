@@ -14,23 +14,20 @@ import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
 import com.hr200009.wordcup.models.Word
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class LearnedWordsActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-
+    private var dataBase = FirebaseUtil()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var arrayList: ArrayList<Word>
 
-    val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_learned_words)
-
-        auth = Firebase.auth
 
         recyclerView = findViewById(R.id.recyclerViewAttachedWords)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -44,10 +41,8 @@ class LearnedWordsActivity : AppCompatActivity() {
     }
 
     private fun getWords() {
-        val user = auth.currentUser
-        val userId = user?.uid
 
-        val dbRef = db.collection("words").document(userId.toString()).collection("learnedWords")
+        val dbRef = dataBase.learnedWords
         dbRef.addSnapshotListener { dataSnapshot, _ ->
 
             arrayList.clear()

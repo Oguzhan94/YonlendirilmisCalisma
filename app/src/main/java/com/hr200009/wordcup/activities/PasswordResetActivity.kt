@@ -9,10 +9,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class PasswordResetActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private var dataBase = FirebaseUtil()
+
     private lateinit var sendButton: Button
     private lateinit var emailEditText: EditText
 
@@ -20,7 +22,6 @@ class PasswordResetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password_reset)
 
-        auth = Firebase.auth
         sendButton = findViewById(R.id.button4)
         emailEditText = findViewById(R.id.editTextTextEmailAddress)
 
@@ -32,7 +33,7 @@ class PasswordResetActivity : AppCompatActivity() {
     private fun sendPasswordResetEmail() {
 
         sendButton.setOnClickListener() {
-            auth.sendPasswordResetEmail(emailEditText.text.toString())
+            dataBase.auth.sendPasswordResetEmail(emailEditText.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()
