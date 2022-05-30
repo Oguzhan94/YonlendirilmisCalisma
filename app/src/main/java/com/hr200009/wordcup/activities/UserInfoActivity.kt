@@ -22,6 +22,8 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 class UserInfoActivity : AppCompatActivity() {
 
+    private var dataBase = FirebaseUtil()
+
     private lateinit var radioGroupToBeLearned: RadioGroup
     private lateinit var radioGroupDifficulty: RadioGroup
     private lateinit var radioGroupNotification: RadioGroup
@@ -39,7 +41,6 @@ class UserInfoActivity : AppCompatActivity() {
     private var toBeLearned = ""
     private var difficulty = ""
     private var notification = ""
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,14 +61,14 @@ class UserInfoActivity : AppCompatActivity() {
         buttonSaveUserInfo = findViewById(R.id.buttonSaveUserInfo)
 
 
+
+
         run()
     }
 
-    private fun getData(userId: String) {
+    private fun getData() {
 
-
-
-        FirebaseUtil.USER_INFO.document(FirebaseUtil.CURRENT_USER_ID).get()
+       dataBase.userInfo.get()
             .addOnSuccessListener {
 
                 toBeLearned = it.get("toBeLearned").toString()
@@ -106,11 +107,46 @@ class UserInfoActivity : AppCompatActivity() {
                 }
 
             }
+/*
+        database = FirebaseDatabase.getInstance().getReference("userInfo")
+        database.child(userId).get().addOnSuccessListener {
+            toBeLearned = it.child("toBeLearned").value.toString()
+            difficulty = it.child("difficulty").value.toString()
+            notification = it.child("notificationFrequency").value.toString()
 
+            if (toBeLearned == "0") {
+                radioGroupToBeLearned.check(R.id.toBeLearnedFirst)
+            } else {
+                radioGroupToBeLearned.check(R.id.toBeLearnedSecond)
+            }
+
+            when (difficulty) {
+                "0" -> {
+                    radioGroupDifficulty.check(R.id.diffucultyEasy)
+                }
+                "1" -> {
+                    radioGroupDifficulty.check(R.id.diffucultyMedium)
+                }
+                else -> {
+                    radioGroupDifficulty.check(R.id.diffucultyHard)
+                }
+            }
+
+            when (notification) {
+                "0" -> {
+                    radioGroupNotification.check(R.id.notificationHourly)
+                }
+                "1" -> {
+                    radioGroupNotification.check(R.id.notificationWeekly)
+                }
+                else -> {
+                    radioGroupNotification.check(R.id.notificationMontly)
+                }
+            }*/
         }
 
 
-    private fun updateData(userId: String) {
+    private fun updateData() {
 
 
         radioGroupToBeLearned.setOnCheckedChangeListener { _, checkedId ->
@@ -137,16 +173,26 @@ class UserInfoActivity : AppCompatActivity() {
 
         }
         buttonSaveUserInfo.setOnClickListener(View.OnClickListener {
-            FirebaseUtil.USER_INFO.document(FirebaseUtil.CURRENT_USER_ID).update(mapOf(
+           dataBase.userInfo.update(mapOf(
                "toBeLearned" to toBeLearned,
                "difficulty" to difficulty,
                "notificationFrequency" to notification))
-            getData(userId)
+            getData()
             Toast.makeText(this, R.string.user_information_update_successful, Toast.LENGTH_SHORT)
                 .show()
             comeToSignupActivity()
         })
-
+        /*
+        buttonSaveUserInfo.setOnClickListener(View.OnClickListener {
+            database.child(userId).updateChildren(mapOf(
+                "toBeLearned" to toBeLearned,
+                "difficulty" to difficulty,
+                "notificationFrequency" to notification))
+            getData(userId)
+            Toast.makeText(this, R.string.user_information_update_successful, Toast.LENGTH_SHORT)
+                .show()
+            comeToSignupActivity()
+        })*/
     }
 
     private fun comeToSignupActivity() {
@@ -161,8 +207,8 @@ class UserInfoActivity : AppCompatActivity() {
 
 
     private fun run() {
-        getData(FirebaseUtil.CURRENT_USER_ID)
-        updateData(FirebaseUtil.CURRENT_USER_ID)
+        getData()
+        updateData()
     }
 
 

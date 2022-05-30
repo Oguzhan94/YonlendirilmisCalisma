@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/buttonRandomWordPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="70dp"
         android:layout_marginStart="124dp"
         android:layout_marginTop="300dp"
         android:layout_marginEnd="125dp"
@@ -25,8 +25,8 @@
 
     <Button
         android:id="@+id/buttonPopularWords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/green_button"
@@ -39,8 +39,8 @@
 
     <Button
         android:id="@+id/buttonWeeklyWords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="200dp"
         android:backgroundTint="@color/green_button"

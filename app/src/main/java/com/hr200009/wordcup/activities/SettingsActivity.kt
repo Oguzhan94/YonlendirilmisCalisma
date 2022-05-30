@@ -14,6 +14,7 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 class SettingsActivity : AppCompatActivity() {
 
+    private var dataBase = FirebaseUtil()
     private lateinit var buttonToPasswordActivity: Button
     private lateinit var buttonToUserInfoActivity: Button
     private lateinit var buttonToLogout: Button
@@ -51,7 +52,7 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(intent)
     }
     private fun logOut(){
-        Firebase.auth.signOut()
+        dataBase.auth.signOut()
         val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
         startActivity(intent)
         this.cacheDir.deleteRecursively()

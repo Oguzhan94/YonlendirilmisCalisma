@@ -22,7 +22,7 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class PlayActivity : AppCompatActivity() {
-
+    private var dataBase = FirebaseUtil()
 
     private var arrayList = ArrayList<Word>()
 
@@ -44,7 +44,6 @@ class PlayActivity : AppCompatActivity() {
     private var isItLearned: Boolean = false
 
     private var bool: Boolean = false
-
 
 
 
@@ -76,7 +75,7 @@ class PlayActivity : AppCompatActivity() {
     private fun getWord() {
 
         arrayList.clear()
-        FirebaseUtil.ALL_WORDS_REF
+        dataBase.allWords
             .get()
             .addOnSuccessListener {
                 for (word in it) {
@@ -116,7 +115,7 @@ class PlayActivity : AppCompatActivity() {
 
     private fun randomWord(arrayList: ArrayList<Word>) {
 
-        //db.collection("words").document(auth.uid.toString()).collection("allWords")
+       // db.collection("words").document(auth.uid.toString()).collection("allWords")
 
         arrayList.random().let { Word ->
             textSource.text = Word.source
@@ -189,15 +188,13 @@ class PlayActivity : AppCompatActivity() {
 
 
     private fun learnedWord(id: String, word: Word) {
-       FirebaseUtil.LEARNED_WORDS_REF.document(id).set(word)
-
-
+       dataBase.learnedWords.document(id).set(word)
     }
 
     private fun viewCounter(wordId: String, viewCounter: Int, word: Word, isItLearned: Boolean) {
 
 
-        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("viewCounter", viewCounter.toInt())
+        dataBase.allWords.document(wordId).update("viewCounter", viewCounter.toInt())
 
 
         if (isItLearned) {
@@ -208,7 +205,8 @@ class PlayActivity : AppCompatActivity() {
 
     private fun isLearned(wordId: String, isLearned: Boolean, word: Word) {
 
-        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("isItLearned", isLearned)
+        dataBase.allWords
+        .document(wordId).update("isItLearned", isLearned)
 
         if (isItLearned) {
             learnedWord(wordId, word)
@@ -219,7 +217,8 @@ class PlayActivity : AppCompatActivity() {
 
 
 
-        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("trueCounter", trueCounter.toInt())
+        dataBase.allWords
+        .document(wordId).update("trueCounter", trueCounter.toInt())
 
         if (isItLearned) {
             learnedWord(wordId, word)
@@ -230,7 +229,7 @@ class PlayActivity : AppCompatActivity() {
 
 
 
-        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("falseCounter", falseCounter.toInt())
+        dataBase.allWords.document(wordId).update("falseCounter", falseCounter.toInt())
         if (isItLearned) {
             learnedWord(wordId, word)
         }
@@ -239,7 +238,7 @@ class PlayActivity : AppCompatActivity() {
     private fun passCounter(wordId: String, passCounter: Int, word: Word, isItLearned: Boolean) {
 
 
-        FirebaseUtil.ALL_WORDS_REF.document(wordId).update("passCounter", passCounter.toInt())
+        dataBase.allWords.document(wordId).update("passCounter", passCounter.toInt())
 
         if (isItLearned) {
             learnedWord(wordId, word)

@@ -29,6 +29,13 @@
             android:text="@string/buttonSettingsPassword" />
 
         <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/green_button"
+            android:text="HESAP" />
+
+        <Button
             android:id="@+id/buttonSettingsUserInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

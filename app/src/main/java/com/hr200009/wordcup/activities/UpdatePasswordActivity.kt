@@ -16,6 +16,8 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 class UpdatePasswordActivity : AppCompatActivity() {
 
+    private var dataBase = FirebaseUtil()
+
     private lateinit var saveButton: Button
     private lateinit var newPassword: String
     private lateinit var newPasswordCheck: String
@@ -34,7 +36,6 @@ class UpdatePasswordActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.buttonUpdatePassword)
 
 
-
         run()
     }
 
@@ -51,20 +52,20 @@ class UpdatePasswordActivity : AppCompatActivity() {
             if (newPassword == newPasswordCheck) {
                 // doğrulama
                 val credential = EmailAuthProvider
-                    .getCredential(FirebaseUtil.CURRENT_USER!!.email!!, currentPassword)
+                    .getCredential(dataBase.currentUser!!.email!!, currentPassword)
                 // tekrar giriş yapma
-                FirebaseUtil.CURRENT_USER!!.reauthenticate(credential)
+                dataBase.currentUser!!.reauthenticate(credential)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             Toast.makeText(this, R.string.re_aut_success, Toast.LENGTH_SHORT)
                                 .show()
                             // şifre güncelleme
-                            FirebaseUtil.CURRENT_USER!!.updatePassword(newPassword)
+                            dataBase.currentUser!!.updatePassword(newPassword)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         Toast.makeText(this, R.string.success_update_password, Toast.LENGTH_SHORT)
                                             .show()
-                                        FirebaseUtil.AUTH.signOut()
+                                        dataBase.auth.signOut()
                                         openLoginActivity()
                                     } else {
                                         Toast.makeText(this, R.string.failed_update_password, Toast.LENGTH_SHORT)

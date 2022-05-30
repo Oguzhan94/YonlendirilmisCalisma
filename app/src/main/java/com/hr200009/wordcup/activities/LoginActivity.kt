@@ -17,7 +17,8 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private var dataBase = FirebaseUtil()
+
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
@@ -36,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.buttonToRegister)
         forgotPassword = findViewById(R.id.buttonForgotPassword)
 
-        auth = Firebase.auth
 
     }
     override fun onStart() {
@@ -58,14 +58,13 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun login() {
-FirebaseUtil.reset()
         email = emailEditText.text.toString()
         password = passwordEditText.text.toString()
 
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, R.string.empty_email_password, Toast.LENGTH_SHORT).show()
         } else {
-            FirebaseUtil.AUTH.signInWithEmailAndPassword(email, password)
+            dataBase.auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show()

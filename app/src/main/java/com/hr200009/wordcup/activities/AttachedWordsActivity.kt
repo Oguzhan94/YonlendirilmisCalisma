@@ -21,9 +21,10 @@ import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
 import com.hr200009.wordcup.models.Word
-import com.hr200009.wordcup.util.FirebaseUtil
 
 class AttachedWordsActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var arrayList: ArrayList<Word>
@@ -38,6 +39,7 @@ class AttachedWordsActivity : AppCompatActivity() {
     private lateinit var editButton: Button
     private lateinit var writeButton: Button
 
+    val db = Firebase.firestore
 
 
     private lateinit var tempLayout2: ConstraintLayout
@@ -45,6 +47,8 @@ class AttachedWordsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attached_words)
+
+        auth = Firebase.auth
 
 
         tempLayout2 = findViewById(R.id.cons)
@@ -91,7 +95,7 @@ class AttachedWordsActivity : AppCompatActivity() {
 
         }
         writeButton.setOnClickListener() {
-          FirebaseUtil.ALL_WORDS_REF.document(text.id.toString())
+           db.collection("words").document(auth.uid.toString()).collection("allWords").document(text.id.toString())
                .update(mapOf(
                    "source" to textSource.text.toString(),
                    "translation" to textTarget.text.toString()
@@ -111,26 +115,12 @@ class AttachedWordsActivity : AppCompatActivity() {
     }
 
     private fun getWords() {
+       val dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
 
-       FirebaseUtil.ALL_WORDS_REF.get().addOnSuccessListener { querySnapshot ->
+        dbRef.get().addOnSuccessListener {
             arrayList.clear()
-            if (querySnapshot != null){
-                for (data in querySnapshot){
-                    val word = data.toObject(Word::class.java)
-                    arrayList.add(word)
-                }
-                var size = arrayList.size.toString()
-                Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
-                recyclerView.adapter = WordAdapter(arrayList) {
-                    secondaryLayout(arrayList[it])
-                }
-            }
-        }
-        FirebaseUtil.ALL_WORDS_REF.addSnapshotListener { dataSnapshot, _ ->
-
-            arrayList.clear()
-            if (dataSnapshot != null) {
-                for (snapshot in dataSnapshot) {
+            if (it != null) {
+                for (snapshot in it) {
                     val word = snapshot.toObject(Word::class.java)
                     arrayList.add(word)
                 }
@@ -139,16 +129,16 @@ class AttachedWordsActivity : AppCompatActivity() {
                 Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
                 recyclerView.adapter = WordAdapter(arrayList) {
                     arrayList[it].let { word ->
-
                         secondaryLayout(word)
-
-
                     }
                 }
             }
 
         }
+    }
 
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setContentView(R.layout.activity_attached_words)
     }
 }

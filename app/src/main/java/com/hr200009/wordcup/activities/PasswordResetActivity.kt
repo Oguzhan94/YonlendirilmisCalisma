@@ -13,6 +13,8 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 class PasswordResetActivity : AppCompatActivity() {
 
+    private var dataBase = FirebaseUtil()
+
     private lateinit var sendButton: Button
     private lateinit var emailEditText: EditText
 
@@ -31,7 +33,7 @@ class PasswordResetActivity : AppCompatActivity() {
     private fun sendPasswordResetEmail() {
 
         sendButton.setOnClickListener() {
-            FirebaseUtil.AUTH.sendPasswordResetEmail(emailEditText.text.toString())
+            dataBase.auth.sendPasswordResetEmail(emailEditText.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()

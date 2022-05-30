@@ -26,8 +26,8 @@
     <SearchView
         android:id="@+id/searchViewDictionaryWordAdd"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="112dp"
         android:background="@color/green_button"
         android:backgroundTint="@color/green_button"
         android:gravity="center"
@@ -43,10 +43,11 @@
     <TextView
         android:id="@+id/textViewTarget"
         android:layout_width="140dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="130dp"
         android:layout_marginEnd="30dp"
         android:background="@color/green_button"
+        android:gravity="center"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchViewDictionaryWordAdd" />
@@ -54,10 +55,11 @@
     <TextView
         android:id="@+id/textViewSource"
         android:layout_width="140dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="130dp"
         android:background="@color/green_button"
+        android:gravity="center"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchViewDictionaryWordAdd" />

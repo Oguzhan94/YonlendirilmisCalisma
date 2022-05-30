@@ -8,12 +8,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.User
 import com.hr200009.wordcup.util.FirebaseUtil
 
 class SignupActivity : AppCompatActivity() {
-
+    private var dataBase = FirebaseUtil()
 
 
     private lateinit var emailEditText: EditText
@@ -26,7 +32,7 @@ class SignupActivity : AppCompatActivity() {
     private var difficulty: Int = 0
     private var notificationFrequency: Int = 0
     private var toBeLearned: Int = 0
-private  var au: FirebaseUtil = FirebaseUtil()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +43,6 @@ private  var au: FirebaseUtil = FirebaseUtil()
         passwordEditText = findViewById(R.id.textRegisterPassword)
         nickNameEditText = findViewById(R.id.textRegisterNickname)
         registerButton = findViewById(R.id.buttonRegister)
-
 
 
     }
@@ -61,7 +66,7 @@ private  var au: FirebaseUtil = FirebaseUtil()
             Toast.makeText(applicationContext, R.string.fill_in_all_fields, Toast.LENGTH_SHORT)
                 .show()
         } else {
-            FirebaseUtil.AUTH.createUserWithEmailAndPassword(email, password)
+            dataBase.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Register success, update UI with the signed-in user's information
@@ -95,9 +100,7 @@ private  var au: FirebaseUtil = FirebaseUtil()
     ) {
         val user = User(name, difficulty, notificationFrequency, toBeLearned)
        // database.child("userInfo").child(auth.uid.toString()).setValue(user)
-        FirebaseUtil.dbb.collection("userInfo")
-            .document(au.auth.currentUser?.uid.toString())
-            .set(user)
+        dataBase.userInfo.set(user)
     }
 
 

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wordCardView"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginBottom="5dp">
+    android:layout_height="100dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardVieww"
@@ -31,7 +30,7 @@
                 android:layout_marginBottom="35dp"
                 android:background="@drawable/border"
                 android:gravity="center"
-                android:hint="123"
+                android:hint="KELİME"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textCardViewTarget"
                 app:layout_constraintStart_toStartOf="parent"

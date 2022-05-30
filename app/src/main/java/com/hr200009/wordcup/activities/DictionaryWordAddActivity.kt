@@ -23,6 +23,7 @@ import com.hr200009.wordcup.util.FirebaseUtil
 
 class DictionaryWordAddActivity : AppCompatActivity() {
 
+    private var dataBase = FirebaseUtil()
 
     private lateinit var searchView: SearchView
     private lateinit var textViewTarget: TextView
@@ -105,7 +106,8 @@ class DictionaryWordAddActivity : AppCompatActivity() {
 
               //wordId=database.push().key.toString()
 
-              wordId= FirebaseUtil.ALL_WORDS_REF.document().toString()
+              wordId= dataBase.allWords.document().toString()
+
 
               val wordData = hashMapOf(
                   "source" to textTSource.lowercase(),
@@ -118,7 +120,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                   "viewCounter" to viewCounter
               )
 
-              FirebaseUtil.ALL_WORDS_REF.document(wordId.toString())
+              dataBase.allWords.document(wordId.toString())
                   .set(wordData)
                   .addOnSuccessListener {
                       Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
@@ -129,6 +131,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
               Toast.makeText(this, R.string.word_add_failed, Toast.LENGTH_SHORT).show()
           }
       })
+
     }
 
 }
