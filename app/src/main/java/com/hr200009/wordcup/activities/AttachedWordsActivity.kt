@@ -21,10 +21,9 @@ import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
 import com.hr200009.wordcup.models.Word
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class AttachedWordsActivity : AppCompatActivity() {
-
-    private lateinit var auth: FirebaseAuth
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var arrayList: ArrayList<Word>
@@ -39,7 +38,6 @@ class AttachedWordsActivity : AppCompatActivity() {
     private lateinit var editButton: Button
     private lateinit var writeButton: Button
 
-    val db = Firebase.firestore
 
 
     private lateinit var tempLayout2: ConstraintLayout
@@ -47,8 +45,6 @@ class AttachedWordsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attached_words)
-
-        auth = Firebase.auth
 
 
         tempLayout2 = findViewById(R.id.cons)
@@ -95,7 +91,7 @@ class AttachedWordsActivity : AppCompatActivity() {
 
         }
         writeButton.setOnClickListener() {
-           db.collection("words").document(auth.uid.toString()).collection("allWords").document(text.id.toString())
+          FirebaseUtil.ALL_WORDS_REF.document(text.id.toString())
                .update(mapOf(
                    "source" to textSource.text.toString(),
                    "translation" to textTarget.text.toString()
@@ -115,10 +111,8 @@ class AttachedWordsActivity : AppCompatActivity() {
     }
 
     private fun getWords() {
-        val user = auth.currentUser
-        val userId = user?.uid
-       val dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
-        dbRef.get().addOnSuccessListener { querySnapshot ->
+
+       FirebaseUtil.ALL_WORDS_REF.get().addOnSuccessListener { querySnapshot ->
             arrayList.clear()
             if (querySnapshot != null){
                 for (data in querySnapshot){
@@ -132,7 +126,7 @@ class AttachedWordsActivity : AppCompatActivity() {
                 }
             }
         }
-        dbRef.addSnapshotListener { dataSnapshot, _ ->
+        FirebaseUtil.ALL_WORDS_REF.addSnapshotListener { dataSnapshot, _ ->
 
             arrayList.clear()
             if (dataSnapshot != null) {

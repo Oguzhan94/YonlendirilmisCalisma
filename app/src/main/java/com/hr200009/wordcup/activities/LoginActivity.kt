@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class LoginActivity : AppCompatActivity() {
@@ -57,13 +58,14 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun login() {
+FirebaseUtil.reset()
         email = emailEditText.text.toString()
         password = passwordEditText.text.toString()
 
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, R.string.empty_email_password, Toast.LENGTH_SHORT).show()
         } else {
-            auth.signInWithEmailAndPassword(email, password)
+            FirebaseUtil.AUTH.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show()

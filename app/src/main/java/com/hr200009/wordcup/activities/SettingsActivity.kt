@@ -10,6 +10,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -53,7 +54,9 @@ class SettingsActivity : AppCompatActivity() {
         Firebase.auth.signOut()
         val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
         startActivity(intent)
-        finishAffinity()
+        this.cacheDir.deleteRecursively()
+        //finishAffinity()
+        finishAndRemoveTask()
     }
 
 }

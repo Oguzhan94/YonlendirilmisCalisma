@@ -10,31 +10,28 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.util.FirebaseUtil
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var nickNameTextView: TextView
-    private lateinit var currentUserId: String
-    private lateinit var auth: FirebaseAuth
     private lateinit var settingsButton: ImageButton
     private lateinit var openAddWordCategory: Button
     private lateinit var openAttachedWordActivity: Button
     private lateinit var openPlayCategoryActivity: Button
     private lateinit var openLearnedWordsActivity: Button
 
-    val db = Firebase.firestore
+    private  var au: FirebaseUtil = FirebaseUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        auth = Firebase.auth
+
 
         nickNameTextView = findViewById(R.id.textNickname)
         settingsButton = findViewById(R.id.buttonOpenSettings)
@@ -43,11 +40,16 @@ class MainActivity : AppCompatActivity() {
         openPlayCategoryActivity = findViewById(R.id.buttonOpenPlayCategory)
         openLearnedWordsActivity = findViewById(R.id.buttonLearnedWords)
 
-        currentUserId = auth.uid.toString()
-        currentUserId
-        readData(currentUserId)
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        readData(FirebaseUtil.CURRENT_USER?.uid.toString())
 
         run()
+
     }
 
     private fun run() {
@@ -71,9 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun readData(userId: String) {
 
-        val dbRef = db.collection("userInfo").document(userId)
-
-        dbRef.get()
+            FirebaseUtil.dbb.collection("userInfo").document(userId).get()
             .addOnSuccessListener {
                 if (it != null){
                     val nickName: String = getString(R.string.welcome_message, it.get("userName").toString())

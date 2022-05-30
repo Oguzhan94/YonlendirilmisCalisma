@@ -11,21 +11,19 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.util.AlertUtil
+import com.hr200009.wordcup.util.FirebaseUtil
 import com.hr200009.wordcup.util.NetworkUtil
 
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         // Offline için data izini veriyoruz
-        Firebase.database.setPersistenceEnabled(true)
+      //  Firebase.database.setPersistenceEnabled(true)
 
-        // Initialize Firebase Auth
-        auth = Firebase.auth
 
     }
 
@@ -33,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
         super.onStart()
         loadingTime()
     }
+
 
     private fun loadingTime() {
         val countDownTimer: CountDownTimer = object : CountDownTimer(3000, 1000) {
@@ -50,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
         return NetworkUtil.isInternetConnected(applicationContext)
     }
     private fun checkUserLogin(): Boolean {
-       return auth.currentUser != null
+       return FirebaseUtil.CURRENT_USER != null
     }
 
     private fun openNextActivity() {
