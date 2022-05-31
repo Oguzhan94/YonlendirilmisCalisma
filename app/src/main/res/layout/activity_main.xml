@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
+    android:backgroundTintMode="screen"
     tools:context=".activities.MainActivity">
 
     <TextView
@@ -25,7 +26,7 @@
     <Button
         android:id="@+id/buttonOpenPlayCategory"
         android:layout_width="150dp"
-        android:layout_height="65dp"
+        android:layout_height="60dp"
         android:layout_marginStart="161dp"
         android:layout_marginTop="65dp"
         android:layout_marginEnd="162dp"
@@ -41,7 +42,7 @@
     <Button
         android:id="@+id/buttonToAddedWords"
         android:layout_width="0dp"
-        android:layout_height="65dp"
+        android:layout_height="60dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/green_button"
@@ -55,7 +56,7 @@
     <Button
         android:id="@+id/buttonAddWordCategory"
         android:layout_width="0dp"
-        android:layout_height="65dp"
+        android:layout_height="60dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/green_button"
@@ -69,7 +70,7 @@
     <Button
         android:id="@+id/buttonLearnedWords"
         android:layout_width="0dp"
-        android:layout_height="65dp"
+        android:layout_height="60dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="135dp"
         android:backgroundTint="@color/green_button"
@@ -82,18 +83,18 @@
 
     <ImageButton
         android:id="@+id/buttonOpenSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="57dp"
+        android:layout_width="74dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="349dp"
-        android:backgroundTint="#0C0C0C"
+        android:background="@drawable/background"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/textNickname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122"
-        app:srcCompat="@android:drawable/ic_menu_preferences" />
+        app:layout_constraintVertical_bias="0.034"
+        app:srcCompat="@drawable/settings_icon_iki" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

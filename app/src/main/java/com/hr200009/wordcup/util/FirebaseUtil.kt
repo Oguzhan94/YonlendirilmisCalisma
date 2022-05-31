@@ -20,11 +20,11 @@ class FirebaseUtil {
     val db = Firebase.firestore
     var userInfo = db.collection("userInfo").document(auth.uid.toString())
     var wordId =
-        db.collection("words").document(auth.uid.toString()).collection("allWords").document()
+        db.collection("userWords").document(auth.uid.toString()).collection("allWords").document()
             .toString()
-    var allWords = db.collection("words").document(auth.uid.toString()).collection("allWords")
+    var allWords = db.collection("userWords").document(auth.uid.toString()).collection("allWords")
     var learnedWords =
-        db.collection("words").document(currentUserUid.toString()).collection("learnedWords")
+        db.collection("userWords").document(currentUserUid.toString()).collection("learnedWords")
 
     }
 
