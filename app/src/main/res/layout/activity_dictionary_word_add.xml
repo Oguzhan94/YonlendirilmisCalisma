@@ -9,25 +9,23 @@
 
     <Button
         android:id="@+id/buttonAddWordDictionary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="460dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="159dp"
-        android:layout_marginBottom="108dp"
+        android:layout_marginBottom="148dp"
         android:backgroundTint="@color/green_button"
         android:text="@string/buttonAddWordDictionary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.388"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchViewDictionaryWordAdd" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTarget" />
 
     <SearchView
         android:id="@+id/searchViewDictionaryWordAdd"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="112dp"
+        android:layout_height="65dp"
         android:background="@color/green_button"
         android:backgroundTint="@color/green_button"
         android:gravity="center"
@@ -36,31 +34,35 @@
         android:queryHint="@string/searchViewDictionaryWordAdd"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewTarget"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="30dp"
-        android:background="@color/green_button"
+        android:layout_width="170dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="127dp"
+        android:background="@drawable/textview_background"
         android:gravity="center"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchViewDictionaryWordAdd" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSource" />
 
     <TextView
         android:id="@+id/textViewSource"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="130dp"
-        android:background="@color/green_button"
+        android:layout_width="170dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="126dp"
+        android:background="@drawable/textview_background"
         android:gravity="center"
         android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchViewDictionaryWordAdd" />
 

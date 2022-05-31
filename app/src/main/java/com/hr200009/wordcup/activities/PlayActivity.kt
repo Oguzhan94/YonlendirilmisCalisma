@@ -2,21 +2,16 @@ package com.hr200009.wordcup.activities
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.ktx.firestore
-
-import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
-
 import com.hr200009.wordcup.models.Word
 import com.hr200009.wordcup.util.FirebaseUtil
 
@@ -24,7 +19,8 @@ import com.hr200009.wordcup.util.FirebaseUtil
 class PlayActivity : AppCompatActivity() {
     private var dataBase = FirebaseUtil()
 
-    private var arrayList = ArrayList<Word>()
+
+     var arrayList = ArrayList<Word>()
 
 
     private lateinit var textSource: TextView
@@ -88,6 +84,7 @@ class PlayActivity : AppCompatActivity() {
 
     }
 
+
     private fun tempLayout(boolean: Boolean) {
         goButton.visibility = View.INVISIBLE
         passButton.visibility = View.INVISIBLE
@@ -127,7 +124,6 @@ class PlayActivity : AppCompatActivity() {
 
 
             goButton.setOnClickListener(View.OnClickListener {
-
 
                 viewCounter++
                 Word.viewCounter = viewCounter

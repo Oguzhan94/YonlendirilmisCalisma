@@ -20,13 +20,15 @@
             android:exported="false" />
         <activity
             android:name=".activities.PlayActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activities.AttachedWordsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.DictionaryWordAddActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activities.ManualWordAddActivity"
             android:exported="false" />
@@ -43,9 +45,6 @@
             android:name=".activities.SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
-        <activity
-            android:name=".activities.MainActivity2"
-            android:exported="false" />
         <activity
             android:name=".activities.SignupActivity"
             android:exported="false" />

@@ -36,7 +36,7 @@
 
             <EditText
                 android:id="@+id/textSource"
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="10dp"
@@ -54,7 +54,7 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="170dp"
                 android:background="@drawable/textview_background"
                 android:backgroundTint="@color/design_default_color_secondary"
@@ -66,7 +66,7 @@
 
             <EditText
                 android:id="@+id/textTarget"
-                android:layout_width="wrap_content"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="10dp"
@@ -84,7 +84,7 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="170dp"
                 android:background="@drawable/textview_background"
                 android:backgroundTint="@color/design_default_color_secondary"
@@ -96,7 +96,7 @@
 
             <TextView
                 android:id="@+id/textTrueCount"
-                android:layout_width="100dp"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="10dp"
@@ -113,7 +113,7 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="170dp"
                 android:background="@drawable/textview_background"
                 android:backgroundTint="@color/design_default_color_secondary"
@@ -125,7 +125,7 @@
 
             <TextView
                 android:id="@+id/textFalseCount"
-                android:layout_width="100dp"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="10dp"
@@ -142,7 +142,7 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="170dp"
                 android:background="@drawable/textview_background"
                 android:backgroundTint="@color/design_default_color_secondary"
@@ -154,7 +154,7 @@
 
             <TextView
                 android:id="@+id/textPassCount"
-                android:layout_width="100dp"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="10dp"
@@ -171,7 +171,7 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="170dp"
                 android:background="@drawable/textview_background"
                 android:backgroundTint="@color/design_default_color_secondary"
@@ -183,7 +183,7 @@
 
             <TextView
                 android:id="@+id/textViewCount"
-                android:layout_width="100dp"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="10dp"
@@ -200,7 +200,7 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="170dp"
                 android:background="@drawable/textview_background"
                 android:backgroundTint="@color/design_default_color_secondary"
@@ -212,7 +212,7 @@
 
             <TextView
                 android:id="@+id/textIsItLearned"
-                android:layout_width="100dp"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="10dp"
@@ -229,10 +229,10 @@
 
     <Button
         android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
         android:layout_marginStart="52dp"
-        android:layout_marginBottom="124dp"
+        android:layout_marginBottom="115dp"
         android:backgroundTint="@color/green_button"
         android:text="DÜZENLE"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -240,8 +240,8 @@
 
     <Button
         android:id="@+id/writeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
         android:layout_marginStart="117dp"
         android:layout_marginEnd="54dp"
         android:layout_marginBottom="115dp"

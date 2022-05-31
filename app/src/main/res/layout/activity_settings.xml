@@ -23,30 +23,37 @@
         <Button
             android:id="@+id/buttonSettingsPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="170dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="250dp"
             android:backgroundTint="@color/green_button"
             android:text="@string/buttonSettingsPassword" />
 
         <Button
             android:id="@+id/button5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:backgroundTint="@color/green_button"
             android:text="HESAP" />
 
         <Button
             android:id="@+id/buttonSettingsUserInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:backgroundTint="@color/green_button"
             android:text="@string/buttonSettingsUserInfo" />
 
         <Button
             android:id="@+id/buttonSettingsLogout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:backgroundTint="@color/green_button"
             android:text="@string/buttonSettingsLogout" />
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="365dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

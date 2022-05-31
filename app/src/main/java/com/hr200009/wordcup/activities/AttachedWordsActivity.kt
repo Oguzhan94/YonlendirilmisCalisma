@@ -113,6 +113,7 @@ class AttachedWordsActivity : AppCompatActivity() {
     private fun run() {
        getWords()
 
+
     }
 
     private fun getWords() {
