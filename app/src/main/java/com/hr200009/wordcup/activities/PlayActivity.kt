@@ -37,14 +37,13 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var goButton: Button
     private lateinit var passButton: Button
 
-    private  var trueCounter: Int = 0
+    private var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
     private var viewCounter: Int = 0
     private var isItLearned: Boolean = false
 
     private var bool: Boolean = false
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +60,6 @@ class PlayActivity : AppCompatActivity() {
         textTarget = findViewById(R.id.textView2)
         goButton = findViewById(R.id.button2)
         passButton = findViewById(R.id.button)
-        //arrayList = ArrayList()
 
 
         run()
@@ -71,7 +69,9 @@ class PlayActivity : AppCompatActivity() {
 
     private fun run() {
         getWord()
+
     }
+
     private fun getWord() {
 
         arrayList.clear()
@@ -80,9 +80,7 @@ class PlayActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 for (word in it) {
                     val word = word.toObject(Word::class.java)
-
                     arrayList.add(word!!)
-
                 }
                 randomWord(arrayList)
             }
@@ -115,7 +113,6 @@ class PlayActivity : AppCompatActivity() {
 
     private fun randomWord(arrayList: ArrayList<Word>) {
 
-       // db.collection("words").document(auth.uid.toString()).collection("allWords")
 
         arrayList.random().let { Word ->
             textSource.text = Word.source
@@ -134,21 +131,18 @@ class PlayActivity : AppCompatActivity() {
 
                 viewCounter++
                 Word.viewCounter = viewCounter
-                viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+                //viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+                asd(Word.id.toString(), isItLearned, Word, viewCounter)
 
                 if (textTarget.text.toString() == Word.translation) {
 
                     trueCounter++
                     Word.trueCounter = trueCounter
 
-                    trueCounter(Word.id.toString(), trueCounter, Word, isItLearned)
 
-                    if (trueCounter!! >= 15) {
-                        isItLearned = true
-                        Word.isItLearned = isItLearned
-                        isLearned(Word.id.toString(), isItLearned, Word)
-                        learnedWord(Word.id!!, Word)
-                    }
+                    asd(Word.id.toString(), isItLearned, Word, trueCounter)
+
+
 
                     bool = true
                     tempLayout(bool)
@@ -157,7 +151,7 @@ class PlayActivity : AppCompatActivity() {
                 } else {
                     falseCounter++
                     Word.falseCounter = falseCounter
-                    falseCounter(Word.id.toString(), falseCounter, Word, isItLearned)
+                    asd(Word.id.toString(), isItLearned, Word, falseCounter)
                     bool = false
                     tempLayout(bool)
                     // Toast.makeText(this, "Yanlış", Toast.LENGTH_SHORT).show()
@@ -170,13 +164,16 @@ class PlayActivity : AppCompatActivity() {
 
                 viewCounter++
                 Word.viewCounter = viewCounter
-                viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+               // viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+                asd(Word.id.toString(), isItLearned, Word, viewCounter)
 
 
                 passCounter++
                 Word.passCounter = passCounter
 
-                passCounter(Word.id.toString(), passCounter, Word, isItLearned)
+
+               // asd(Word.id.toString(), isItLearned, Word, passCounter)
+                asd(Word.id.toString(), isItLearned, Word, passCounter)
                 textTarget.text.clear()
                 Toast.makeText(this, "PAS GEÇTİNİZ", Toast.LENGTH_SHORT).show()
                 randomWord(arrayList)
@@ -188,63 +185,46 @@ class PlayActivity : AppCompatActivity() {
 
 
     private fun learnedWord(id: String, word: Word) {
-       dataBase.learnedWords.document(id).set(word)
+        dataBase.learnedWords.document(id).set(word)
     }
 
-    private fun viewCounter(wordId: String, viewCounter: Int, word: Word, isItLearned: Boolean) {
 
 
-        dataBase.allWords.document(wordId).update("viewCounter", viewCounter.toInt())
 
 
+    private fun asd(wordId: String, isLearned: Boolean, word: Word, args: Any) {
+        when (args) {
+            passCounter -> dataBase.allWords.document(wordId)
+                .update("passCounter", passCounter.toInt())
+            falseCounter -> dataBase.allWords.document(wordId)
+                .update("falseCounter", falseCounter.toInt())
+            trueCounter -> dataBase.allWords.document(wordId)
+                .update("trueCounter", trueCounter.toInt())
+            viewCounter -> dataBase.allWords.document(wordId)
+                .update("viewCounter", viewCounter.toInt())
+            isItLearned -> dataBase.allWords.document(wordId).update("isItLearned", isLearned)
+        }
+
+        if (trueCounter!! >= 15) {
+            word.isItLearned = true
+            dataBase.learnedWords.document(wordId).set(word)
+        }
         if (isItLearned) {
-            learnedWord(wordId, word)
+            when (args) {
+                passCounter -> dataBase.allWords.document(wordId)
+                    .update("passCounter", passCounter.toInt())
+                falseCounter -> dataBase.allWords.document(wordId)
+                    .update("falseCounter", falseCounter.toInt())
+                trueCounter -> dataBase.allWords.document(wordId)
+                    .update("trueCounter", trueCounter.toInt())
+                viewCounter -> dataBase.allWords.document(wordId)
+                    .update("viewCounter", viewCounter.toInt())
+                isItLearned -> dataBase.allWords.document(wordId).update("isItLearned", isLearned)
+            }
         }
 
     }
 
-    private fun isLearned(wordId: String, isLearned: Boolean, word: Word) {
-
-        dataBase.allWords
-        .document(wordId).update("isItLearned", isLearned)
-
-        if (isItLearned) {
-            learnedWord(wordId, word)
-        }
-    }
-
-    private fun trueCounter(wordId: String, trueCounter: Int, word: Word, isItLearned: Boolean) {
-
-
-
-        dataBase.allWords
-        .document(wordId).update("trueCounter", trueCounter.toInt())
-
-        if (isItLearned) {
-            learnedWord(wordId, word)
-        }
-    }
-
-    private fun falseCounter(wordId: String, falseCounter: Int, word: Word, isItLearned: Boolean) {
-
-
-
-        dataBase.allWords.document(wordId).update("falseCounter", falseCounter.toInt())
-        if (isItLearned) {
-            learnedWord(wordId, word)
-        }
-    }
-
-    private fun passCounter(wordId: String, passCounter: Int, word: Word, isItLearned: Boolean) {
-
-
-        dataBase.allWords.document(wordId).update("passCounter", passCounter.toInt())
-
-        if (isItLearned) {
-            learnedWord(wordId, word)
-        }
-
-    }
 
     override fun onBackPressed() {
 

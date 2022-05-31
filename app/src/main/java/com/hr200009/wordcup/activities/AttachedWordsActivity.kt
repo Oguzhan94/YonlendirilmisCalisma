@@ -21,10 +21,11 @@ import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
 import com.hr200009.wordcup.models.Word
+import com.hr200009.wordcup.util.FirebaseUtil
 
 class AttachedWordsActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private var dataBase = FirebaseUtil()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var arrayList: ArrayList<Word>
@@ -39,7 +40,7 @@ class AttachedWordsActivity : AppCompatActivity() {
     private lateinit var editButton: Button
     private lateinit var writeButton: Button
 
-    val db = Firebase.firestore
+
 
 
     private lateinit var tempLayout2: ConstraintLayout
@@ -48,7 +49,6 @@ class AttachedWordsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attached_words)
 
-        auth = Firebase.auth
 
 
         tempLayout2 = findViewById(R.id.cons)
@@ -95,7 +95,7 @@ class AttachedWordsActivity : AppCompatActivity() {
 
         }
         writeButton.setOnClickListener() {
-           db.collection("words").document(auth.uid.toString()).collection("allWords").document(text.id.toString())
+           dataBase.allWords.document(text.id.toString())
                .update(mapOf(
                    "source" to textSource.text.toString(),
                    "translation" to textTarget.text.toString()
@@ -111,13 +111,14 @@ class AttachedWordsActivity : AppCompatActivity() {
 
 
     private fun run() {
-        getWords()
+       getWords()
+
     }
 
     private fun getWords() {
-       val dbRef = db.collection("words").document(auth.uid.toString()).collection("allWords")
 
-        dbRef.get().addOnSuccessListener {
+
+        dataBase.allWords.get().addOnSuccessListener { it ->
             arrayList.clear()
             if (it != null) {
                 for (snapshot in it) {
@@ -128,14 +129,13 @@ class AttachedWordsActivity : AppCompatActivity() {
 
                 Toast.makeText(this@AttachedWordsActivity, "Size: $size", Toast.LENGTH_SHORT).show()
                 recyclerView.adapter = WordAdapter(arrayList) {
-                    arrayList[it].let { word ->
-                        secondaryLayout(word)
-                    }
+                    secondaryLayout(arrayList[it])
                 }
             }
 
         }
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()
