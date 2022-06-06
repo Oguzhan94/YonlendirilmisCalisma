@@ -24,9 +24,8 @@ class LearnedWordsActivity : AppCompatActivity() {
     private lateinit var arrayList: ArrayList<Word>
 
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_learned_words)
 
         recyclerView = findViewById(R.id.recyclerViewAttachedWords)

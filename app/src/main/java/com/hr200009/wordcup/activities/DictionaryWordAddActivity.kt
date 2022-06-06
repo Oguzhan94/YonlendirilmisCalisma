@@ -1,33 +1,29 @@
 package com.hr200009.wordcup.activities
 
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+
 import android.view.View
 import android.widget.Button
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.hr200009.wordcup.R
-import com.hr200009.wordcup.models.Word
+import com.hr200009.wordcup.databinding.ActivityDictionaryWordAddBinding
+
 import com.hr200009.wordcup.util.FirebaseUtil
 
 class DictionaryWordAddActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityDictionaryWordAddBinding
+
     private var dataBase = FirebaseUtil()
 
-    private lateinit var searchView: SearchView
-    private lateinit var textViewTarget: TextView
-    private lateinit var textViewSource: TextView
+
     private lateinit var textTSource: String
     private lateinit var textTarget: String
     private var trueCounter: Int = 0
@@ -35,18 +31,18 @@ class DictionaryWordAddActivity : AppCompatActivity() {
     private var passCounter: Int = 0
     private var isItLearned: Boolean = false
     private var viewCounter: Int = 0
-    private lateinit var saveButton: Button
+
     var wordId: String? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_dictionary_word_add)
 
-        searchView = findViewById(R.id.searchViewDictionaryWordAdd)
-        textViewTarget = findViewById(R.id.textViewTarget)
-        textViewSource = findViewById(R.id.textViewSource)
-        saveButton = findViewById(R.id.buttonAddWordDictionary)
+        binding = ActivityDictionaryWordAddBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         addWordToDatabase()
@@ -66,15 +62,15 @@ class DictionaryWordAddActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 // Model downloaded successfully. Okay to start translating.
                 // (Set a flag, unhide the translation UI, etc.)
-                Toast.makeText(this, "Model downloaded successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.translate_model_download_success, Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 // Model couldn’t be downloaded or other internal error.
                 // ...
-                Toast.makeText(this, "Model couldn't be downloaded", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.translate_model_download_failed, Toast.LENGTH_SHORT).show()
             }
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchViewDictionaryWordAdd.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -86,8 +82,8 @@ class DictionaryWordAddActivity : AppCompatActivity() {
                         // Translation successful.
                         textTarget = translatedText
                         textTSource = newText
-                        textViewTarget.text = textTarget
-                        textViewSource.text = textTSource
+                        binding.textViewTarget.text = textTarget
+                        binding.textViewSource.text = textTSource
                     }
                     .addOnFailureListener {
                         // Error.
@@ -101,7 +97,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
 
     private fun addWordToDatabase(){
         translate()
-      saveButton.setOnClickListener(View.OnClickListener {
+        binding.buttonAddWordDictionary.setOnClickListener(View.OnClickListener {
           if (textTSource.isNotEmpty() && textTarget.isNotEmpty()) {
 
               //wordId=database.push().key.toString()

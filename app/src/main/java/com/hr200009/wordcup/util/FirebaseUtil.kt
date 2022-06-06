@@ -8,6 +8,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
+import com.hr200009.wordcup.activities.MainActivity
 import com.hr200009.wordcup.activities.PlayActivity
 import com.hr200009.wordcup.adaptor.WordAdapter
 import com.hr200009.wordcup.models.Word
@@ -17,14 +18,19 @@ class FirebaseUtil {
     var currentUser = auth.currentUser
     var currentUserUid = currentUser?.uid
 
+    var arrayList = ArrayList<Word>()
+
     val db = Firebase.firestore
     var userInfo = db.collection("userInfo").document(auth.uid.toString())
     var wordId =
         db.collection("userWords").document(auth.uid.toString()).collection("allWords").document()
             .toString()
-    var allWords = db.collection("userWords").document(auth.uid.toString()).collection("allWords")
+    var allWords = db.collection("userWords").document(currentUserUid.toString()).collection("allWords")
     var learnedWords =
         db.collection("userWords").document(currentUserUid.toString()).collection("learnedWords")
+
+
+
 
     }
 

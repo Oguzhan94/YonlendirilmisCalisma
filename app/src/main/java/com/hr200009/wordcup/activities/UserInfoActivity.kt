@@ -43,8 +43,8 @@ class UserInfoActivity : AppCompatActivity() {
     private var notification = ""
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_user_info)
 
         radioGroupToBeLearned = findViewById(R.id.toBeLearnedRadioGroup)

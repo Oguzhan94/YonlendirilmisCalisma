@@ -2,26 +2,18 @@ package com.hr200009.wordcup.activities
 
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.User
 import com.hr200009.wordcup.util.FirebaseUtil
 
 class SignupActivity : AppCompatActivity() {
+
     private var dataBase = FirebaseUtil()
-
-
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var nickNameEditText: EditText
@@ -33,10 +25,8 @@ class SignupActivity : AppCompatActivity() {
     private var notificationFrequency: Int = 0
     private var toBeLearned: Int = 0
 
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_signup)
 
         emailEditText = findViewById(R.id.textRegisterEmail)
@@ -44,11 +34,6 @@ class SignupActivity : AppCompatActivity() {
         nickNameEditText = findViewById(R.id.textRegisterNickname)
         registerButton = findViewById(R.id.buttonRegister)
 
-
-    }
-
-   override fun onStart() {
-        super.onStart()
         run()
     }
 
@@ -62,7 +47,7 @@ class SignupActivity : AppCompatActivity() {
         email = emailEditText.text.toString()
         password = passwordEditText.text.toString()
         nickName = nickNameEditText.text.toString()
-        if (email.isEmpty() || password.isEmpty() || nickName.isEmpty()) {
+        if (email.isEmpty() && password.isEmpty() && nickName.isEmpty()) {
             Toast.makeText(applicationContext, R.string.fill_in_all_fields, Toast.LENGTH_SHORT)
                 .show()
         } else {
@@ -99,7 +84,6 @@ class SignupActivity : AppCompatActivity() {
         toBeLearned: Int
     ) {
         val user = User(name, difficulty, notificationFrequency, toBeLearned)
-       // database.child("userInfo").child(auth.uid.toString()).setValue(user)
         dataBase.userInfo.set(user)
     }
 

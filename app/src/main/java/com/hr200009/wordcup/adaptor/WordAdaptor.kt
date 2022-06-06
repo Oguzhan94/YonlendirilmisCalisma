@@ -12,7 +12,6 @@ import com.hr200009.wordcup.models.Word
 
 class WordAdapter(private val dataSet: ArrayList<Word>, var onClick: (Int) -> Unit) :
     RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
-
     constructor(dataSet: ArrayList<Word>) : this(dataSet, {})
 
     /**

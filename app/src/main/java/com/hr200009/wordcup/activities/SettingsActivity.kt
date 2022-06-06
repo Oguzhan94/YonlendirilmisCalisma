@@ -19,8 +19,10 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var buttonToUserInfoActivity: Button
     private lateinit var buttonToLogout: Button
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_settings)
 
         buttonToPasswordActivity = findViewById(R.id.buttonSettingsPassword)

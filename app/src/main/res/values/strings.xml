@@ -64,8 +64,16 @@
     <string name="buttonWeeklyWords">HAFTALIK KELİMELER</string>
 
     <!-- WordCup Dictionary Word Add -->
+    <!-- XML -->
     <string name="searchViewDictionaryWordAdd">KELİME ARAMA</string>
     <string name="buttonAddWordDictionary">KELİME EKLE</string>
+    <string name="textWordSource">KELİME</string>
+    <string name="textWordTranslation">ÇEVİRİ</string>
+    <!-- ACTIVITY -->
+    <string name="word_added_dictionary">Kelime başarıyla eklendi!</string>
+    <string name="translate_model_download_success">Model downloaded successfully</string>
+    <string name="translate_model_download_failed">Model couldn\'t be downloaded</string>
+    <!-- WordCup Dictionary Word Add -->
 
     <!-- WordCup Login -->
     <string name="textLoginEmailAddress">E-MAİL</string>
@@ -90,6 +98,8 @@
     <string name="buttonSettingsPassword">ŞİFRE</string>
     <string name="buttonSettingsUserInfo">OYUN AYARLARI</string>
     <string name="buttonSettingsLogout">ÇIKIŞ YAP</string>
+    <string name="buttonSettingsAbout">HESAP</string>
+    <!-- WordCup Settings Category -->
 
     <!-- WordCup Signup -->
     <string name="textRegisterNickname">KULLANICI ADI</string>
@@ -113,11 +123,40 @@
     <!-- WordCup CardView -->
     <string name="textCardViewSource">Source</string>
     <string name="textCardViewTarget">Target</string>
+    <!-- WordCup CardView -->
 
-    <!-- WordCup Play Category -->
+    <!-- WordCup Play Activity -->
+    <!-- XML -->
     <string name="passButton">PAS GEÇ</string>
     <string name="continueButton">DEVAM ET</string>
+    <!-- ACTIVITY -->
+    <string name="answerIsCorrect">Doğru cevap verdiniz</string>
+    <string name="answerIsWrong">Yanlış cevap verdiniz</string>
+    <string name="answerIsPassed">Pas Geçtiniz</string>
 
+    <!-- WordCup Play Activity -->
+
+    <!-- WordCup Attached Words Activity -->
+    <string name="success_word_update">Kelime güncelleme başarılı</string>
+
+    <!-- WordCup Word Detail -->
+    <string name="textWordDetailSource">KELİME</string>
+    <string name="textWordDetailTarget">ANLAMI</string>
+    <string name="textWordDetailTrueCounter">DOĞRU SAYISI</string>
+    <string name="textWordDetailFalseCounter">YANLIŞ SAYISI</string>
+    <string name="textWordDetailPassCounter">PAS GEÇME SAYISI</string>
+    <string name="textWordDetailViewCounter">GÖRÜNTÜLENME SAYISI</string>
+    <string name="textWordDetailIsItLearned">ÖĞRENİLMİŞ Mİ?</string>
+    <!-- WordCup Attached Words Activity -->
+
+    <!-- WordCup Password Reset Activity -->
+    <!-- XML -->
+    <string name="textPasswordResetEmail">E-MAİL</string>
+    <!-- ACTIVITY -->
+    <string name="fillInTheMailField">LÜTFEN MAİL ADRESİNİZİ GİRİNİZ</string>
+    <string name="sendingMailSuccess">ŞİFRE SIFIRLAMA MAİLİ GÖNDERİLDİ</string>
+    <string name="sendingMailFailed">ŞİFRE SIFIRLAMA MAİLİ GÖNDERİLEMEDİ</string>
+    <!-- WordCup Password Reset Activity -->
     <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 </resources>

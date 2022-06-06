@@ -47,7 +47,9 @@
         android:layout_marginEnd="127dp"
         android:background="@drawable/textview_background"
         android:gravity="center"
-        android:text="TextView"
+        android:hint="@string/textWordTranslation"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSource" />
@@ -61,7 +63,9 @@
         android:layout_marginEnd="126dp"
         android:background="@drawable/textview_background"
         android:gravity="center"
-        android:text="TextView"
+        android:hint="@string/textWordDetailSource"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchViewDictionaryWordAdd" />

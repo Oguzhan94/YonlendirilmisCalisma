@@ -3,9 +3,12 @@ package com.hr200009.wordcup.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.WorkSource
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.util.DisplayMetrics
+import android.view.Display
+import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -40,8 +43,9 @@ class ManualWordAddActivity : AppCompatActivity() {
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_manual_word_add)
 
         saveButton = findViewById(R.id.buttonSaveWordsManualAdded)
@@ -49,8 +53,7 @@ class ManualWordAddActivity : AppCompatActivity() {
         textWordTarget = findViewById(R.id.textWordTargetManuelAdded)
 
 
-
-        run()
+                run()
     }
 
     private fun run() {
@@ -66,7 +69,6 @@ class ManualWordAddActivity : AppCompatActivity() {
         wordId= dataBase.allWords.document().toString()
 
         if (wordSource.isNotEmpty() && wordTarget.isNotEmpty()) {
-            //val word = Word(wordSource, wordTarget, trueCounter, falseCounter, passCounter, isItLearned,)
             val wordData = hashMapOf(
                 "source" to wordSource.lowercase(),
                 "translation" to wordTarget.lowercase(),

@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-data class Word(
+data class Word (
     var source: String? = null,
     var translation: String? = null,
     var trueCounter: Int? = null,
@@ -26,4 +26,5 @@ data class Word(
             "viewCounter" to viewCounter
         )
     }
+
 }

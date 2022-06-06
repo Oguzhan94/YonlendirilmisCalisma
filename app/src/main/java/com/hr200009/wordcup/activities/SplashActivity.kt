@@ -2,13 +2,8 @@ package com.hr200009.wordcup.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.util.AlertUtil
 import com.hr200009.wordcup.util.FirebaseUtil
@@ -16,22 +11,11 @@ import com.hr200009.wordcup.util.NetworkUtil
 
 class SplashActivity : AppCompatActivity() {
 
-private var dataBase = FirebaseUtil()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-
-        // Offline için data izini veriyoruz
-        Firebase.database.setPersistenceEnabled(true)
-
-        // Initialize Firebase Auth
-
-
-    }
+    private var dataBase = FirebaseUtil()
 
     override fun onStart() {
         super.onStart()
+        setContentView(R.layout.activity_splash)
         loadingTime()
     }
 
@@ -39,8 +23,6 @@ private var dataBase = FirebaseUtil()
         val countDownTimer: CountDownTimer = object : CountDownTimer(3000, 1000) {
             override fun onTick(l: Long) {}
             override fun onFinish() {
-                //start nextActivity
-                //checkUserLogin()
                 openNextActivity()
             }
         }
@@ -50,8 +32,9 @@ private var dataBase = FirebaseUtil()
     private fun checkInternet(): Boolean {
         return NetworkUtil.isInternetConnected(applicationContext)
     }
+
     private fun checkUserLogin(): Boolean {
-       return dataBase.currentUser != null
+        return dataBase.currentUser != null
     }
 
     private fun openNextActivity() {
@@ -76,7 +59,7 @@ private var dataBase = FirebaseUtil()
     private fun openMainActivity() {
         val intent = Intent(this@SplashActivity, MainActivity::class.java)
         startActivity(intent)
-        finish()
+        finishAffinity()
     }
 
 }

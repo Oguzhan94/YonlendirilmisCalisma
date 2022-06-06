@@ -1,6 +1,7 @@
 package com.hr200009.wordcup.activities
 
 import android.os.Bundle
+import android.view.View
 
 import android.widget.Button
 import android.widget.EditText
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.adaptor.WordAdapter
+import com.hr200009.wordcup.databinding.ActivityAttachedWordsBinding
 import com.hr200009.wordcup.models.Word
 import com.hr200009.wordcup.util.FirebaseUtil
 
@@ -40,8 +42,7 @@ class AttachedWordsActivity : AppCompatActivity() {
     private lateinit var editButton: Button
     private lateinit var writeButton: Button
 
-
-
+private lateinit var binding: ActivityAttachedWordsBinding
 
     private lateinit var tempLayout2: ConstraintLayout
 
@@ -93,16 +94,17 @@ class AttachedWordsActivity : AppCompatActivity() {
             textSource.isFocusableInTouchMode = true
             textTarget.isFocusableInTouchMode = true
 
+
         }
         writeButton.setOnClickListener() {
-           dataBase.allWords.document(text.id.toString())
-               .update(mapOf(
-                   "source" to textSource.text.toString(),
-                   "translation" to textTarget.text.toString()
-               ))
-               .addOnSuccessListener {
-                   Toast.makeText(this,"Kelime güncelleme başarılı",Toast.LENGTH_SHORT)
-               }
+            dataBase.allWords.document(text.id.toString())
+                .update(mapOf(
+                    "source" to textSource.text.toString(),
+                    "translation" to textTarget.text.toString()
+                ))
+                .addOnSuccessListener {
+                    Toast.makeText(this,R.string.success_word_update,Toast.LENGTH_SHORT)
+                }
             textSource.isFocusableInTouchMode = false
             textTarget.isFocusableInTouchMode = false
         }
@@ -111,7 +113,7 @@ class AttachedWordsActivity : AppCompatActivity() {
 
 
     private fun run() {
-       getWords()
+        getWords()
 
 
     }

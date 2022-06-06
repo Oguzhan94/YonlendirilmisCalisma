@@ -42,8 +42,9 @@ class PlayActivity : AppCompatActivity() {
     private var bool: Boolean = false
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_play)
 
 
@@ -59,8 +60,6 @@ class PlayActivity : AppCompatActivity() {
 
 
         run()
-
-
     }
 
     private fun run() {
@@ -92,10 +91,10 @@ class PlayActivity : AppCompatActivity() {
 
         if (boolean) {
 
-            tempText.setText("Doğru cevap verdiniz")
+            tempText.setText(R.string.answerIsCorrect)
 
         } else {
-            tempText.setText("Yanlış cevap verdiniz")
+            tempText.setText(R.string.answerIsWrong)
         }
         tempButton.setOnClickListener(View.OnClickListener {
             goButton.visibility = View.VISIBLE
@@ -171,7 +170,7 @@ class PlayActivity : AppCompatActivity() {
                // asd(Word.id.toString(), isItLearned, Word, passCounter)
                 asd(Word.id.toString(), isItLearned, Word, passCounter)
                 textTarget.text.clear()
-                Toast.makeText(this, "PAS GEÇTİNİZ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.answerIsPassed, Toast.LENGTH_SHORT).show()
                 randomWord(arrayList)
             })
         }

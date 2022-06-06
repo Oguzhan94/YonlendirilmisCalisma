@@ -2,18 +2,11 @@ package com.hr200009.wordcup.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.util.FirebaseUtil
 
@@ -21,9 +14,7 @@ import com.hr200009.wordcup.util.FirebaseUtil
 class MainActivity : AppCompatActivity() {
 
     private var dataBase = FirebaseUtil()
-
     private lateinit var nickNameTextView: TextView
-
     private lateinit var settingsButton: ImageButton
     private lateinit var openAddWordCategory: Button
     private lateinit var openAttachedWordActivity: Button
@@ -31,9 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var openLearnedWordsActivity: Button
 
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_main)
 
 
@@ -43,8 +33,6 @@ class MainActivity : AppCompatActivity() {
         openAttachedWordActivity = findViewById(R.id.buttonToAddedWords)
         openPlayCategoryActivity = findViewById(R.id.buttonOpenPlayCategory)
         openLearnedWordsActivity = findViewById(R.id.buttonLearnedWords)
-
-        readData()
 
         run()
     }
@@ -65,24 +53,20 @@ class MainActivity : AppCompatActivity() {
         openLearnedWordsActivity.setOnClickListener(View.OnClickListener {
             openLearnedWordsActivity()
         })
-
+        readData()
     }
 
     private fun readData() {
-
-        val dbRef = dataBase.userInfo
-
-        dbRef.get()
+        dataBase.userInfo.get()
             .addOnSuccessListener {
-                if (it != null){
-                    val nickName: String = getString(R.string.welcome_message, it.get("userName").toString())
+                if (it != null) {
+                    val nickName: String =
+                        getString(R.string.welcome_message, it.get("userName").toString())
                     nickNameTextView.text = nickName
-                }else{
+                } else {
                     Toast.makeText(this, "Data bulunamadı", Toast.LENGTH_SHORT)
                 }
             }
-
-
     }
 
     private fun openSettingsActivity() {
@@ -99,10 +83,12 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this@MainActivity, AttachedWordsActivity::class.java)
         startActivity(intent)
     }
+
     private fun openPlayCategoryActivity() {
         val intent = Intent(this@MainActivity, CategoryActivity::class.java)
         startActivity(intent)
     }
+
     private fun openLearnedWordsActivity() {
         val intent = Intent(this@MainActivity, LearnedWordsActivity::class.java)
         startActivity(intent)

@@ -3,4 +3,6 @@
     <style name="Theme.WordCup" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/black</item>
     </style>
+
+
 </resources>
