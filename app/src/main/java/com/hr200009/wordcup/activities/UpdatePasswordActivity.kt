@@ -26,9 +26,10 @@ class UpdatePasswordActivity : AppCompatActivity() {
     private lateinit var newPasswordEditText: EditText
     private lateinit var newPasswordCheckEditText: EditText
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_update_password)
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         currentPasswordEditText = findViewById(R.id.textSettingsCurrentPassword)
         newPasswordEditText = findViewById(R.id.TextSettingsNewPassword)

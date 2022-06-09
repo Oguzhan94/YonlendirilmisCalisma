@@ -1,5 +1,6 @@
 package com.hr200009.wordcup.activities
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
@@ -13,9 +14,10 @@ class PasswordResetActivity : AppCompatActivity() {
     private lateinit var sendButton: Button
     private lateinit var emailEditText: EditText
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_password_reset)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
 
         sendButton = findViewById(R.id.button4)
         emailEditText = findViewById(R.id.editTextTextEmailAddress)

@@ -22,9 +22,8 @@ class SettingsActivity : AppCompatActivity() {
 
 
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_settings)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         buttonToPasswordActivity = findViewById(R.id.buttonSettingsPassword)
         buttonToUserInfoActivity = findViewById(R.id.buttonSettingsUserInfo)

@@ -44,16 +44,15 @@ class ManualWordAddActivity : AppCompatActivity() {
 
 
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_manual_word_add)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         saveButton = findViewById(R.id.buttonSaveWordsManualAdded)
         textWordSource = findViewById(R.id.textWordSourceManuelAdded)
         textWordTarget = findViewById(R.id.textWordTargetManuelAdded)
 
 
-                run()
+        run()
     }
 
     private fun run() {

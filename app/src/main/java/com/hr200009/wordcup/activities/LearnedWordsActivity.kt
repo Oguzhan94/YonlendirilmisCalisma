@@ -24,10 +24,9 @@ class LearnedWordsActivity : AppCompatActivity() {
     private lateinit var arrayList: ArrayList<Word>
 
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_learned_words)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         recyclerView = findViewById(R.id.recyclerViewAttachedWords)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)

@@ -1,5 +1,6 @@
 package com.hr200009.wordcup.activities
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 import android.view.View
@@ -37,10 +38,8 @@ class DictionaryWordAddActivity : AppCompatActivity() {
 
 
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_dictionary_word_add)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivityDictionaryWordAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

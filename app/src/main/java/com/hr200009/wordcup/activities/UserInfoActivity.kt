@@ -47,6 +47,11 @@ class UserInfoActivity : AppCompatActivity() {
         super.onStart()
         setContentView(R.layout.activity_user_info)
 
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         radioGroupToBeLearned = findViewById(R.id.toBeLearnedRadioGroup)
         radioGroupDifficulty = findViewById(R.id.diffucultyRadioGroup)
         radioGroupNotification = findViewById(R.id.notificationRadioGroup)
@@ -64,6 +69,7 @@ class UserInfoActivity : AppCompatActivity() {
 
 
         run()
+
     }
 
     private fun getData() {

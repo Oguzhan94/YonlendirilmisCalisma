@@ -1,6 +1,7 @@
 package com.hr200009.wordcup.activities
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
@@ -22,11 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var openLearnedWordsActivity: Button
 
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_main)
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         nickNameTextView = findViewById(R.id.textNickname)
         settingsButton = findViewById(R.id.buttonOpenSettings)
         openAddWordCategory = findViewById(R.id.buttonAddWordCategory)

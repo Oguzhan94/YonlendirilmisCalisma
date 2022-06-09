@@ -2,6 +2,7 @@ package com.hr200009.wordcup.activities
 
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -25,9 +26,9 @@ class SignupActivity : AppCompatActivity() {
     private var notificationFrequency: Int = 0
     private var toBeLearned: Int = 0
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_signup)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
 
         emailEditText = findViewById(R.id.textRegisterEmail)
         passwordEditText = findViewById(R.id.textRegisterPassword)
@@ -36,7 +37,6 @@ class SignupActivity : AppCompatActivity() {
 
         run()
     }
-
     private fun run() {
         registerButton.setOnClickListener(View.OnClickListener {
             registerNewUser()

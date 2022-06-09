@@ -15,6 +15,12 @@ class WordAddCategoryActivity : AppCompatActivity() {
         super.onStart()
         setContentView(R.layout.activity_word_add_category)
 
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         addWordFromDictionary = findViewById(R.id.buttonAddWordFromDictionary)
         addWordManuel = findViewById(R.id.buttonAddWordFromManuel)
 

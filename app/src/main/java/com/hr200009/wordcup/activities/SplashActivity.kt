@@ -1,6 +1,7 @@
 package com.hr200009.wordcup.activities
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.CountDownTimer
 import android.widget.Toast
@@ -15,9 +16,9 @@ class SplashActivity : AppCompatActivity() {
 
     private var dataBase = FirebaseUtil()
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_splash)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         loadingTime()
     }
 

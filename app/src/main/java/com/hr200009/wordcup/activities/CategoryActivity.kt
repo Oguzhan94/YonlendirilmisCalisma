@@ -1,6 +1,7 @@
 package com.hr200009.wordcup.activities
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import com.hr200009.wordcup.R
@@ -11,10 +12,10 @@ class CategoryActivity : AppCompatActivity() {
     private lateinit var popularWords: Button
     private lateinit var weeklyWords: Button
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_category)
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         mixUpWordsButton = findViewById(R.id.buttonRandomWordPlay)
         popularWords = findViewById(R.id.buttonPopularWords)
         weeklyWords = findViewById(R.id.buttonWeeklyWords)
