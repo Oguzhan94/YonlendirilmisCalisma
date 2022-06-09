@@ -12,6 +12,7 @@ data class Word (
     var passCounter: Int? = null,
     val id: String? = null,
     var viewCounter: Int? = null,
+    @field:JvmField
     var isItLearned: Boolean? = null
 ) {
     @Exclude

@@ -53,7 +53,7 @@
 
     <!-- Alert Dialog -->
     <string name="alert_dialog_title">Alert</string>
-    <string name="alert_dialog_message">İnternet bağlantınız bulunmamaktadır</string>
+    <string name="internet_connection_alert_dialog_message">İnternet bağlantınız bulunmamaktadır, Ayarlara Yönlendirilmek İster misniz?</string>
     <string name="alert_dialog_positive_button">Ayarları Aç</string>
     <string name="alert_dialog_negative_button">Çıkış Yap</string>
 
@@ -129,6 +129,7 @@
     <!-- XML -->
     <string name="passButton">PAS GEÇ</string>
     <string name="continueButton">DEVAM ET</string>
+    <string name="textTarget">ÇEVİRİ</string>
     <!-- ACTIVITY -->
     <string name="answerIsCorrect">Doğru cevap verdiniz</string>
     <string name="answerIsWrong">Yanlış cevap verdiniz</string>
@@ -157,6 +158,17 @@
     <string name="sendingMailSuccess">ŞİFRE SIFIRLAMA MAİLİ GÖNDERİLDİ</string>
     <string name="sendingMailFailed">ŞİFRE SIFIRLAMA MAİLİ GÖNDERİLEMEDİ</string>
     <!-- WordCup Password Reset Activity -->
+
+    <!-- WordCup Account Settings Activity -->
+    <!-- XML -->
+    <string name="a">E-MAİL</string>
+    <string name="button_delete_account">HESABI SİL</string>
+    <string name="button_confirm_updates">ONAYLA</string>
+    <!-- ACTIVITY -->
+    <string name="account_delete_alert_message">Hesabı silmek istediğinize Emin misiniz?</string>
+    <string name="nickname_update_success">TAKMA AD GÜNCELLENDİ</string>
+    <string name="delete_user">KULLANICI SİLİNDİ.!!!</string>
+    <!-- WordCup Account Settings Activity -->
     <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 </resources>

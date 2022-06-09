@@ -31,7 +31,9 @@
         android:layout_marginEnd="176dp"
         android:background="@drawable/textview_background"
         android:gravity="center"
-        android:hint="ÇEVİRİ"
+        android:hint="@string/textTarget"
+        android:importantForAutofill="no"
+        android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,28 +74,13 @@
         android:id="@+id/tempLayout"
         android:layout_width="0dp"
         android:layout_height="311dp"
-        android:layout_marginEnd="1dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="1.0">
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="72dp"
-            android:layout_marginEnd="38dp"
-            android:backgroundTint="@color/green_button"
-            android:text="DEVAM ET"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.308"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintVertical_bias="0.187">
 
         <EditText
             android:id="@+id/editTextTextMultiLine"
@@ -103,13 +90,30 @@
             android:layout_marginEnd="100dp"
             android:background="@drawable/textview_background"
             android:ems="10"
-            android:gravity="start|top"
+            android:gravity="center"
             android:inputType="textMultiLine"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.216" />
+            app:layout_constraintVertical_bias="0.146"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="38dp"
+            android:backgroundTint="@color/green_button"
+            android:text="@string/continueButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.308"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

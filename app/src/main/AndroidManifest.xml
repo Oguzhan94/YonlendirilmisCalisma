@@ -14,6 +14,10 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.WordCup">
         <activity
+            android:name=".activities.AccountSettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activities.PasswordResetActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

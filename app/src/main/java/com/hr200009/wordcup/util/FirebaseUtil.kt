@@ -26,10 +26,11 @@ class FirebaseUtil {
         db.collection("userWords").document(auth.uid.toString()).collection("allWords").document()
             .toString()
     var allWords = db.collection("userWords").document(currentUserUid.toString()).collection("allWords")
-    var learnedWords =
-        db.collection("userWords").document(currentUserUid.toString()).collection("learnedWords")
+    var learnedWords = db.collection("userWords").document(currentUserUid.toString()).collection("learnedWords")
 
-
+    var userNickname = db.collection("userInfo").document(auth.uid.toString()).collection("userName")
+    var dailyWords = db.collection("adminWords").document("tr").collection("dailyWords")
+    var weeklyWords = db.collection("adminWords").document("tr").collection("weeklyWords")
 
 
     }

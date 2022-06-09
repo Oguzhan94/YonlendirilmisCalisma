@@ -18,6 +18,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var buttonToPasswordActivity: Button
     private lateinit var buttonToUserInfoActivity: Button
     private lateinit var buttonToLogout: Button
+    private lateinit var buttonToAccountSettingsActivity: Button
 
 
 
@@ -28,6 +29,7 @@ class SettingsActivity : AppCompatActivity() {
         buttonToPasswordActivity = findViewById(R.id.buttonSettingsPassword)
         buttonToUserInfoActivity = findViewById(R.id.buttonSettingsUserInfo)
         buttonToLogout = findViewById(R.id.buttonSettingsLogout)
+        buttonToAccountSettingsActivity = findViewById(R.id.button5)
 
         run()
     }
@@ -42,6 +44,9 @@ class SettingsActivity : AppCompatActivity() {
         buttonToLogout.setOnClickListener(View.OnClickListener {
             logOut()
         })
+        buttonToAccountSettingsActivity.setOnClickListener {
+            openToAccountSettingsActivity()
+        }
 
     }
 
@@ -51,6 +56,10 @@ class SettingsActivity : AppCompatActivity() {
     }
     private fun openToUserInfoActivity(){
         val intent = Intent(this@SettingsActivity, UserInfoActivity::class.java)
+        startActivity(intent)
+    }
+    private fun openToAccountSettingsActivity(){
+        val intent = Intent(this@SettingsActivity, AccountSettingsActivity::class.java)
         startActivity(intent)
     }
     private fun logOut(){

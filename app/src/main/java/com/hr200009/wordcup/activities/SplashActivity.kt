@@ -8,6 +8,8 @@ import com.hr200009.wordcup.R
 import com.hr200009.wordcup.util.AlertUtil
 import com.hr200009.wordcup.util.FirebaseUtil
 import com.hr200009.wordcup.util.NetworkUtil
+import android.provider.Settings
+import com.hr200009.wordcup.util.showAlert
 
 class SplashActivity : AppCompatActivity() {
 
@@ -17,6 +19,11 @@ class SplashActivity : AppCompatActivity() {
         super.onStart()
         setContentView(R.layout.activity_splash)
         loadingTime()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        openNextActivity()
     }
 
     private fun loadingTime() {
@@ -46,7 +53,18 @@ class SplashActivity : AppCompatActivity() {
         } else if (!checkUserLogin() && checkInternet()) {
             openLoginActivity()
         } else {
-            AlertUtil.internetAlert(this)
+            showAlert()
+        }
+    }
+
+    private fun showAlert(){
+        showAlert(R.string.internet_connection_alert_dialog_message) {
+            if (it) {
+                openWifiSettings()
+            }
+            else{
+                finishAndRemoveTask()
+            }
         }
     }
 
@@ -60,6 +78,10 @@ class SplashActivity : AppCompatActivity() {
         val intent = Intent(this@SplashActivity, MainActivity::class.java)
         startActivity(intent)
         finishAffinity()
+    }
+    private fun openWifiSettings(){
+        val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+        startActivity(intent)
     }
 
 }

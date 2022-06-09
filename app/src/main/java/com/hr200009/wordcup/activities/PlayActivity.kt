@@ -1,16 +1,14 @@
 package com.hr200009.wordcup.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.firebase.database.*
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.Word
 import com.hr200009.wordcup.util.FirebaseUtil
@@ -20,7 +18,7 @@ class PlayActivity : AppCompatActivity() {
     private var dataBase = FirebaseUtil()
 
 
-     var arrayList = ArrayList<Word>()
+    private var arrayList = ArrayList<Word>()
 
 
     private lateinit var textSource: TextView
@@ -42,9 +40,8 @@ class PlayActivity : AppCompatActivity() {
     private var bool: Boolean = false
 
 
-
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
 
@@ -75,7 +72,8 @@ class PlayActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 for (word in it) {
                     val word = word.toObject(Word::class.java)
-                    arrayList.add(word!!)
+                    arrayList.add(word)
+                    println("****************************           ${word.isItLearned.toString()}             **************************** ")
                 }
                 randomWord(arrayList)
             }
@@ -109,6 +107,15 @@ class PlayActivity : AppCompatActivity() {
 
     private fun randomWord(arrayList: ArrayList<Word>) {
 
+        val numberOfElements = 2
+
+
+
+        arrayList.asSequence().shuffled().take(numberOfElements).toList().let {
+            for (word in it){
+                arrayList.add(word)
+            }
+        }
 
         arrayList.random().let { Word ->
             textSource.text = Word.source
@@ -116,27 +123,28 @@ class PlayActivity : AppCompatActivity() {
             falseCounter = Word.falseCounter!!
             passCounter = Word.passCounter!!
             viewCounter = Word.viewCounter!!
-
-
-
+            isItLearned = Word.isItLearned!!
 
 
 
             goButton.setOnClickListener(View.OnClickListener {
 
-                viewCounter++
-                Word.viewCounter = viewCounter
-                //viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
-                asd(Word.id.toString(), isItLearned, Word, viewCounter)
+
 
                 if (textTarget.text.toString() == Word.translation) {
 
                     trueCounter++
                     Word.trueCounter = trueCounter
+                    if (Word.trueCounter!! >= 15 && Word.isItLearned == false) {
 
+                        isItLearned = true
+                        Word.isItLearned = isItLearned
+                        updateWordData(Word.id.toString(), isItLearned, isItLearned)
+                        learnedWord(Word.id.toString(), Word)
+                        getWord()
+                    }
 
-                    asd(Word.id.toString(), isItLearned, Word, trueCounter)
-
+                    updateWordData(Word.id.toString(), isItLearned, trueCounter)
 
 
                     bool = true
@@ -146,7 +154,7 @@ class PlayActivity : AppCompatActivity() {
                 } else {
                     falseCounter++
                     Word.falseCounter = falseCounter
-                    asd(Word.id.toString(), isItLearned, Word, falseCounter)
+                    updateWordData(Word.id.toString(), isItLearned, falseCounter)
                     bool = false
                     tempLayout(bool)
                     // Toast.makeText(this, "Yanlış", Toast.LENGTH_SHORT).show()
@@ -159,20 +167,23 @@ class PlayActivity : AppCompatActivity() {
 
                 viewCounter++
                 Word.viewCounter = viewCounter
-               // viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
-                asd(Word.id.toString(), isItLearned, Word, viewCounter)
+                // viewCounter(Word.id.toString(), viewCounter, Word, isItLearned)
+                updateWordData(Word.id.toString(), isItLearned, viewCounter)
 
 
                 passCounter++
                 Word.passCounter = passCounter
 
 
-               // asd(Word.id.toString(), isItLearned, Word, passCounter)
-                asd(Word.id.toString(), isItLearned, Word, passCounter)
+                // asd(Word.id.toString(), isItLearned, Word, passCounter)
+                updateWordData(Word.id.toString(), isItLearned, passCounter)
                 textTarget.text.clear()
                 Toast.makeText(this, R.string.answerIsPassed, Toast.LENGTH_SHORT).show()
                 randomWord(arrayList)
             })
+            viewCounter++
+            Word.viewCounter = viewCounter
+            updateWordData(Word.id.toString(), isItLearned, viewCounter)
         }
 
 
@@ -181,49 +192,65 @@ class PlayActivity : AppCompatActivity() {
 
     private fun learnedWord(id: String, word: Word) {
         dataBase.learnedWords.document(id).set(word)
+            .addOnSuccessListener {
+                Toast.makeText(this, R.string.word_added, Toast.LENGTH_SHORT).show()
+            }
+
     }
 
 
-
-
-
-    private fun asd(wordId: String, isLearned: Boolean, word: Word, args: Any) {
+    private fun updateWordData(wordId: String, isLearned: Boolean, args: Any) {
         when (args) {
             passCounter -> dataBase.allWords.document(wordId)
-                .update("passCounter", passCounter.toInt())
+                .update("passCounter", passCounter)
             falseCounter -> dataBase.allWords.document(wordId)
-                .update("falseCounter", falseCounter.toInt())
+                .update("falseCounter", falseCounter)
             trueCounter -> dataBase.allWords.document(wordId)
-                .update("trueCounter", trueCounter.toInt())
+                .update("trueCounter", trueCounter)
             viewCounter -> dataBase.allWords.document(wordId)
-                .update("viewCounter", viewCounter.toInt())
-            isItLearned -> dataBase.allWords.document(wordId).update("isItLearned", isLearned)
+                .update("viewCounter", viewCounter)
+            isItLearned -> dataBase.allWords.document(wordId).
+            update("isItLearned", isLearned)
         }
 
-        if (trueCounter!! >= 15) {
-            word.isItLearned = true
-            dataBase.learnedWords.document(wordId).set(word)
-        }
         if (isItLearned) {
             when (args) {
-                passCounter -> dataBase.allWords.document(wordId)
+                passCounter -> dataBase.learnedWords.document(wordId)
                     .update("passCounter", passCounter.toInt())
-                falseCounter -> dataBase.allWords.document(wordId)
+                falseCounter -> dataBase.learnedWords.document(wordId)
                     .update("falseCounter", falseCounter.toInt())
-                trueCounter -> dataBase.allWords.document(wordId)
+                trueCounter -> dataBase.learnedWords.document(wordId)
                     .update("trueCounter", trueCounter.toInt())
-                viewCounter -> dataBase.allWords.document(wordId)
+                viewCounter -> dataBase.learnedWords.document(wordId)
                     .update("viewCounter", viewCounter.toInt())
-                isItLearned -> dataBase.allWords.document(wordId).update("isItLearned", isLearned)
             }
         }
 
     }
 
+    private fun getPopularWords() {
+        val intent = intent
+        val activity = intent.getStringExtra("activity")
+        if (activity == "popular") {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+    }
+
+    private fun getWeeklyWords() {
+        val intent = intent
+        val activity = intent.getStringExtra("activity")
+        if (activity == "weekly") {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+    }
 
     override fun onBackPressed() {
 
         super.onBackPressed()
-        finish()
+        finishAffinity()
     }
 }

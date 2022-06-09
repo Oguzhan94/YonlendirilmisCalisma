@@ -36,7 +36,7 @@ class ManualWordAddActivity : AppCompatActivity() {
     private var trueCounter: Int = 0
     private var falseCounter: Int = 0
     private var passCounter: Int = 0
-    private var isItLearned: Boolean = false
+    private var isItLearned: Boolean =false
     private var viewCounter: Int = 0
     private var wordId: String? = null
 
