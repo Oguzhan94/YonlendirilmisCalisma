@@ -46,11 +46,12 @@ class ManualWordAddActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+setContentView(R.layout.activity_manual_word_add)
         saveButton = findViewById(R.id.buttonSaveWordsManualAdded)
         textWordSource = findViewById(R.id.textWordSourceManuelAdded)
         textWordTarget = findViewById(R.id.textWordTargetManuelAdded)
 
+        textWordSource.requestFocus()
 
         run()
     }
@@ -91,6 +92,10 @@ class ManualWordAddActivity : AppCompatActivity() {
         else {
             Toast.makeText(this, R.string.word_add_empty_fields, Toast.LENGTH_SHORT).show()
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }
 

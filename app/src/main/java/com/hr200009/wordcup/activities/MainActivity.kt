@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
         nickNameTextView = findViewById(R.id.textNickname)
         settingsButton = findViewById(R.id.buttonOpenSettings)
         openAddWordCategory = findViewById(R.id.buttonAddWordCategory)

@@ -24,7 +24,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+setContentView(R.layout.activity_settings)
         buttonToPasswordActivity = findViewById(R.id.buttonSettingsPassword)
         buttonToUserInfoActivity = findViewById(R.id.buttonSettingsUserInfo)
         buttonToLogout = findViewById(R.id.buttonSettingsLogout)
@@ -68,6 +68,10 @@ class SettingsActivity : AppCompatActivity() {
         this.cacheDir.deleteRecursively()
         //finishAffinity()
         finishAndRemoveTask()
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

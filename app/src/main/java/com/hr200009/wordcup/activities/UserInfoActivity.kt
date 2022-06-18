@@ -43,14 +43,9 @@ class UserInfoActivity : AppCompatActivity() {
     private var notification = ""
 
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_user_info)
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+setContentView(R.layout.activity_user_info)
 
         radioGroupToBeLearned = findViewById(R.id.toBeLearnedRadioGroup)
         radioGroupDifficulty = findViewById(R.id.diffucultyRadioGroup)
@@ -207,7 +202,7 @@ class UserInfoActivity : AppCompatActivity() {
         if (activity == "signup") {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finishAffinity()
+            finish()
         }
     }
 
@@ -215,6 +210,10 @@ class UserInfoActivity : AppCompatActivity() {
     private fun run() {
         getData()
         updateData()
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 

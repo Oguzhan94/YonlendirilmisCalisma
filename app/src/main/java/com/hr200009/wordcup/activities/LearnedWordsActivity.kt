@@ -27,6 +27,8 @@ class LearnedWordsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_learned_words)
+
         recyclerView = findViewById(R.id.recyclerViewAttachedWords)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
@@ -60,5 +62,9 @@ class LearnedWordsActivity : AppCompatActivity() {
         }
 
 
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

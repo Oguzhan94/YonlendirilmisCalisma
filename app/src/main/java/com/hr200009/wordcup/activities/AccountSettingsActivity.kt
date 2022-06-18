@@ -40,6 +40,7 @@ class AccountSettingsActivity : AppCompatActivity() {
     private fun getUserNickName() {
         dataBase.userInfo.get().addOnSuccessListener {
             binding.editTextTextPersonName.setText(it.get("userName").toString())
+            binding.editTextTextPersonName.requestFocus()
         }
     }
 
@@ -52,6 +53,7 @@ class AccountSettingsActivity : AppCompatActivity() {
         dataBase.currentUser!!.delete()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    deleteUserData()
                     Toast.makeText(this, R.string.delete_user, Toast.LENGTH_SHORT).show()
                     openToLoginScreen()
                 }
@@ -62,5 +64,13 @@ class AccountSettingsActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finishAffinity()
+    }
+    private fun deleteUserData() {
+        dataBase.userInfo.delete()
+        dataBase.userWords.delete()
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

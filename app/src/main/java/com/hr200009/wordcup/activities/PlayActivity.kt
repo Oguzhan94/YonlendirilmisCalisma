@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.hr200009.wordcup.R
 import com.hr200009.wordcup.models.Word
 import com.hr200009.wordcup.util.FirebaseUtil
+import kotlin.random.Random
 
 
 class PlayActivity : AppCompatActivity() {
@@ -55,6 +56,7 @@ class PlayActivity : AppCompatActivity() {
         goButton = findViewById(R.id.button2)
         passButton = findViewById(R.id.button)
 
+        textTarget.requestFocus()
 
         run()
     }
@@ -73,7 +75,6 @@ class PlayActivity : AppCompatActivity() {
                 for (word in it) {
                     val word = word.toObject(Word::class.java)
                     arrayList.add(word)
-                    println("****************************           ${word.isItLearned.toString()}             **************************** ")
                 }
                 randomWord(arrayList)
             }
@@ -107,17 +108,10 @@ class PlayActivity : AppCompatActivity() {
 
     private fun randomWord(arrayList: ArrayList<Word>) {
 
-        val numberOfElements = 2
+        val random = Random.nextInt(arrayList.size)
 
 
-
-        arrayList.asSequence().shuffled().take(numberOfElements).toList().let {
-            for (word in it){
-                arrayList.add(word)
-            }
-        }
-
-        arrayList.random().let { Word ->
+        arrayList[random].let { Word ->
             textSource.text = Word.source
             trueCounter = Word.trueCounter!!
             falseCounter = Word.falseCounter!!
@@ -251,6 +245,6 @@ class PlayActivity : AppCompatActivity() {
     override fun onBackPressed() {
 
         super.onBackPressed()
-        finishAffinity()
+        finish()
     }
 }

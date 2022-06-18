@@ -27,12 +27,14 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_login)
         emailEditText = findViewById(R.id.textLoginEmailAddress)
         passwordEditText = findViewById(R.id.textLoginPassword)
         loginButton = findViewById(R.id.buttonLogin)
         registerButton = findViewById(R.id.buttonToRegister)
         forgotPassword = findViewById(R.id.buttonForgotPassword)
+
+        emailEditText.requestFocus()
         run()
     }
 
@@ -71,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
     private fun openMainActivity() {
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)
-        finishAffinity()
+        finish()
     }
 
     private fun openSignupActivity() {

@@ -1,5 +1,6 @@
 package com.hr200009.wordcup.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 
@@ -94,6 +95,7 @@ private lateinit var binding: ActivityAttachedWordsBinding
             textSource.isFocusableInTouchMode = true
             textTarget.isFocusableInTouchMode = true
 
+            textSource.requestFocus()
 
         }
         writeButton.setOnClickListener() {
@@ -142,6 +144,6 @@ private lateinit var binding: ActivityAttachedWordsBinding
 
     override fun onBackPressed() {
         super.onBackPressed()
-        setContentView(R.layout.activity_attached_words)
+       finish()
     }
 }

@@ -17,10 +17,12 @@ class PasswordResetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+setContentView(R.layout.activity_password_reset)
 
         sendButton = findViewById(R.id.button4)
         emailEditText = findViewById(R.id.editTextTextEmailAddress)
+
+        emailEditText.requestFocus()
 
         sendPasswordResetEmail()
     }
@@ -44,5 +46,9 @@ class PasswordResetActivity : AppCompatActivity() {
             }
         }
 
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

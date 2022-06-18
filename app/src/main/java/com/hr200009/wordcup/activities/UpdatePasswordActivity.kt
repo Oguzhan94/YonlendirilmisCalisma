@@ -30,11 +30,13 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+setContentView(R.layout.activity_update_password)
         currentPasswordEditText = findViewById(R.id.textSettingsCurrentPassword)
         newPasswordEditText = findViewById(R.id.TextSettingsNewPassword)
         newPasswordCheckEditText = findViewById(R.id.TextSettingsNewPasswordCheck)
         saveButton = findViewById(R.id.buttonUpdatePassword)
+
+        currentPasswordEditText.requestFocus()
 
 
         run()
@@ -45,6 +47,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
     }
 
     private fun passwordUpdate() {
+        currentPasswordEditText.requestFocus()
         saveButton.setOnClickListener(View.OnClickListener {
             currentPassword = currentPasswordEditText.text.toString()
             newPassword = newPasswordEditText.text.toString()
@@ -89,6 +92,10 @@ class UpdatePasswordActivity : AppCompatActivity() {
     private fun openLoginActivity() {
         val intent = Intent(this@UpdatePasswordActivity, LoginActivity::class.java)
         startActivity(intent)
+        finish()
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
         finish()
     }
 

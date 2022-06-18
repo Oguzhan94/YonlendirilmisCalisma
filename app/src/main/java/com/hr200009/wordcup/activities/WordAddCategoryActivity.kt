@@ -11,15 +11,11 @@ class WordAddCategoryActivity : AppCompatActivity() {
     private lateinit var addWordFromDictionary: Button
     private lateinit var addWordManuel: Button
 
-    override fun onStart() {
-        super.onStart()
-        setContentView(R.layout.activity_word_add_category)
 
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_word_add_category)
 
         addWordFromDictionary = findViewById(R.id.buttonAddWordFromDictionary)
         addWordManuel = findViewById(R.id.buttonAddWordFromManuel)
@@ -38,6 +34,10 @@ class WordAddCategoryActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

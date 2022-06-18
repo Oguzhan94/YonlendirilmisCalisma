@@ -18,10 +18,10 @@ class FirebaseUtil {
     var currentUser = auth.currentUser
     var currentUserUid = currentUser?.uid
 
-    var arrayList = ArrayList<Word>()
+
 
     val db = Firebase.firestore
-    var userInfo = db.collection("userInfo").document(auth.uid.toString())
+    var userInfo = db.collection("userInfo").document(currentUserUid.toString())
     var wordId =
         db.collection("userWords").document(auth.uid.toString()).collection("allWords").document()
             .toString()
@@ -32,7 +32,7 @@ class FirebaseUtil {
     var dailyWords = db.collection("adminWords").document("tr").collection("dailyWords")
     var weeklyWords = db.collection("adminWords").document("tr").collection("weeklyWords")
 
-
+    var userWords = db.collection("userWords").document(currentUserUid.toString())
     }
 
 

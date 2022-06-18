@@ -40,6 +40,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityDictionaryWordAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -96,6 +97,7 @@ class DictionaryWordAddActivity : AppCompatActivity() {
 
     private fun addWordToDatabase(){
         translate()
+        binding.searchViewDictionaryWordAdd.requestFocus()
         binding.buttonAddWordDictionary.setOnClickListener(View.OnClickListener {
           if (textTSource.isNotEmpty() && textTarget.isNotEmpty()) {
 
@@ -127,6 +129,10 @@ class DictionaryWordAddActivity : AppCompatActivity() {
           }
       })
 
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

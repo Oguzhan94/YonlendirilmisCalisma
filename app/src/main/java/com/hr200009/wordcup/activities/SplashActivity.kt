@@ -18,14 +18,10 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_splash)
         loadingTime()
     }
 
-    override fun onResume() {
-        super.onResume()
-        openNextActivity()
-    }
 
     private fun loadingTime() {
         val countDownTimer: CountDownTimer = object : CountDownTimer(3000, 1000) {
@@ -58,12 +54,12 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAlert(){
+    private fun showAlert() {
         showAlert(R.string.internet_connection_alert_dialog_message) {
             if (it) {
                 openWifiSettings()
-            }
-            else{
+
+            } else {
                 finishAndRemoveTask()
             }
         }
@@ -78,9 +74,10 @@ class SplashActivity : AppCompatActivity() {
     private fun openMainActivity() {
         val intent = Intent(this@SplashActivity, MainActivity::class.java)
         startActivity(intent)
-        finishAffinity()
+        finish()
     }
-    private fun openWifiSettings(){
+
+    private fun openWifiSettings() {
         val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
         startActivity(intent)
     }

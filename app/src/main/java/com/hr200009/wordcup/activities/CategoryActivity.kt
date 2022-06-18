@@ -16,6 +16,8 @@ class CategoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_category)
+
         mixUpWordsButton = findViewById(R.id.buttonRandomWordPlay)
         popularWords = findViewById(R.id.buttonPopularWords)
         weeklyWords = findViewById(R.id.buttonWeeklyWords)
@@ -51,5 +53,9 @@ class CategoryActivity : AppCompatActivity() {
         val intent = Intent(this, PlayActivity::class.java)
         intent.putExtra("activity", "weekly")
         startActivity(intent)
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

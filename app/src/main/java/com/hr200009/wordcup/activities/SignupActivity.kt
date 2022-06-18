@@ -28,15 +28,18 @@ class SignupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_signup)
 
         emailEditText = findViewById(R.id.textRegisterEmail)
         passwordEditText = findViewById(R.id.textRegisterPassword)
         nickNameEditText = findViewById(R.id.textRegisterNickname)
         registerButton = findViewById(R.id.buttonRegister)
 
+        nickNameEditText.requestFocus()
+
         run()
     }
+
     private fun run() {
         registerButton.setOnClickListener(View.OnClickListener {
             registerNewUser()
@@ -74,7 +77,7 @@ class SignupActivity : AppCompatActivity() {
         val intent = Intent(this@SignupActivity, UserInfoActivity::class.java)
         intent.putExtra("activity", "signup")
         startActivity(intent)
-        finishAffinity()
+        finish()
     }
 
     private fun writeNewUser(
@@ -84,8 +87,12 @@ class SignupActivity : AppCompatActivity() {
         toBeLearned: Int
     ) {
         val user = User(name, difficulty, notificationFrequency, toBeLearned)
-        dataBase.userInfo.set(user)
+      //  dataBase.userInfo.set(user)
+        dataBase.db.collection("userInfo").document(dataBase.auth.currentUser!!.uid.toString()).set(user)
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 
 }
